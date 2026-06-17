@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-type BlogStatus = string;
 import { BusinessEcosystemPage, type BusinessInsight } from "@/components/BusinessEcosystemPage";
 import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
@@ -29,7 +28,7 @@ async function getBusinessInsights(): Promise<BusinessInsight[]> {
   try {
     const targetedInsights = await prisma.blog.findMany({
       where: {
-        status: BlogStatus.published,
+        status: "published",
         OR: [
           { category: { in: ["Business", "Strategy", "Operations", "Design", "Architecture", "Construction", "Real Estate", "Export & Import", "OTC Exchange"] } },
           { tags: { hasSome: ["Business", "Enterprise", "Strategy", "Operations", "Investment", "Market Expansion", "Commercial Development"] } }
