@@ -23,6 +23,7 @@
     "gsap": "^3.12.7",
     "inngest": "^4.5.0",
     "lenis": "^1.1.20",
+    "mongoose": "^8.23.1",
     "lucide-react": "^0.471.1",
     "next": "^15.5.18",
     "nodemailer": "^8.0.10",
