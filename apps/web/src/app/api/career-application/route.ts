@@ -334,7 +334,7 @@ async function persistCareerApplication(payload: ApplicationPayload, resumeUrl: 
 
     logCareerApplication("info", "database_save_success", {
       applicationId: application.id,
-      position: (application as Record<string, unknown>).position as string
+      position: application.position
     });
 
     return { ok: true, application };
