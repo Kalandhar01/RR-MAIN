@@ -3,15 +3,15 @@ import path from "node:path";
 import { readFileSync } from "node:fs";
 import { config as loadDotenv, parse as parseDotenv } from "dotenv";
 
-import PropertyModel from "@/models/Property.js";
-import PropertyCategoryModel from "@/models/PropertyCategory.js";
-import PropertyLocationModel from "@/models/PropertyLocation.js";
-import PropertyMediaModel from "@/models/PropertyMedia.js";
-import TestimonialModel from "@/models/Testimonial.js";
-import PropertyLeadModel from "@/models/PropertyLead.js";
-import NewsletterSubscriberModel from "@/models/NewsletterSubscriber.js";
-import AdminModel from "@/models/Admin.js";
-import NotificationModel from "@/models/Notification.js";
+import PropertyModel from "@/models/Property";
+import PropertyCategoryModel from "@/models/PropertyCategory";
+import PropertyLocationModel from "@/models/PropertyLocation";
+import PropertyMediaModel from "@/models/PropertyMedia";
+import TestimonialModel from "@/models/Testimonial";
+import PropertyLeadModel from "@/models/PropertyLead";
+import NewsletterSubscriberModel from "@/models/NewsletterSubscriber";
+import AdminModel from "@/models/Admin";
+import NotificationModel from "@/models/Notification";
 
 const envCandidates = [
   path.resolve(process.cwd(), ".env"),
