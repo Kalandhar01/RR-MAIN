@@ -5,6 +5,17 @@ const ractyshGroupOrigin = process.env.RACTYSH_GROUP_ORIGIN?.replace(/\/$/, "");
 const nextConfig: NextConfig = {
   devIndicators: false,
   transpilePackages: ["@ractysh/db"],
+  webpack: (config) => {
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        ...config.resolve?.fallback,
+        fs: false,
+        encoding: false,
+      },
+    };
+    return config;
+  },
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2400],
     formats: ["image/avif", "image/webp"],
