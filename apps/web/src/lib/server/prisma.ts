@@ -1,4 +1,4 @@
-import mongoose, { type Model, type Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI || "";
 
@@ -11,24 +11,48 @@ async function dbConnect(): Promise<typeof mongoose> {
   return cachedConnection;
 }
 
-type PrismaDelegate<T extends Document> = {
-  create(args: { data: Record<string, unknown> }): Promise<T & { id: string }>;
-  findMany(args?: {
-    where?: Record<string, unknown>;
-    orderBy?: Record<string, "asc" | "desc">;
-    take?: number;
-    select?: Record<string, unknown>;
-  }): Promise<(T & { id: string })[]>;
+export type CareerApplication = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  position: string;
+  experience: string;
+  message: string;
+  resumeUrl: string;
+  portfolioUrl: string | null;
+  coverLetter: string;
+  createdAt: Date;
 };
 
-function createDelegate<T extends Document>(model: Model<T>): PrismaDelegate<T> {
+export type NewsletterSubscriber = {
+  id: string;
+  email: string;
+  division: string;
+  createdAt: Date;
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Delegate = {
+  create(args: { data: Record<string, unknown> }): Promise<any>;
+  findMany(args?: {
+    where?: Record<string, unknown>;
+    orderBy?: Record<string, string> | Record<string, string>[];
+    take?: number;
+    select?: Record<string, unknown>;
+  }): Promise<any[]>;
+};
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+function createDelegate(model: mongoose.Model<Record<string, unknown>>): Delegate {
   return {
     async create({ data }) {
       const doc = await model.create(data);
-      return { ...doc.toObject(), id: String(doc._id) } as T & { id: string };
+      const obj = typeof doc.toObject === "function" ? doc.toObject() : doc;
+      return { ...obj, id: String((obj as Record<string, unknown>)._id) };
     },
     async findMany(args) {
-      let query = model.find();
+      let query = model.find() as unknown as mongoose.Query<Record<string, unknown>[], Record<string, unknown>>;
       if (args?.where) {
         const filter = { ...args.where };
         if (filter.OR) {
@@ -46,24 +70,22 @@ function createDelegate<T extends Document>(model: Model<T>): PrismaDelegate<T> 
             return mongoCond;
           });
           delete filter.OR;
-          query = query.and([filter, ...orConditions.map((c) => ({ $or: [c] }))]);
+          query = query.find({ ...filter, $or: orConditions }) as typeof query;
+        } else {
+          query = query.find(filter) as typeof query;
         }
-        if (Object.keys(filter).length > 0) query = query.find(filter);
       }
       if (args?.orderBy) {
         const sort: Record<string, 1 | -1> = {};
         for (const [key, dir] of Object.entries(args.orderBy)) {
           sort[key] = dir === "desc" ? -1 : 1;
         }
-        query = query.sort(sort);
+        query = query.sort(sort) as typeof query;
       }
-      if (args?.take) query = query.limit(args.take);
-      if (args?.select) query = query.select(Object.keys(args.select).join(" "));
+      if (args?.take) query = query.limit(args.take) as typeof query;
+      if (args?.select) query = query.select(Object.keys(args.select).join(" ")) as typeof query;
       const docs = await query.lean();
-      return (docs as T[]).map((doc) => {
-        const d = doc as Record<string, unknown>;
-        return { ...d, id: String(d._id) } as T & { id: string };
-      });
+      return (docs as Record<string, unknown>[]).map((d) => ({ ...d, id: String(d._id) }));
     }
   };
 }
@@ -118,11 +140,11 @@ const serviceRequestSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-let BlogModel: Model<Document>;
-let CareerApplicationModel: Model<Document>;
-let NewsletterSubscriberModel: Model<Document>;
-let ChatbotQueryModel: Model<Document>;
-let ServiceRequestModel: Model<Document>;
+let BlogModel: mongoose.Model<Record<string, unknown>>;
+let CareerApplicationModel: mongoose.Model<Record<string, unknown>>;
+let NewsletterSubscriberModel: mongoose.Model<Record<string, unknown>>;
+let ChatbotQueryModel: mongoose.Model<Record<string, unknown>>;
+let ServiceRequestModel: mongoose.Model<Record<string, unknown>>;
 
 function getModels() {
   BlogModel = BlogModel || mongoose.model("Blog", blogSchema);
@@ -132,27 +154,6 @@ function getModels() {
   ServiceRequestModel = ServiceRequestModel || mongoose.model("ServiceRequest", serviceRequestSchema);
   return { BlogModel, CareerApplicationModel, NewsletterSubscriberModel, ChatbotQueryModel, ServiceRequestModel };
 }
-
-export type CareerApplication = {
-  id: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  position: string;
-  experience: string;
-  message: string;
-  resumeUrl: string;
-  portfolioUrl: string | null;
-  coverLetter: string;
-  createdAt: Date;
-};
-
-export type NewsletterSubscriber = {
-  id: string;
-  email: string;
-  division: string;
-  createdAt: Date;
-};
 
 export const prisma = {
   async $connect() { return dbConnect(); },

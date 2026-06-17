@@ -64,7 +64,7 @@ type ResumeStorageResult = {
   providerId?: string;
 };
 
-type ApplicationDoc = Record<string, unknown>;
+type ApplicationDoc = CareerApplication;
 
 type DatabaseSaveResult =
   | {

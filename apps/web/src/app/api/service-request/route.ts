@@ -23,12 +23,20 @@ const serviceRequestSchema = z.object({
 
 type ServiceRequestInput = z.infer<typeof serviceRequestSchema>;
 
-type ServiceRequestDoc = Record<string, unknown>;
+type ServiceRequestDoc = {
+  id: string;
+  name: string;
+  email: string;
+  service: string;
+  route: string;
+  createdAt: Date;
+};
 
 type ServiceRequestStorageResult =
   | {
       ok: true;
       request: ServiceRequestDoc;
+      repairedSchema?: string;
     }
   | {
       ok: false;
