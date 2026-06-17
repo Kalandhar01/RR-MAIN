@@ -42,7 +42,7 @@ async function getBusinessInsights(): Promise<BusinessInsight[]> {
     const insights = targetedInsights.length
       ? targetedInsights
       : await prisma.blog.findMany({
-          where: { status: BlogStatus.published },
+          where: { status: "published" },
           orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
           take: 6,
           select: insightSelect
