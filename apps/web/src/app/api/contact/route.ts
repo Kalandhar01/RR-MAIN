@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { inferDivisionFromText, normalizeDivisionKey } from "@ractysh/shared";
+import { inferDivisionFromText, normalizeDivisionKey } from "@/lib/shared";
 import { elapsedMs, logSubmissionTiming, runBackgroundJob } from "@/lib/server/backgroundJobs";
 import { persistInquiry, sendInquiryEmail, type ContactInquiryPayload } from "@/lib/server/inquiryDelivery";
 

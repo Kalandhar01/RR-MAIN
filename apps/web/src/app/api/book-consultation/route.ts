@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 import { NextResponse } from "next/server";
 import type { Attachment } from "resend";
 import { z } from "zod";
-import { inferDivisionFromText, normalizeDivisionKey } from "@ractysh/shared";
+import { inferDivisionFromText, normalizeDivisionKey } from "@/lib/shared";
 import {
   createFallbackConsultationRecord,
   updateFallbackConsultationNotification

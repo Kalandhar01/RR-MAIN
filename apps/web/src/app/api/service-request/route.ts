@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { inferDivisionFromText } from "@ractysh/shared";
+import { inferDivisionFromText } from "@/lib/shared";
 import { getRactyshEmailBrand } from "@/emails/branding";
 import { renderInquiryNotificationEmail } from "@/emails/InquiryNotificationEmail";
 import { parseEmailList, sendResendEmail, type EmailDeliveryResult } from "@/lib/server/emailDelivery";

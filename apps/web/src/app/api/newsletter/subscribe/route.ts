@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { inferDivisionFromText, normalizeDivisionKey } from "@ractysh/shared";
+import { inferDivisionFromText, normalizeDivisionKey } from "@/lib/shared";
 import { subscribeNewsletterSubscriber } from "@/lib/server/newsletter.service";
 
 export const runtime = "nodejs";
