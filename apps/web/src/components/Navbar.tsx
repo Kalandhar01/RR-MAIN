@@ -91,7 +91,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Ractysh Group",
     title: "Business divisions across one premium enterprise ecosystem.",
     description: "Move between Ractysh business divisions across Architecture, Construction, Real Estate, Import-Export operations and OTC Exchange.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1486406146926-c627a92ad1ab.webp",
     ctaLabel: "Explore ecosystem",
     ctaHref: ecosystemAnchorHref,
     columns: [
@@ -111,7 +111,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Selected Work",
     title: "Selected work across five enterprise pillars.",
     description: "An editorial view of Ractysh work across Architecture, Construction, Real Estate, Export-Import, OTC Exchange and enterprise environments.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1518005020951-eccb494ad742.webp",
     ctaLabel: "Explore our work",
     ctaHref: "/our-projects",
     columns: [
@@ -131,7 +131,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Commercial Services",
     title: "Professional service offerings with dedicated service routes.",
     description: "Commercial service pathways for clients who need Architecture, Construction, Real Estate, Trade coordination or Private Exchange support.",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1497366754035-f200968a6e72.webp",
     ctaLabel: "Browse services",
     ctaHref: "/services",
     columns: [
@@ -156,7 +156,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Company",
     title: "Leadership, locations and enterprise identity.",
     description: `Learn about Ractysh Group, the founder, directors, trademark layer and ${COMPANY_CONTACT.locationDisplay}.`,
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1518005020951-eccb494ad742.webp",
     ctaLabel: "About Ractysh",
     ctaHref: "/about",
     columns: [
@@ -174,7 +174,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Careers",
     title: "Build enterprise systems with Ractysh.",
     description: "Roles and internships across Architecture, Construction, Real Estate, Trade, OTC Exchange and premium client service.",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1551836022-d5d88e9218df.webp",
     ctaLabel: "View careers",
     ctaHref: "/careers",
     columns: [
@@ -191,7 +191,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Insights",
     title: "Enterprise writing for premium decisions.",
     description: "Architecture insights, construction notes, real estate strategy, export-import updates, OTC exchange workflow and company stories.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1450101499163-c8848c66ca85.webp",
     ctaLabel: "Read insights",
     ctaHref: "/blog",
     columns: [
@@ -211,7 +211,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Contact",
     title: "Start a premium enterprise conversation.",
     description: `Connect with the Ractysh office across ${COMPANY_CONTACT.locationDisplay}, book a demo or send private feedback.`,
-    image: "https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1497366412874-3415097a27e7.webp",
     ctaLabel: "Contact office",
     ctaHref: "/contact",
     columns: [
@@ -228,7 +228,7 @@ const menuModels: Record<string, MegaDefinition> = {
     eyebrow: "Founder",
     title: "Founder vision and enterprise direction.",
     description: "Read the chairman profile, Ractysh timeline and leadership principles behind the group.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+    image: "/images/photo-1518005020951-eccb494ad742.webp",
     ctaLabel: "View founder",
     ctaHref: "/founder",
     columns: [

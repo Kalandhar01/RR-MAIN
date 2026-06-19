@@ -139,7 +139,7 @@ function FeaturedHomeBlog({
             alt={article.coverImageAlt || article.title}
             loading="lazy"
             decoding="async"
-            onError={(e) => { (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"; }}
+            onError={(e) => { (e.target as HTMLImageElement).src = "/images/photo-1486406146926-c627a92ad1ab.webp"; }}
             className="h-full w-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.06]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,10,6,0.02)_42%,rgba(15,10,6,0.52))]" />
@@ -211,7 +211,7 @@ function BlogIntelligenceFeed({
                   alt={article.coverImageAlt || article.title}
                   loading="lazy"
                   decoding="async"
-                  onError={(e) => { (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80"; }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = "/images/photo-1486406146926-c627a92ad1ab.webp"; }}
                   className="h-full w-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]"
                 />
               </div>

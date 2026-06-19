@@ -1,12 +1,12 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -483,175 +483,85 @@ function ArchitecturalOpeningVisual() {
 }
 
 function ServiceShowcase() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const [selected, setSelected] = useState<EnterpriseServicePillar | null>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const reduceMotion = Boolean(shouldReduceMotion);
-
-    const context = gsap.context(() => {
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-services-layout-reveal]");
-      const cards = gsap.utils.toArray<HTMLElement>("[data-services-layout-card]");
-
-      if (reduceMotion) {
-        gsap.set([...revealItems, ...cards], { clearProps: "all" });
-        return;
-      }
-
-      gsap.set(revealItems, { opacity: 0, y: 28, filter: "blur(10px)" });
-      gsap.set(cards, { opacity: 0, y: 42, rotateX: -4, transformOrigin: "50% 100%" });
-
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 72%",
-          once: true
-        },
-        defaults: { ease: "power4.out" }
-      });
-
-      timeline
-        .to(revealItems, {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 0.86,
-          stagger: 0.08
-        })
-        .to(
-          cards,
-          {
-            opacity: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 0.92,
-            stagger: 0.08
-          },
-          0.18
-        );
-    }, section);
-
-    return () => context.revert();
-  }, [shouldReduceMotion]);
-
-  useEffect(() => {
-    if (!selected) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelected(null);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selected]);
-
   return (
-    <section ref={sectionRef} className="services-enterprise-showcase" aria-labelledby="services-layout-heading">
+    <section className="services-enterprise-showcase" aria-labelledby="services-layout-heading">
       <div className="services-enterprise-shell">
         <div className="services-layout-heading">
-          <p data-services-layout-reveal>Enterprise Services</p>
-          <h2 id="services-layout-heading" data-services-layout-reveal>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: cinemaEase }}
+          >
+            Enterprise Services
+          </motion.p>
+          <motion.h2
+            id="services-layout-heading"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: cinemaEase }}
+          >
             Connected Through One Operating Ecosystem
-          </h2>
-          <span data-services-layout-reveal>
-            Six specialist service lanes are arranged as a premium operating surface. Open any panel to expand the
-            context, then move into the dedicated service path.
-          </span>
+          </motion.h2>
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: cinemaEase }}
+          >
+            Five specialist service lanes arranged as a premium operating surface.
+          </motion.span>
         </div>
 
-        <motion.div className="services-layout-grid" layout>
+        <div className="services-simple-grid">
           {services.map((service, index) => (
-            <LayoutGridCard
-              key={service.id}
-              service={service}
-              index={index}
-              reduceMotion={Boolean(shouldReduceMotion)}
-              onSelect={() => setSelected(service)}
-            />
+            <ServiceCard key={service.id} service={service} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
-
-      <AnimatePresence>
-        {selected ? (
-          <motion.div
-            className="services-layout-expanded-layer"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: shouldReduceMotion ? 0.01 : 0.42, ease: cinemaEase }}
-            onClick={() => setSelected(null)}
-          >
-            <motion.article
-              layoutId={`services-layout-card-${selected.id}`}
-              className="services-layout-expanded-card"
-              role="dialog"
-              aria-modal="true"
-              aria-label={selected.name}
-              onClick={(event) => event.stopPropagation()}
-              transition={{ duration: shouldReduceMotion ? 0.01 : 0.72, ease: cinemaEase }}
-            >
-              <motion.div layoutId={`services-layout-image-${selected.id}`} className="services-layout-expanded-media">
-                <Image
-                  src={selected.image}
-                  alt={selected.alt}
-                  fill
-                  sizes="(min-width: 1280px) 62vw, 92vw"
-                  quality={95}
-                  className="services-layout-expanded-image"
-                  priority
-                />
-              </motion.div>
-              <button
-                type="button"
-                className="services-layout-close"
-                aria-label="Close service preview"
-                onClick={() => setSelected(null)}
-              >
-                <X className="h-4 w-4" strokeWidth={1.9} />
-              </button>
-              <div className="services-layout-expanded-content">
-                <motion.p
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.54, delay: 0.12, ease: cinemaEase }}
-                >
-                  {selected.filter}
-                </motion.p>
-                <motion.h3
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.58, delay: 0.18, ease: cinemaEase }}
-                >
-                  {selected.name}
-                </motion.h3>
-                <motion.span
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.62, delay: 0.24, ease: cinemaEase }}
-                >
-                  {selected.statement}
-                </motion.span>
-                <motion.div
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.56, delay: 0.3, ease: cinemaEase }}
-                >
-                  <Link href={selected.href} className="services-layout-expanded-cta">
-                    Explore {selected.name}
-                    <ArrowRight className="h-4 w-4" strokeWidth={2.1} />
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.article>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </section>
+  );
+}
+
+function ServiceCard({ service, index }: { service: EnterpriseServicePillar; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: cinemaEase }}
+    >
+      <Link
+        href={service.href}
+        className="services-simple-card group"
+        data-pillar={service.id}
+      >
+        <div className="services-simple-card-media">
+          <Image
+            src={service.image}
+            alt={service.alt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            quality={92}
+            className="services-simple-card-image"
+          />
+        </div>
+        <div className="services-simple-card-overlay" />
+        <div className="services-simple-card-content">
+          <span className="services-simple-card-number">{service.number}</span>
+          <div className="services-simple-card-info">
+            <span className="services-simple-card-filter">{service.filter}</span>
+            <h3 className="services-simple-card-name">{service.name}</h3>
+            <p className="services-simple-card-desc">{service.description}</p>
+          </div>
+          <span className="services-simple-card-cta">
+            Explore
+            <ArrowRight className="h-4 w-4" strokeWidth={2} />
+          </span>
+        </div>
+      </Link>
+    </motion.div>
   );
 }
 

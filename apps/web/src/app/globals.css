@@ -17474,6 +17474,193 @@ header nav[aria-label="Primary navigation"] .executive-nav-link > span {
   }
 }
 
+.services-simple-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  perspective: 1200px;
+}
+
+.services-simple-card {
+  position: relative;
+  display: block;
+  height: 22rem;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(198, 158, 80, 0.25);
+  background: #100c0a;
+  box-shadow:
+    0 20px 60px rgba(20, 13, 10, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateZ(0);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.services-simple-card-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.services-simple-card-image {
+  object-fit: cover;
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.services-simple-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(10, 7, 5, 0.15) 40%, rgba(10, 7, 5, 0.75) 100%);
+  transition: opacity 0.5s ease;
+}
+
+.services-simple-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.2rem, 2vw, 2rem);
+}
+
+.services-simple-card-number {
+  align-self: flex-end;
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  font-weight: 600;
+  line-height: 0.8;
+  color: rgba(255, 250, 240, 0.2);
+  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.services-simple-card-info {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 32rem;
+}
+
+.services-simple-card-filter {
+  color: rgba(215, 181, 106, 0.9);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.services-simple-card-name {
+  color: #fffaf0;
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.6rem, 2.8vw, 3.2rem);
+  font-weight: 650;
+  line-height: 0.92;
+  text-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.services-simple-card-desc {
+  color: rgba(255, 250, 240, 0.65);
+  font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 28rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.services-simple-card-cta {
+  position: absolute;
+  right: clamp(1.2rem, 2vw, 2rem);
+  bottom: clamp(1.2rem, 2vw, 2rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 224, 158, 0.25);
+  border-radius: 999px;
+  background: rgba(16, 12, 10, 0.45);
+  color: rgba(255, 250, 240, 0.85);
+  font-size: 0.75rem;
+  font-weight: 760;
+  line-height: 1;
+  padding: 0.6rem 0.85rem;
+  opacity: 0;
+  transform: translate3d(0.3rem, 0, 0);
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 640px) {
+  .services-simple-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-simple-card {
+    height: 24rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-simple-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .services-simple-card {
+    height: 26rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .services-simple-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .services-simple-card {
+    height: 28rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .services-simple-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(215, 181, 106, 0.55);
+    box-shadow:
+      0 30px 80px rgba(20, 13, 10, 0.35),
+      0 0 40px rgba(215, 181, 106, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .services-simple-card:hover .services-simple-card-image {
+    transform: scale(1.08);
+    filter: saturate(1.1) contrast(1.05) brightness(1.05);
+  }
+
+  .services-simple-card:hover .services-simple-card-number {
+    transform: translateY(-4px);
+    color: rgba(215, 181, 106, 0.4);
+  }
+
+  .services-simple-card:hover .services-simple-card-cta {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .services-enterprise-desk-section {
   position: relative;
   overflow: hidden;

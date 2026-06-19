@@ -55,7 +55,7 @@ interface AdvantageStory {
   Icon: LucideIcon;
 }
 
-const tradeImage = (photoId: string) => `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=3000&q=95`;
+const tradeImage = (photoId: string) => `/images/${photoId}.webp`;
 
 const showcasePanels: ShowcasePanel[] = [
   {

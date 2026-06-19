@@ -5,7 +5,7 @@ import path from "node:path";
 import nodemailer, { type Transporter } from "nodemailer";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma, type CareerApplication } from "@/lib/server/prisma";
+import { prisma, type CareerApplication } from "@/lib/server/db";
 import {
   EmailLayout,
   getRactyshEmailBrand,

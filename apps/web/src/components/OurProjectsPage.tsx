@@ -37,9 +37,9 @@ const projects: ProjectCard[] = [
     location: "Dubai, UAE",
     category: "Construction",
     images: [
-      { src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=95", position: "50% 46%" },
-      { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" }
+      { src: "/images/photo-1503387762-592deb58ef4e.webp", position: "50% 50%" },
+      { src: "/images/photo-1541888946425-d81bb19240f5.webp", position: "50% 46%" },
+      { src: "/images/photo-1486406146926-c627a92ad1ab.webp", position: "50% 50%" }
     ]
   },
   {
@@ -47,9 +47,9 @@ const projects: ProjectCard[] = [
     location: "Dubai, UAE",
     category: "Architecture",
     images: [
-      { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=95", position: "48% 52%" },
-      { src: "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=2400&q=95", position: "50% 52%" }
+      { src: "/images/photo-1600585154340-be6161a56a0c.webp", position: "48% 52%" },
+      { src: "/images/photo-1600210492493-0946911123ea.webp", position: "50% 50%" },
+      { src: "/images/photo-1618220179428-22790b461013.webp", position: "50% 52%" }
     ]
   },
   {
@@ -57,9 +57,9 @@ const projects: ProjectCard[] = [
     location: "Jebel Ali, UAE",
     category: "Real Estate",
     images: [
-      { src: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2400&q=95", position: "50% 52%" },
-      { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=95", position: "48% 48%" },
-      { src: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" }
+      { src: "/images/photo-1560518883-ce09059eeffa.webp", position: "50% 52%" },
+      { src: "/images/photo-1486406146926-c627a92ad1ab.webp", position: "48% 48%" },
+      { src: "/images/photo-1494526585095-c41746248156.webp", position: "50% 50%" }
     ]
   },
   {
@@ -67,9 +67,9 @@ const projects: ProjectCard[] = [
     location: "Bangalore, India",
     category: "Architecture",
     images: [
-      { src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" }
+      { src: "/images/photo-1497366754035-f200968a6e72.webp", position: "50% 50%" },
+      { src: "/images/photo-1497366811353-6870744d04b2.webp", position: "50% 50%" },
+      { src: "/images/photo-1504384308090-c894fdcc538d.webp", position: "50% 50%" }
     ]
   },
   {
@@ -77,9 +77,9 @@ const projects: ProjectCard[] = [
     location: "Singapore",
     category: "Export & Import",
     images: [
-      { src: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=2400&q=95", position: "50% 48%" }
+      { src: "/images/photo-1494412651409-8963ce7935a7.webp", position: "50% 50%" },
+      { src: "/images/photo-1605745341112-85968b19335b.webp", position: "50% 50%" },
+      { src: "/images/photo-1578575437130-527eed3abbec.webp", position: "50% 48%" }
     ]
   },
   {
@@ -87,9 +87,9 @@ const projects: ProjectCard[] = [
     location: "Doha, Qatar",
     category: "OTC Exchange",
     images: [
-      { src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" },
-      { src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=95", position: "50% 50%" }
+      { src: "/images/photo-1611974789855-9c2a0a7236a3.webp", position: "50% 50%" },
+      { src: "/images/photo-1551434678-e076c223a692.webp", position: "50% 50%" },
+      { src: "/images/photo-1450101499163-c8848c66ca85.webp", position: "50% 50%" }
     ]
   }
 ];

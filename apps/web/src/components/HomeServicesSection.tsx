@@ -27,7 +27,7 @@ const serviceDivisions: ServiceDivision[] = [
     title: "Architecture",
     statement: "Designing spaces that define identity.",
     href: "/architecture",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2600&q=95",
+    image: "/images/photo-1600585154340-be6161a56a0c.webp",
     imageClassName: "object-[48%_52%]",
     code: "ARC",
     capabilities: ["Planning", "Visualization", "Documentation", "Execution Support"]
@@ -36,7 +36,7 @@ const serviceDivisions: ServiceDivision[] = [
     title: "Construction",
     statement: "Civil, MEP, buildings, interiors, landscape and turnkey — all under one accountable system.",
     href: "/construction",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2600&q=95",
+    image: "/images/photo-1541888946425-d81bb19240f5.webp",
     imageClassName: "object-[50%_44%]",
     code: "CON",
     capabilities: ["Civil & MEP", "Building Construction", "Interiors & Finishing", "Turnkey Projects"]
@@ -45,7 +45,7 @@ const serviceDivisions: ServiceDivision[] = [
     title: "Real Estate",
     statement: "Land, buildings and communities with lasting value.",
     href: "/real-estate",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2600&q=95",
+    image: "/images/photo-1486406146926-c627a92ad1ab.webp",
     imageClassName: "object-[50%_50%]",
     code: "REA",
     capabilities: ["Land & Building Promoters", "Villas & Plots", "Residential & Commercial", "Gated Communities"]
@@ -54,7 +54,7 @@ const serviceDivisions: ServiceDivision[] = [
     title: "Import & Export",
     statement: "Connecting markets through global trade.",
     href: "/import-export",
-    image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=2600&q=95",
+    image: "/images/photo-1605745341112-85968b19335b.webp",
     imageClassName: "object-[50%_50%]",
     code: "TRD",
     capabilities: ["Global Sourcing", "Supplier Network", "Trade Documentation", "International Movement"]
@@ -63,7 +63,7 @@ const serviceDivisions: ServiceDivision[] = [
     title: "OTC Exchange",
     statement: "Crypto currency, USDT exchange and KYC-verified OTC services.",
     href: "/otc-exchange",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2600&q=95",
+    image: "/images/photo-1611974789855-9c2a0a7236a3.webp",
     imageClassName: "object-[50%_48%]",
     code: "OTC",
     capabilities: ["Crypto Currency Exchange", "USDT Exchange", "FIU Registered Partnerships", "KYC Verification"]

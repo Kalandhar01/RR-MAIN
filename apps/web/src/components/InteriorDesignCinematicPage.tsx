@@ -29,10 +29,10 @@ const InteriorLuxuryHeroScene = dynamic<{ reduceMotion: boolean }>(() => import(
 });
 
 const interiorImages = {
-  living: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1700&q=88",
-  material: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1700&q=88",
-  lighting: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1700&q=88",
-  hospitality: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1700&q=88"
+  living: "/images/photo-1618221195710-dd6b41faaea6.webp",
+  material: "/images/photo-1616486338812-3dadae4b4ace.webp",
+  lighting: "/images/photo-1600607687939-ce8a6c25118c.webp",
+  hospitality: "/images/photo-1600566753190-17f0baa2a6c3.webp"
 };
 
 const storySections = [

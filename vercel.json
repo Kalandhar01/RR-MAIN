@@ -1,4 +1,4 @@
 {
-  "installCommand": "npm install",
-  "buildCommand": "npm run build"
+  "buildCommand": "cd ../.. && ./node_modules/.bin/turbo run build --filter=@ractysh/web",
+  "framework": "nextjs"
 }

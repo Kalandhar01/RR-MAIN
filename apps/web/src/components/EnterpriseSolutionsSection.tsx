@@ -98,7 +98,7 @@ function EcosystemImage() {
   return (
     <div className="relative mx-auto h-[20rem] w-full max-w-[32rem] overflow-hidden rounded-[14px] shadow-[0_34px_100px_rgba(24,20,17,0.18),0_0_50px_rgba(214,180,95,0.08)] lg:h-[24rem]">
       <Image
-        src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80"
+        src="/images/photo-1559136555-9303baea8ebd.webp"
         alt="Five-pillar enterprise ecosystem"
         fill
         sizes="(min-width: 1024px) 38vw, 90vw"

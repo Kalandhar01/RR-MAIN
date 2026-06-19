@@ -84,7 +84,7 @@ const lifeExperiences = [
     eyebrow: "01 / Operating Culture",
     body:
       "Every team works inside clear ownership, documented cadence and calm execution loops so ambitious enterprise work stays controlled from idea to delivery.",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1500&q=86",
+    image: "/images/photo-1497366754035-f200968a6e72.webp",
     alt: "Premium enterprise office with warm architectural lighting",
     signal: "Execution Control",
     metric: "Daily",
@@ -97,7 +97,7 @@ const lifeExperiences = [
     eyebrow: "02 / Design Systems",
     body:
       "Creative decisions are shaped through research, visual discipline and operational context, giving every interface, space and presentation a sharper business purpose.",
-    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1500&q=86",
+    image: "/images/photo-1497215728101-856f4ea42174.webp",
     alt: "Bright premium creative studio workspace with modern desks",
     signal: "Concept Studio",
     metric: "4D",
@@ -110,7 +110,7 @@ const lifeExperiences = [
     eyebrow: "03 / Connected Teams",
     body:
       "Architecture, Construction, Real Estate, Export-Import, OTC Exchange and client teams move as one connected ecosystem, reducing handoffs and keeping decisions aligned.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1500&q=86",
+    image: "/images/photo-1552664730-d307ca884978.webp",
     alt: "Enterprise team collaborating in a modern meeting space",
     signal: "Team Network",
     metric: "One",
@@ -123,7 +123,7 @@ const lifeExperiences = [
     eyebrow: "04 / Delivery Philosophy",
     body:
       "High standards do not require noise. Ractysh teams prioritize measured communication, strong documentation and focused delivery windows.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1500&q=86",
+    image: "/images/photo-1551288049-bebda4e38f71.webp",
     alt: "Operational dashboards and enterprise analytics on screens",
     signal: "Standards Room",
     metric: "Zero",
@@ -136,7 +136,7 @@ const lifeExperiences = [
     eyebrow: "05 / Professional Growth",
     body:
       "The workplace is designed for long-term craft, thoughtful autonomy and premium presentation standards across the full Ractysh ecosystem.",
-    image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1500&q=86",
+    image: "/images/photo-1497366811353-6870744d04b2.webp",
     alt: "Modern warm workplace lounge with premium interiors",
     signal: "Culture System",
     metric: "360",

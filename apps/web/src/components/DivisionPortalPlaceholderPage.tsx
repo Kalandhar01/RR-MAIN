@@ -144,7 +144,7 @@ export function DivisionPortalPlaceholderPage({ division }: { division: Division
         </div>
 
         <p className="mt-4 text-[0.72rem] font-semibold leading-none tracking-[0] text-[#8f8374] sm:mt-7 sm:text-[0.78rem]">
-          Part of the Ractysh Group Enterprise Ecosystem
+          Part of the Ractysh Group Ecosystem
         </p>
       </section>
     </main>

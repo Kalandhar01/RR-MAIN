@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BusinessEcosystemPage, type BusinessInsight } from "@/components/BusinessEcosystemPage";
 import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
-import { prisma } from "@/lib/server/prisma";
+import { prisma } from "@/lib/server/db";
 
 export const metadata: Metadata = {
   title: "Ractysh Group Business Ecosystem | Five Enterprise Pillars",

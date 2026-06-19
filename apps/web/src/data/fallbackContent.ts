@@ -22,7 +22,7 @@ export const fallbackContent: SiteContent = {
       "OTC Exchange"
     ],
     ogImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=82",
+      "/images/photo-1486406146926-c627a92ad1ab.webp",
     canonicalUrl: "https://ractysh.com"
   },
   theme: {
@@ -30,7 +30,7 @@ export const fallbackContent: SiteContent = {
     accent: "#D6B45F"
   },
   nav: {
-    logoText: "Ractysh",
+    logoText: "RACTYSH",
     items: [
       { label: "Ecosystem", href: "/#features" },
       { label: "Services", href: "/services" },
@@ -44,7 +44,7 @@ export const fallbackContent: SiteContent = {
     ]
   },
   hero: {
-    eyebrow: "Ractysh Group Enterprise Ecosystem",
+    eyebrow: "Ractysh Group Ecosystem",
     headline: "Architecture, Construction, Real Estate, Trade and OTC Exchange through one ecosystem",
     subheadline:
       "Ractysh Group operates across Architecture, Construction, Real Estate, Export & Import and OTC Exchange through one premium operating layer.",
@@ -249,9 +249,9 @@ export const fallbackContent: SiteContent = {
     name: "Fawas",
     role: "Chairman & Founder",
     image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=84",
+      "/images/photo-1560250097-0b93528c311a.webp",
     heroImage:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=82",
+      "/images/photo-1518005020951-eccb494ad742.webp",
     shortArticle:
       "Ractysh was created to bring serious enterprise discipline to Architecture, Construction, Real Estate, Global Trade and Private Exchange coordination. The group is built around trust, documentation and accountable delivery.",
     biography:
@@ -300,9 +300,9 @@ export const fallbackContent: SiteContent = {
       { label: "Email", href: "mailto:noorulsmart1998@gmail.com" }
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=82",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=82",
-      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=82"
+      "/images/photo-1486406146926-c627a92ad1ab.webp",
+      "/images/photo-1497366754035-f200968a6e72.webp",
+      "/images/photo-1503387762-592deb58ef4e.webp"
     ]
   },
   directors: [
@@ -310,7 +310,7 @@ export const fallbackContent: SiteContent = {
       name: "Executive Director",
       position: "Director - Construction Delivery",
       image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=84",
+        "/images/photo-1573496359142-b8d87734a5a2.webp",
       experience: "10+ years across construction coordination, vendor management and site execution.",
       biography:
         "Leads construction programs with a focus on schedule clarity, safety discipline, quality control and practical execution governance.",
@@ -322,7 +322,7 @@ export const fallbackContent: SiteContent = {
       name: "Design Director",
       position: "Director - Architecture & Interiors",
       image:
-        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=84",
+        "/images/photo-1551836022-d5d88e9218df.webp",
       experience: "12+ years in spatial planning, interior systems, visualization and client presentation.",
       biography:
         "Guides the design studio across concept, documentation, visualization, material direction and premium client reviews.",
@@ -334,7 +334,7 @@ export const fallbackContent: SiteContent = {
       name: "Operations Director",
       position: "Director - Enterprise Operations",
       image:
-        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=84",
+        "/images/photo-1519085360753-af0119f7cbe7.webp",
       experience: "8+ years in enterprise coordination, customer experience and operating systems.",
       biography:
         "Connects business divisions, demo requests, client communications and internal execution dashboards.",
@@ -351,7 +351,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Master planning, facade language, 3D visualization, interiors and BIM-ready documentation for premium residential and commercial spaces.",
       image:
-        "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
+        "/images/photo-1497366754035-f200968a6e72.webp",
       href: "/architecture",
       cta: "Explore Architecture",
       metrics: [
@@ -367,7 +367,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Full-spectrum construction systems for civil engineering, MEP, commercial & residential buildings, PEB, turnkey, interiors, landscape, swimming pools, lifts, mega structures, government tenders, project management, surveys, soil testing, and building stability.",
       image:
-        "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=84",
+        "/images/photo-1503387762-592deb58ef4e.webp",
       href: "/construction",
       cta: "Plan Construction",
       metrics: [
@@ -383,7 +383,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Land and building promotion, villa projects, plotted developments, residential and commercial buildings, row houses, gated communities and government-approved lands and plots.",
       image:
-        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=84",
+        "/images/photo-1560518883-ce09059eeffa.webp",
       href: "/real-estate",
       cta: "Explore Real Estate",
       metrics: [
@@ -399,7 +399,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Global export, import and enterprise trade support systems designed for modern commercial operations.",
       image:
-        "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1400&q=84",
+        "/images/photo-1494412574643-ff11b0a5c1c3.webp",
       href: "/import-export",
       cta: "Explore Trade",
       metrics: [
@@ -415,7 +415,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Crypto based currency exchange, USDT currency exchange, FIU registered ISO certified partnerships and KYC verification for OTC transactions.",
       image:
-        "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=84",
+        "/images/photo-1450101499163-c8848c66ca85.webp",
       href: "/otc-exchange",
       cta: "Explore OTC",
       metrics: [
@@ -442,7 +442,7 @@ export const fallbackContent: SiteContent = {
     certificateTitle: "Ractysh Trademark Registration Certificate",
     certificateUrl: "/trademark-certificate.pdf",
     certificatePreviewUrl:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=82",
+      "/images/photo-1450101499163-c8848c66ca85.webp",
     documents: [
       {
         slug: "privacy-policy",
@@ -574,7 +574,7 @@ export const fallbackContent: SiteContent = {
       description:
         "A connected business platform across Architecture, Construction, Real Estate, Export & Import and OTC Exchange.",
       image:
-        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=82",
+        "/images/photo-1486406146926-c627a92ad1ab.webp",
       sections: [
         {
           title: "Enterprise operating model",
@@ -595,7 +595,7 @@ export const fallbackContent: SiteContent = {
       description:
         "Service systems for Architecture, Construction, Real Estate, Export-Import operations, OTC Exchange and turnkey delivery.",
       image:
-        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=82",
+        "/images/photo-1497366811353-6870744d04b2.webp",
       sections: [
         {
           title: "Clear service ownership",

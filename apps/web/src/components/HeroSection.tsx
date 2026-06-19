@@ -299,9 +299,11 @@ export function HeroSection({ hero, divisions }: HeroSectionProps) {
     >
       <BackgroundPattern />
       <div className="relative z-10 mx-auto max-w-[80rem]">
-        <HeroHeading hero={hero} isReady={heroCopyReady} onTypingComplete={handleHeroTypingComplete} />
-        <FloatingCards divisions={divisions} />
-        <DashboardPreview divisions={divisions} enableDesktopFloat={dashboardFloatReady} />
+        <div className="relative z-10">
+          <HeroHeading hero={hero} isReady={heroCopyReady} onTypingComplete={handleHeroTypingComplete} />
+          <FloatingCards divisions={divisions} />
+          <DashboardPreview divisions={divisions} enableDesktopFloat={dashboardFloatReady} />
+        </div>
       </div>
     </section>
   );

@@ -114,7 +114,7 @@ export function HeroHeading({ hero, isReady, onTypingComplete }: HeroHeadingProp
         data-hero-eyebrow
         className="mb-6 inline-flex items-center gap-4 text-[0.88rem] font-medium text-[#343434]"
       >
-        <span>Ractysh Group Enterprise Ecosystem</span>
+        <span>Ractysh Group Ecosystem</span>
         <span className="h-5 w-px bg-[#c9c7c1]" />
         <Link href="/about" className="inline-flex items-center gap-1.5">
           Know More

@@ -119,7 +119,7 @@ export function BlogEnterprisePage({ data }: { data: BlogListPayload | null }) {
             className="group relative min-h-[25rem] overflow-hidden rounded-[0.45rem] border border-[#d8bd79]/48 bg-[#180c0e] shadow-[0_34px_100px_rgba(72,42,19,0.19)] md:min-h-[32rem]"
           >
             <img
-              src={featuredArticle?.coverImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1700&q=88"}
+              src={featuredArticle?.coverImage || "/images/photo-1486406146926-c627a92ad1ab.webp"}
               alt={featuredArticle?.coverImageAlt || featuredArticle?.title || "Luxury enterprise editorial environment"}
               loading="eager"
               decoding="async"

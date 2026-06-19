@@ -1,7 +1,7 @@
 import { sendWelcomeEmail } from "@/lib/email/sendWelcomeEmail";
 import { elapsedMs, logSubmissionTiming, runBackgroundJob } from "@/lib/server/backgroundJobs";
 import type { EmailDeliveryResult } from "@/lib/server/emailDelivery";
-import { prisma, type NewsletterSubscriber } from "@/lib/server/prisma";
+import { prisma, type NewsletterSubscriber } from "@/lib/server/db";
 
 type SubscriberDoc = Record<string, unknown> & { id: string; email: string };
 

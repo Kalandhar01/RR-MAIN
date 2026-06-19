@@ -5,7 +5,7 @@ import { getRactyshEmailBrand } from "@/emails/branding";
 import { renderInquiryNotificationEmail } from "@/emails/InquiryNotificationEmail";
 import { parseEmailList, sendResendEmail, type EmailDeliveryResult } from "@/lib/server/emailDelivery";
 import { senderFromEnv } from "@/lib/server/ractyshEmail";
-import { prisma } from "@/lib/server/prisma";
+import { prisma } from "@/lib/server/db";
 import { getServiceRequestService, normalizeServiceRequestRoute } from "@/lib/serviceRequestRoutes";
 
 export const runtime = "nodejs";
