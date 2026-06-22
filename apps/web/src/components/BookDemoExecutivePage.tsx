@@ -6,8 +6,10 @@ import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, CalendarCheck, CheckCircle2, Network, Send } from "lucide-react";
+import SplitText from "@/components/home/SplitText";
 import Link from "next/link";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { PremiumSelect } from "@/components/ui/PremiumSelect";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -42,29 +44,6 @@ export function BookDemoExecutivePage() {
     if (!root) return;
 
     const context = gsap.context(() => {
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-demo-reveal]", root);
-
-      if (reduceMotion) {
-        gsap.set(revealItems, { opacity: 1, y: 0 });
-        return;
-      }
-
-      gsap.fromTo(
-        revealItems,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.06,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: root,
-            start: "top 86%"
-          }
-        }
-      );
-
       gsap.to("[data-demo-glow]", {
         xPercent: 5,
         yPercent: -4,
@@ -128,77 +107,89 @@ export function BookDemoExecutivePage() {
 
       <section className="relative z-10 flex min-h-[92svh] items-center px-5 pb-16 pt-28 sm:px-6 md:px-8 lg:pt-32">
         <div className="mx-auto flex w-full max-w-[980px] flex-col items-center text-center">
-          <motion.div
-            data-demo-reveal
-            animate={reduceMotion ? undefined : { y: [0, -7, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="book-demo-ring relative mb-8 flex h-[8.5rem] w-[8.5rem] items-center justify-center sm:h-[10rem] sm:w-[10rem]"
-            aria-hidden="true"
-          >
-            <span className="absolute inset-2 rounded-full border border-[#d6b45f]/28" />
-            <span className="absolute inset-7 rounded-full border border-[#181512]/10" />
-            <span className="book-demo-ring-line absolute left-1/2 top-1/2 h-px w-[78%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(154,116,40,0.6),transparent)]" />
-            <span className="relative flex h-14 w-14 items-center justify-center rounded-full border border-[#d6b45f]/30 bg-[#fffdf8]/70 text-[#9A7428] shadow-[0_18px_48px_rgba(98,78,34,0.12)]">
-              <CalendarCheck className="h-6 w-6" strokeWidth={1.75} />
-            </span>
-          </motion.div>
-
-          <p data-demo-reveal className="text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[#9A7428]">
-            Private Consultation
-          </p>
-
-          <h1
-            data-demo-reveal
-            className="mt-5 max-w-[820px] font-display text-[clamp(3.2rem,7vw,6.7rem)] font-[650] leading-[0.9] tracking-[-0.055em] text-[#181512]"
-          >
-            Book a private{" "}
-            <span className="block text-[#74675b]">enterprise discussion.</span>
-          </h1>
-
-          <p
-            data-demo-reveal
-            className="mt-6 max-w-[620px] text-[1rem] font-medium leading-7 text-[#665f55] md:text-[1.08rem]"
-          >
-            Connect with the Ractysh ecosystem for Architecture, Construction, Real Estate, Export-Import and OTC Exchange
-            planning.
-          </p>
-
-          <div data-demo-reveal className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="#booking-form"
-              className="group inline-flex min-h-[3.05rem] items-center justify-center gap-2.5 rounded-[0.65rem] border border-[#181512]/10 bg-[#090807] px-5 text-[0.9rem] font-semibold text-[#fff8ec] shadow-[0_18px_48px_rgba(24,21,18,0.18)] transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_58px_rgba(24,21,18,0.24),0_0_34px_rgba(214,180,95,0.16)]"
+          <ScrollReveal className="book-demo-ring relative mb-8 flex h-[8.5rem] w-[8.5rem] items-center justify-center sm:h-[10rem] sm:w-[10rem]">
+            <motion.div
+              animate={reduceMotion ? undefined : { y: [0, -7, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
             >
-              Schedule Demo
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/business"
-              className="group inline-flex min-h-[3.05rem] items-center justify-center gap-2.5 rounded-[0.65rem] border border-[#d6b45f]/30 bg-[#fffdf8]/68 px-5 text-[0.9rem] font-semibold text-[#181512] shadow-[0_16px_44px_rgba(98,78,34,0.08),inset_0_1px_0_rgba(255,255,255,0.88)] transition-[box-shadow,background-color,transform] duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-[0_22px_56px_rgba(98,78,34,0.12)]"
-            >
-              Explore Ecosystem
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </div>
+              <span className="absolute inset-2 rounded-full border border-[#d6b45f]/28" />
+              <span className="absolute inset-7 rounded-full border border-[#181512]/10" />
+              <span className="book-demo-ring-line absolute left-1/2 top-1/2 h-px w-[78%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(154,116,40,0.6),transparent)]" />
+              <span className="relative flex h-14 w-14 items-center justify-center rounded-full border border-[#d6b45f]/30 bg-[#fffdf8]/70 text-[#9A7428] shadow-[0_18px_48px_rgba(98,78,34,0.12)]">
+                <CalendarCheck className="h-6 w-6" strokeWidth={1.75} />
+              </span>
+            </motion.div>
+          </ScrollReveal>
+
+          <ScrollReveal className="text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[#9A7428]">
+            <p>Private Consultation</p>
+          </ScrollReveal>
+
+          <ScrollReveal className="mt-5 max-w-[820px] font-display text-[clamp(3.2rem,7vw,6.7rem)] font-[650] leading-[0.9] tracking-[-0.055em] text-[#181512]">
+            <h1>
+              <SplitText
+                text="Book a private enterprise discussion."
+                tag="span"
+                className="block"
+                splitType="lines"
+                delay={60}
+                duration={0.9}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.3}
+                rootMargin="-80px"
+                textAlign="left"
+              />
+            </h1>
+          </ScrollReveal>
+
+          <ScrollReveal className="mt-6 max-w-[620px] text-[1rem] font-medium leading-7 text-[#665f55] md:text-[1.08rem]">
+            <p>
+              Connect with the Ractysh ecosystem for Architecture, Construction, Real Estate, Export-Import and OTC Exchange
+              planning.
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div>
+              <Link
+                href="#booking-form"
+                className="group inline-flex min-h-[3.05rem] items-center justify-center gap-2.5 rounded-[0.65rem] border border-[#181512]/10 bg-[#090807] px-5 text-[0.9rem] font-semibold text-[#fff8ec] shadow-[0_18px_48px_rgba(24,21,18,0.18)] transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_58px_rgba(24,21,18,0.24),0_0_34px_rgba(214,180,95,0.16)]"
+              >
+                Schedule Demo
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/business"
+                className="group inline-flex min-h-[3.05rem] items-center justify-center gap-2.5 rounded-[0.65rem] border border-[#d6b45f]/30 bg-[#fffdf8]/68 px-5 text-[0.9rem] font-semibold text-[#181512] shadow-[0_16px_44px_rgba(98,78,34,0.08),inset_0_1px_0_rgba(255,255,255,0.88)] transition-[box-shadow,background-color,transform] duration-300 hover:-translate-y-1 hover:bg-white/80 hover:shadow-[0_22px_56px_rgba(98,78,34,0.12)]"
+              >
+                Explore Ecosystem
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       <section id="booking-form" className="relative z-10 px-5 py-14 sm:px-6 md:px-8 lg:py-20">
         <div className="mx-auto grid max-w-[1120px] gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
-          <div data-demo-reveal className="max-w-[32rem]">
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#9A7428]">Booking Desk</p>
-            <h2 className="mt-5 font-display text-[clamp(2.4rem,4.8vw,4.9rem)] font-[650] leading-[0.92] tracking-[-0.052em] text-[#181512]">
-              A calm intake for focused executive review.
-            </h2>
-            <p className="mt-6 text-[1rem] leading-7 text-[#665f55]">
-              Share only the essentials. The Ractysh team will review the request and coordinate the right discussion path.
-            </p>
-          </div>
+          <ScrollReveal className="max-w-[32rem]">
+            <div>
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#9A7428]">Booking Desk</p>
+              <h2 className="mt-5 font-display text-[clamp(2.4rem,4.8vw,4.9rem)] font-[650] leading-[0.92] tracking-[-0.052em] text-[#181512]">
+                A calm intake for focused executive review.
+              </h2>
+              <p className="mt-6 text-[1rem] leading-7 text-[#665f55]">
+                Share only the essentials. The Ractysh team will review the request and coordinate the right discussion path.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <motion.form
-            data-demo-reveal
-            onSubmit={handleSubmit}
-            className="relative overflow-hidden rounded-[1.45rem] border border-[#d8c99d]/58 bg-[#fffdf8]/72 p-5 shadow-[0_30px_90px_rgba(82,61,32,0.11),inset_0_1px_0_rgba(255,255,255,0.9)] md:p-6"
-          >
+          <ScrollReveal className="relative overflow-hidden rounded-[1.45rem] border border-[#d8c99d]/58 bg-[#fffdf8]/72 p-5 shadow-[0_30px_90px_rgba(82,61,32,0.11),inset_0_1px_0_rgba(255,255,255,0.9)] md:p-6">
+            <motion.form
+              onSubmit={handleSubmit}
+            >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_86%_10%,rgba(214,180,95,0.13),transparent_24rem)]" />
             <div className="relative z-10 grid gap-4 md:grid-cols-2">
               <Field label="Name" name="name" placeholder="Your name" required />
@@ -267,11 +258,12 @@ export function BookDemoExecutivePage() {
               </div>
             </div>
           </motion.form>
+          </ScrollReveal>
         </div>
       </section>
 
       <section className="relative z-10 px-5 py-12 sm:px-6 md:px-8 lg:py-16">
-        <div data-demo-reveal className="mx-auto max-w-[1120px] rounded-[1.25rem] border border-[#d8c99d]/52 bg-[#fffdf8]/62 p-5 shadow-[0_24px_70px_rgba(82,61,32,0.08),inset_0_1px_0_rgba(255,255,255,0.86)] md:p-6">
+        <ScrollReveal className="mx-auto max-w-[1120px] rounded-[1.25rem] border border-[#d8c99d]/52 bg-[#fffdf8]/62 p-5 shadow-[0_24px_70px_rgba(82,61,32,0.08),inset_0_1px_0_rgba(255,255,255,0.86)] md:p-6">
           <div className="book-demo-flow-line relative grid gap-4 md:grid-cols-4">
             {flowSteps.map((step, index) => (
               <div key={step} className="relative">
@@ -282,11 +274,11 @@ export function BookDemoExecutivePage() {
               </div>
             ))}
           </div>
-        </div>
+          </ScrollReveal>
       </section>
 
       <section className="relative z-10 px-5 pb-24 pt-10 sm:px-6 md:px-8 lg:pb-28">
-        <div data-demo-reveal className="mx-auto max-w-[820px] text-center">
+        <ScrollReveal className="mx-auto max-w-[820px] text-center"><div>
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[0.9rem] border border-[#d6b45f]/24 bg-[#fffdf8]/70 text-[#9A7428] shadow-[0_16px_40px_rgba(98,78,34,0.09)]">
             <Network className="h-5 w-5" strokeWidth={1.8} />
           </div>
@@ -294,6 +286,7 @@ export function BookDemoExecutivePage() {
             Structured conversations begin here.
           </h2>
         </div>
+        </ScrollReveal>
       </section>
     </main>
   );

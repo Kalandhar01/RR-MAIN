@@ -9,8 +9,8 @@ const logoSizes = {
   md: "h-12 w-12",
   lg: "h-16 w-16",
   xl: "h-24 w-24",
-  nav: "h-11 w-11 sm:h-12 sm:w-12",
-  navCompact: "h-10 w-10",
+  nav: "h-8 w-8 sm:h-9 sm:w-9",
+  navCompact: "h-7 w-7",
   footer: "h-20 w-20 md:h-24 md:w-24",
   loader: "h-24 w-24 sm:h-28 sm:w-28",
   identity: "h-16 w-16 md:h-[4.5rem] md:w-[4.5rem]"
@@ -22,8 +22,8 @@ const renderedSizes = {
   md: "48px",
   lg: "64px",
   xl: "96px",
-  nav: "(min-width: 640px) 48px, 44px",
-  navCompact: "40px",
+  nav: "(min-width: 640px) 36px, 32px",
+  navCompact: "28px",
   footer: "(min-width: 768px) 96px, 80px",
   loader: "(min-width: 640px) 112px, 96px",
   identity: "(min-width: 768px) 72px, 64px"

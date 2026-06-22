@@ -129,10 +129,10 @@ export function PrivacyPolicyExperience({ content, document }: PrivacyPolicyExpe
               For enterprise privacy inquiries, contact the Ractysh operations desk.
             </p>
             <Link
-              href="/contact"
+              href="/book-consultation"
               className="group mt-5 inline-flex h-11 items-center justify-center gap-2.5 rounded-[14px] border border-[#d6b45f]/42 bg-[#0f0e0c] px-5 text-[0.88rem] font-semibold text-[#fffaf0] shadow-[0_16px_38px_rgba(15,14,12,0.22),0_0_18px_rgba(214,180,95,0.12)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d6b45f]/70 hover:shadow-[0_20px_50px_rgba(15,14,12,0.28),0_0_28px_rgba(214,180,95,0.24)] md:mt-0"
             >
-              Contact Enterprise Desk
+              Book Consultation
               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </Reveal>

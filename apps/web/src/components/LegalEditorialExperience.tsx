@@ -132,8 +132,8 @@ export function LegalEditorialExperience({
         <section className="relative z-10 px-5 pb-24 md:px-8 lg:pb-32">
           <Reveal className="mx-auto flex max-w-[1000px] flex-col gap-6 rounded-[8px] border border-[#d8c18a]/70 bg-[#f3e8d7]/78 p-6 shadow-[0_24px_70px_rgba(80,52,24,0.08)] md:flex-row md:items-center md:justify-between md:p-8">
             <p className="max-w-[39rem] text-[1rem] font-medium leading-8 text-[#4e443b]">{closingText}</p>
-            <Link href="/contact" className="premium-cta group w-fit">
-              Contact Enterprise Desk
+            <Link href="/book-consultation" className="premium-cta group w-fit">
+              Book Consultation
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </Reveal>

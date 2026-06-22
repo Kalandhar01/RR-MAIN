@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import SplitText from "./home/SplitText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -457,7 +458,7 @@ export function OurProjectsPage() {
           <span className="text-[#b99a54]" aria-hidden="true">
             &rarr;
           </span>
-          <Link href="/services" className="transition duration-300 hover:text-[#8b1118]">
+          <Link href="/architecture-service" className="transition duration-300 hover:text-[#8b1118]">
             Services
           </Link>
           <span className="text-[#b99a54]" aria-hidden="true">
@@ -471,9 +472,20 @@ export function OurProjectsPage() {
           transition={reduceMotion ? undefined : { duration: 0.86, ease }}
           className="mx-auto mt-14 max-w-[68rem] text-center"
         >
-          <h1 className="mx-auto max-w-[60rem] text-5xl font-semibold italic leading-[0.92] tracking-[0] text-[#181614] font-display md:text-6xl lg:text-7xl">
-            <span>Our Recent </span>
-            <span className="not-italic text-[#b68a35]">Works</span>
+          <h1 className="mx-auto max-w-[60rem] text-[clamp(2.2rem,5.5vw,3.5rem)] font-semibold italic leading-[0.92] tracking-[0] text-[#181614] font-display md:text-6xl lg:text-7xl [&_.split-word:last-child]:not-italic [&_.split-word:last-child]:text-[#b68a35]">
+            <SplitText
+              text="Our Recent Works"
+              tag="span"
+              className="block"
+              splitType="words"
+              delay={50}
+              duration={0.8}
+              from={{ opacity: 0, y: 30 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.3}
+              rootMargin="-80px"
+              textAlign="center"
+            />
           </h1>
           <p className="mx-auto mt-7 max-w-[42rem] text-[0.82rem] font-medium leading-[1.9] tracking-[0] text-[rgba(67,61,54,0.66)] [font-family:var(--font-manrope)] sm:text-[0.9rem]">
             Selected Architecture, Construction, Real Estate, Export-Import and OTC Exchange workflows.

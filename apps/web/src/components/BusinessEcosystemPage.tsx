@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import SplitText from "./home/SplitText";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -254,26 +255,19 @@ export function BusinessEcosystemPage({ insights }: { insights: BusinessInsight[
               aria-label="Business Ecosystem. Built For Strategic Growth."
               className="mt-7 max-w-[54rem] font-display text-[clamp(3.05rem,5.7vw,6.15rem)] font-semibold leading-[0.92] tracking-[0] text-[#111111]"
             >
-              <span className="block overflow-hidden">
-                <motion.span
-                  initial={reduceMotion ? false : { opacity: 0, y: 88 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 1.05, ease }}
-                  className="block"
-                >
-                  Business Ecosystem.
-                </motion.span>
-              </span>
-              <span className="block overflow-hidden text-[#8B1118]">
-                <motion.span
-                  initial={reduceMotion ? false : { opacity: 0, y: 88 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 1.05, delay: 0.1, ease }}
-                  className="block"
-                >
-                  Built For Strategic Growth.
-                </motion.span>
-              </span>
+              <SplitText
+                text="Business Ecosystem. Built For Strategic Growth."
+                tag="span"
+                className="block"
+                splitType="lines"
+                delay={60}
+                duration={0.9}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.3}
+                rootMargin="-80px"
+                textAlign="left"
+              />
             </h1>
 
             <motion.p
@@ -292,7 +286,6 @@ export function BusinessEcosystemPage({ insights }: { insights: BusinessInsight[
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <ButtonLink href="/book-consultation">Book Strategic Consultation</ButtonLink>
-              <ButtonLink href="/contact" variant="light">Contact Team</ButtonLink>
             </motion.div>
 
             <div className="mt-12 hidden max-w-[36rem] grid-cols-3 border-y border-[#d8c59d]/62 py-5 md:grid">
@@ -591,7 +584,6 @@ export function BusinessEcosystemPage({ insights }: { insights: BusinessInsight[
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
             <ButtonLink href="/book-consultation">Book Strategic Consultation</ButtonLink>
-            <ButtonLink href="/contact" variant="light">Contact</ButtonLink>
           </div>
         </div>
       </section>

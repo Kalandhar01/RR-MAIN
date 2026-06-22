@@ -10,6 +10,7 @@ import Link from "next/link";
 import { CompanyContactPanel } from "@/components/CompanyContactPanel";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
 import { ServiceRequestCTA } from "@/components/ServiceRequestCTA";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -137,7 +138,7 @@ function EngineeringFlow() {
   return (
     <section id="systems" className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-[1120px]">
-        <div data-structural-reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <ScrollReveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b6c22]">Engineering Flow</p>
             <h2 className="mt-3 max-w-[34rem] font-display text-[clamp(2rem,4vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.052em] text-[#171512]">
@@ -147,9 +148,9 @@ function EngineeringFlow() {
           <p className="max-w-[25rem] text-[0.96rem] leading-7 text-[#5d584d]">
             A compact framework keeps analysis, site execution and validation connected through clear checkpoints.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div data-structural-reveal className="relative mt-10 rounded-[1.05rem] border border-[#302a1f]/10 bg-white/48 p-5 shadow-[0_24px_70px_rgba(57,48,31,0.08)]">
+        <ScrollReveal className="relative mt-10 rounded-[1.05rem] border border-[#302a1f]/10 bg-white/48 p-5 shadow-[0_24px_70px_rgba(57,48,31,0.08)]">
           <div className="absolute left-8 right-8 top-[3.1rem] hidden h-px bg-[#302a1f]/12 md:block" />
           <motion.div
             className="absolute left-8 top-[3.1rem] hidden h-px w-20 bg-[linear-gradient(90deg,transparent,#d6b45f,transparent)] md:block"
@@ -183,7 +184,7 @@ function EngineeringFlow() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -195,28 +196,27 @@ function CapabilitiesSection() {
   return (
     <section className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-[1120px]">
-        <div data-structural-reveal className="max-w-[38rem]">
+        <ScrollReveal className="max-w-[38rem]">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b6c22]">Core Capabilities</p>
           <h2 className="mt-3 font-display text-[clamp(2.1rem,4vw,4rem)] font-semibold leading-[0.98] tracking-[-0.052em] text-[#171512]">
             Clean systems for structural certainty.
           </h2>
-        </div>
+        </ScrollReveal>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {capabilities.map(({ title, body, Icon }) => (
-            <motion.article
-              key={title}
-              data-structural-reveal
-              whileHover={reduceMotion ? undefined : { y: -5 }}
-              transition={{ duration: 0.3, ease }}
-              className="rounded-[1rem] border border-[#302a1f]/10 bg-[#fffdf8]/66 p-5 shadow-[0_22px_60px_rgba(57,48,31,0.08)]"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d6b45f]/24 bg-[#d6b45f]/10 text-[#80621d]">
-                <Icon className="h-4 w-4" />
-              </div>
-              <h3 className="mt-8 font-display text-[1.34rem] font-semibold leading-tight tracking-[-0.04em] text-[#171512]">{title}</h3>
-              <p className="mt-3 text-[0.92rem] leading-6 text-[#625d52]">{body}</p>
-            </motion.article>
+          {capabilities.map(({ title, body, Icon }, index) => (
+            <ScrollReveal key={title} delay={index * 0.04} className="rounded-[1rem] border border-[#302a1f]/10 bg-[#fffdf8]/66 p-5 shadow-[0_22px_60px_rgba(57,48,31,0.08)]">
+              <motion.article
+                whileHover={reduceMotion ? undefined : { y: -5 }}
+                transition={{ duration: 0.3, ease }}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d6b45f]/24 bg-[#d6b45f]/10 text-[#80621d]">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <h3 className="mt-8 font-display text-[1.34rem] font-semibold leading-tight tracking-[-0.04em] text-[#171512]">{title}</h3>
+                <p className="mt-3 text-[0.92rem] leading-6 text-[#625d52]">{body}</p>
+              </motion.article>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -227,10 +227,7 @@ function CapabilitiesSection() {
 function FinalCTA() {
   return (
     <section className="px-5 pb-24 pt-12 md:px-8 md:pb-28 md:pt-16">
-      <div
-        data-structural-reveal
-        className="relative mx-auto max-w-[1120px] overflow-hidden rounded-[1.35rem] border border-[#302a1f]/10 bg-[#f8f6f1] px-5 py-14 text-center shadow-[0_30px_90px_rgba(57,48,31,0.1)] md:px-10 md:py-20"
-      >
+      <ScrollReveal className="relative mx-auto max-w-[1120px] overflow-hidden rounded-[1.35rem] border border-[#302a1f]/10 bg-[#f8f6f1] px-5 py-14 text-center shadow-[0_30px_90px_rgba(57,48,31,0.1)] md:px-10 md:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,180,95,0.16),transparent_34rem),linear-gradient(180deg,rgba(255,255,255,0.78),rgba(236,231,221,0.66))]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(47,42,31,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(47,42,31,0.1)_1px,transparent_1px)] [background-size:46px_46px]" />
         <div className="relative z-10 mx-auto max-w-[42rem]">
@@ -247,7 +244,7 @@ function FinalCTA() {
           </Link>
           <CompanyContactPanel mode="consultation" tone="transparent" compact className="mt-6" />
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
@@ -292,23 +289,6 @@ export function StructuralWorkExperience() {
         });
       }
 
-      gsap.utils.toArray<HTMLElement>("[data-structural-reveal]").forEach((item, index) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 40, force3D: true },
-          {
-            opacity: 1,
-            y: 0,
-            duration: reduceMotion ? 0.01 : 1,
-            delay: reduceMotion ? 0 : Math.min(index * 0.035, 0.14),
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 84%"
-            }
-          }
-        );
-      });
     }, root);
 
     const refreshId = requestAnimationFrame(() => ScrollTrigger.refresh());

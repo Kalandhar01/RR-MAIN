@@ -50,10 +50,10 @@ export function EnterpriseSolutionsSection() {
 
           <div className="mt-11 flex flex-wrap gap-4">
             <Link
-              href="/services"
+              href="/architecture-service"
               className="mle-button inline-flex min-h-12 items-center justify-center gap-2 rounded-[10px] px-6 font-manrope text-[0.9rem] font-semibold"
             >
-              Services
+              Architecture Service
               <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
             </Link>
             <Link

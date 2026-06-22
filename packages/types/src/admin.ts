@@ -146,7 +146,9 @@ export type NotificationRow = {
   status: NotificationStatus;
   entity: string | null;
   entityId: string | null;
+  entityType: string | null;
   actionUrl: string | null;
+  metadata: Record<string, unknown> | null;
   createdAt: string;
   readAt: string | null;
   archivedAt: string | null;

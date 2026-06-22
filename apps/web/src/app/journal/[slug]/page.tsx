@@ -93,12 +93,7 @@ export default async function JournalArticlePage({ params }: JournalArticlePageP
           </div>
         </article>
       </main>
-      <Footer
-        headline={content.footer.headline}
-        description={content.footer.description}
-        links={content.footer.links}
-        socialLinks={content.footer.socialLinks}
-      />
+      <Footer />
     </>
   );
 }

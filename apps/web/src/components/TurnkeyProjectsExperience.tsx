@@ -10,6 +10,7 @@ import Link from "next/link";
 import { CompanyContactPanel } from "@/components/CompanyContactPanel";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
 import { ServiceRequestCTA } from "@/components/ServiceRequestCTA";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -150,7 +151,7 @@ function ExecutionFlow() {
   return (
     <section id="workflow" className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-[1120px]">
-        <div data-turnkey-reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <ScrollReveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#9a7a2e]">Execution Flow</p>
             <h2 className="mt-3 max-w-[35rem] font-display text-[clamp(2rem,4vw,3.8rem)] font-semibold leading-[0.98] tracking-[-0.052em] text-[#161512]">
@@ -160,9 +161,9 @@ function ExecutionFlow() {
           <p className="max-w-[25rem] text-[0.96rem] leading-7 text-[#5d584d]">
             A lean delivery rhythm keeps planning, coordination, site work and closure moving as one system.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div data-turnkey-reveal className="relative mt-10 rounded-[1.1rem] border border-[#2f2a1f]/10 bg-white/46 p-5 shadow-[0_24px_70px_rgba(57,48,31,0.08)]">
+        <ScrollReveal className="relative mt-10 rounded-[1.1rem] border border-[#2f2a1f]/10 bg-white/46 p-5 shadow-[0_24px_70px_rgba(57,48,31,0.08)]">
           <div className="absolute left-8 right-8 top-[3.1rem] hidden h-px bg-[#2f2a1f]/12 md:block" />
           <motion.div
             className="absolute left-8 top-[3.1rem] hidden h-px w-24 bg-[linear-gradient(90deg,transparent,#d6b45f,transparent)] md:block"
@@ -196,7 +197,7 @@ function ExecutionFlow() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -208,12 +209,11 @@ function ShowcaseBlock() {
   return (
     <section className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-[1120px]">
-        <motion.div
-          data-turnkey-reveal
-          whileHover={reduceMotion ? undefined : { y: -5 }}
-          transition={{ duration: 0.35, ease }}
-          className="relative overflow-hidden rounded-[1.35rem] border border-[#28241a]/10 bg-[#171511] p-5 text-[#fff8ec] shadow-[0_34px_90px_rgba(46,39,25,0.16)] md:p-7"
-        >
+        <ScrollReveal className="relative overflow-hidden rounded-[1.35rem] border border-[#28241a]/10 bg-[#171511] p-5 text-[#fff8ec] shadow-[0_34px_90px_rgba(46,39,25,0.16)] md:p-7">
+          <motion.div
+            whileHover={reduceMotion ? undefined : { y: -5 }}
+            transition={{ duration: 0.35, ease }}
+          >
           <div className="absolute inset-0 opacity-[0.34]" style={{ backgroundImage: "url('/HeaderBG.webp')", backgroundSize: "cover", backgroundPosition: "center" }} />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_20%,rgba(214,180,95,0.28),transparent_32%),linear-gradient(135deg,rgba(12,11,9,0.86),rgba(25,23,18,0.92))]" />
           <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:46px_46px]" />
@@ -264,7 +264,8 @@ function ShowcaseBlock() {
               </div>
             </div>
           </div>
-        </motion.div>
+          </motion.div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -276,20 +277,19 @@ function MetricsSection() {
   return (
     <section className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto grid max-w-[1120px] gap-4 md:grid-cols-3">
-        {metrics.map(({ title, body, Icon }) => (
-          <motion.div
-            key={title}
-            data-turnkey-reveal
-            whileHover={reduceMotion ? undefined : { y: -5 }}
-            transition={{ duration: 0.3, ease }}
-            className="rounded-[1rem] border border-[#302a1f]/10 bg-white/52 p-5 shadow-[0_22px_60px_rgba(57,48,31,0.08)]"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d6b45f]/24 bg-[#d6b45f]/10 text-[#8a6a20]">
-              <Icon className="h-4 w-4" />
-            </div>
-            <h3 className="mt-8 font-display text-[1.34rem] font-semibold leading-tight tracking-[-0.04em] text-[#171512]">{title}</h3>
-            <p className="mt-3 text-[0.92rem] leading-6 text-[#625d52]">{body}</p>
-          </motion.div>
+        {metrics.map(({ title, body, Icon }, index) => (
+          <ScrollReveal key={title} delay={index * 0.04} className="rounded-[1rem] border border-[#302a1f]/10 bg-white/52 p-5 shadow-[0_22px_60px_rgba(57,48,31,0.08)]">
+            <motion.div
+              whileHover={reduceMotion ? undefined : { y: -5 }}
+              transition={{ duration: 0.3, ease }}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d6b45f]/24 bg-[#d6b45f]/10 text-[#8a6a20]">
+                <Icon className="h-4 w-4" />
+              </div>
+              <h3 className="mt-8 font-display text-[1.34rem] font-semibold leading-tight tracking-[-0.04em] text-[#171512]">{title}</h3>
+              <p className="mt-3 text-[0.92rem] leading-6 text-[#625d52]">{body}</p>
+            </motion.div>
+          </ScrollReveal>
         ))}
       </div>
     </section>
@@ -299,10 +299,7 @@ function MetricsSection() {
 function FinalCTA() {
   return (
     <section className="px-5 pb-24 pt-12 md:px-8 md:pb-28 md:pt-16">
-      <div
-        data-turnkey-reveal
-        className="relative mx-auto max-w-[1120px] overflow-hidden rounded-[1.35rem] border border-[#2f2a1f]/10 bg-[#f8f6f1] px-5 py-14 text-center shadow-[0_30px_90px_rgba(57,48,31,0.1)] md:px-10 md:py-20"
-      >
+      <ScrollReveal className="relative mx-auto max-w-[1120px] overflow-hidden rounded-[1.35rem] border border-[#2f2a1f]/10 bg-[#f8f6f1] px-5 py-14 text-center shadow-[0_30px_90px_rgba(57,48,31,0.1)] md:px-10 md:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,180,95,0.18),transparent_34rem),linear-gradient(180deg,rgba(255,255,255,0.82),rgba(245,242,235,0.68))]" />
         <div className="relative z-10 mx-auto max-w-[42rem]">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#9a7a2e]">Turnkey Delivery</p>
@@ -318,7 +315,7 @@ function FinalCTA() {
           </Link>
           <CompanyContactPanel mode="consultation" tone="transparent" compact className="mt-6" />
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
@@ -363,23 +360,6 @@ export function TurnkeyProjectsExperience() {
         });
       }
 
-      gsap.utils.toArray<HTMLElement>("[data-turnkey-reveal]").forEach((item, index) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 50, force3D: true },
-          {
-            opacity: 1,
-            y: 0,
-            duration: reduceMotion ? 0.01 : 1,
-            delay: reduceMotion ? 0 : Math.min(index * 0.035, 0.14),
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 84%"
-            }
-          }
-        );
-      });
     }, root);
 
     const refreshId = requestAnimationFrame(() => ScrollTrigger.refresh());

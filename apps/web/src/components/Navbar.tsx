@@ -7,7 +7,6 @@ import { gsap } from "gsap";
 import {
   ArrowUpRight,
   Building2,
-  ChevronDown,
   ChevronRight,
   Clock3,
   DraftingCompass,
@@ -132,8 +131,8 @@ const menuModels: Record<string, MegaDefinition> = {
     title: "Professional service offerings with dedicated service routes.",
     description: "Commercial service pathways for clients who need Architecture, Construction, Real Estate, Trade coordination or Private Exchange support.",
     image: "/images/photo-1497366754035-f200968a6e72.webp",
-    ctaLabel: "Browse services",
-    ctaHref: "/services",
+    ctaLabel: "Architecture Service",
+    ctaHref: "/architecture-service",
     columns: [
       {
         title: "Professional Service Offerings",
@@ -207,23 +206,6 @@ const menuModels: Record<string, MegaDefinition> = {
       }
     ]
   },
-  Contact: {
-    eyebrow: "Contact",
-    title: "Start a premium enterprise conversation.",
-    description: `Connect with the Ractysh office across ${COMPANY_CONTACT.locationDisplay}, book a demo or send private feedback.`,
-    image: "/images/photo-1497366412874-3415097a27e7.webp",
-    ctaLabel: "Contact office",
-    ctaHref: "/contact",
-    columns: [
-      {
-        title: "Reach Us",
-        links: [
-          { label: "Contact", description: `Email, mobile, office and ${COMPANY_CONTACT.locationDisplay}.`, href: "/contact", Icon: Building2 },
-          { label: "Book a Demo", description: "Structured enterprise intake.", href: "/book-consultation", Icon: ShieldCheck }
-        ]
-      }
-    ]
-  },
   Founder: {
     eyebrow: "Founder",
     title: "Founder vision and enterprise direction.",
@@ -252,19 +234,17 @@ const navOrder = [
   "Careers",
   "Blog",
   "Book Consultation",
-  "Contact",
   "Founder"
 ];
 
 const fallbackHref: Record<string, string> = {
   Ecosystem: ecosystemAnchorHref,
-  Services: "/services",
+  Services: "/architecture-service",
   "Our Work": "/our-projects",
   "About Us": "/about",
   Careers: "/careers",
   Blog: "/blog",
   "Book Consultation": "/book-consultation",
-  Contact: "/contact",
   Founder: "/founder"
 };
 
@@ -289,13 +269,6 @@ const quickAccessSearchItems: SearchItem[] = [
     href: "/founder",
     Icon: ShieldCheck,
     keywords: ["founder", "chairman", "leadership", "vision", "trust"]
-  },
-  {
-    title: "Contact",
-    description: `Reach the Ractysh office across ${COMPANY_CONTACT.locationDisplay}`,
-    href: "/contact",
-    Icon: Building2,
-    keywords: ["contact", "office", "location", "support"]
   },
   {
     title: "Blog",
@@ -372,11 +345,11 @@ const globalSearchItems: SearchItem[] = [
     keywords: ["otc", "exchange", "private deals", "counterparty", "deal room", "transaction"]
   },
   {
-    title: "Services",
-    description: "Premium service pathways across Architecture, Construction, Real Estate, Trade and OTC Exchange",
-    href: "/services",
-    Icon: Building2,
-    keywords: ["services", "operations", "enterprise", "design", "build", "trade", "real estate", "otc"]
+    title: "Architecture Service",
+    description: "Premium architecture service – design, planning, visualization and spatial systems",
+    href: "/architecture-service",
+    Icon: DraftingCompass,
+    keywords: ["architecture", "service", "design", "planning", "visualization"]
   },
   {
     title: "Our Work",
@@ -413,13 +386,6 @@ const globalSearchItems: SearchItem[] = [
     Icon: Clock3,
     keywords: ["timeline", "history", "milestones", "journey"]
   },
-  {
-    title: "Contact Office",
-    description: `Reach the Ractysh enterprise office across ${COMPANY_CONTACT.locationDisplay}`,
-    href: "/contact",
-    Icon: Building2,
-    keywords: ["contact", "office", "location", "support"]
-  }
 ];
 
 function normalizeLabel(label: string) {
@@ -433,7 +399,7 @@ const navHrefAliases: Record<string, string[]> = {
 
 function isActiveHref(href: string, pathname: string) {
   if ((href === "/business" || href === ecosystemAnchorHref || href === "/#enterprise-solutions") && pathname === "/business") return true;
-  if (href === "/services" && commercialServiceHrefs.has(pathname)) return true;
+  if (href === "/architecture-service" && commercialServiceHrefs.has(pathname)) return true;
   if (href.startsWith("/#") || href.startsWith("#")) return pathname === "/";
   return href === pathname || (href !== "/" && pathname.startsWith(href));
 }
@@ -452,6 +418,63 @@ function buildNavItems(items: NavItem[]): EnterpriseNavItem[] {
     };
   });
 }
+
+const mobileContainerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.055, delayChildren: 0.12 }
+  }
+};
+
+const mobileItemVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease } }
+};
+
+interface MobileChildItem {
+  label: string;
+  href: string;
+  Icon?: LucideIcon;
+}
+
+interface MobileNavItem {
+  label: string;
+  href: string;
+  children?: MobileChildItem[];
+}
+
+const labelIconMap: Record<string, LucideIcon> = {
+  Architecture: DraftingCompass,
+  Construction: HardHat,
+  "Real Estate": Building2,
+  "Import & Export": Globe2,
+  "OTC Exchange": ShieldCheck,
+};
+
+const commercialServiceChildren = commercialServicePages.map((s) => {
+  const name = s.title.replace(" Service", "");
+  return { label: s.title, href: s.href, Icon: labelIconMap[name] };
+});
+
+const mobileEcosystemChildren: MobileChildItem[] = [
+  { label: "Architecture Division", href: "/architecture", Icon: DraftingCompass },
+  { label: "Construction Division", href: "/construction", Icon: HardHat },
+  { label: "Real Estate Division", href: "/real-estate", Icon: Building2 },
+  { label: "Import & Export Division", href: "/import-export", Icon: Globe2 },
+  { label: "OTC Exchange Division", href: "/otc-exchange", Icon: ShieldCheck },
+];
+
+const mobileNavItems: MobileNavItem[] = [
+  { label: "Ecosystem", href: ecosystemAnchorHref, children: mobileEcosystemChildren },
+  { label: "Services", href: "/architecture-service", children: commercialServiceChildren },
+  { label: "Our Work", href: "/our-projects" },
+  { label: "Founder", href: "/founder" },
+  { label: "About Us", href: "/about" },
+  { label: "Careers", href: "/careers" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/book-consultation" },
+];
 
 function getMegaPreviewImage(link: MegaLink, fallbackImage: string) {
   const signature = `${link.label} ${link.href}`.toLowerCase();
@@ -758,7 +781,8 @@ export function Navbar({ logoText, items }: NavbarProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
+  const [mobileMounted, setMobileMounted] = useState(false);
+  const [mobileExpandedLabels, setMobileExpandedLabels] = useState<Set<string>>(new Set());
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActiveIndex, setSearchActiveIndex] = useState(0);
@@ -773,6 +797,15 @@ export function Navbar({ logoText, items }: NavbarProps) {
     if (!searchQuery.trim()) return quickAccessSearchItems;
     return globalSearchItems.filter((item) => matchesSearchItem(item, searchQuery)).slice(0, 8);
   }, [searchQuery]);
+
+  const toggleMobileExpand = useCallback((label: string) => {
+    setMobileExpandedLabels((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  }, []);
 
   const openSearch = useCallback(() => {
     setActiveLabel(null);
@@ -852,16 +885,22 @@ export function Navbar({ logoText, items }: NavbarProps) {
       const currentScroll = Math.max(window.scrollY, 0);
       const scrolled = currentScroll > 18;
       const insideHomeHero = pathname === "/" && currentScroll < getHeroEnd();
-      const navBackground = "#FFFFFF";
-      const navBorder = "#ECECEC";
+      const navBackground = insideHomeHero ? "transparent" : "#FFFFFF";
+      const navBorder = insideHomeHero ? "transparent" : "#ECECEC";
       const navShadow = scrolled ? "0 2px 20px rgba(0,0,0,0.05)" : "none";
       const navBlur = scrolled ? "blur(8px)" : "blur(0px)";
+      const navText = insideHomeHero ? "#ffffff" : "#111111";
+      const mobileBtnBg = insideHomeHero ? "rgba(255,255,255,0.12)" : "#ffffff";
+      const mobileBtnBorder = insideHomeHero ? "rgba(255,255,255,0.25)" : "#ECECEC";
 
       gsap.to(header, {
         "--nav-bg": navBackground,
         "--nav-border": navBorder,
         "--nav-shadow": navShadow,
         "--nav-blur": navBlur,
+        "--nav-text": navText,
+        "--nav-mobile-btn-bg": mobileBtnBg,
+        "--nav-mobile-btn-border": mobileBtnBorder,
         duration: 0.3,
         ease: "power3.out"
       });
@@ -926,6 +965,10 @@ export function Navbar({ logoText, items }: NavbarProps) {
   }, []);
 
   useEffect(() => {
+    setMobileMounted(true);
+  }, []);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -938,9 +981,16 @@ export function Navbar({ logoText, items }: NavbarProps) {
   }, [openSearch]);
 
   useEffect(() => {
+    const body = document.body;
+    if (mobileOpen) {
+      body.dataset.mobileMenuOpen = "true";
+    } else {
+      delete body.dataset.mobileMenuOpen;
+    }
+
     if (!mobileOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow = body.style.overflow;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMobileOpen(false);
     };
@@ -948,13 +998,13 @@ export function Navbar({ logoText, items }: NavbarProps) {
       if (window.innerWidth >= 1280) setMobileOpen(false);
     };
 
-    document.body.style.overflow = "hidden";
-    setExpandedMobile(null);
+    body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      body.style.overflow = previousOverflow;
+      delete body.dataset.mobileMenuOpen;
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);
     };
@@ -1019,8 +1069,8 @@ export function Navbar({ logoText, items }: NavbarProps) {
     <header
       ref={headerRef}
       className={cn(
-        "fixed inset-x-0 top-0 z-[240] w-full isolate overflow-visible",
-        "[--nav-bg:#FFFFFF] [--nav-blur:blur(0px)] [--nav-border:#ECECEC] [--nav-shadow:none]"
+        "fixed inset-x-0 top-0 z-[240] w-full isolate overflow-visible transition-[background,border-color,box-shadow,backdrop-filter] duration-300",
+        "[--nav-bg:#FFFFFF] [--nav-blur:blur(0px)] [--nav-border:#ECECEC] [--nav-shadow:none] [--nav-text:#111111] [--nav-mobile-btn-bg:#ffffff] [--nav-mobile-btn-border:#ECECEC]"
       )}
       onMouseLeave={() => setActiveLabel(null)}
       style={{
@@ -1050,13 +1100,16 @@ export function Navbar({ logoText, items }: NavbarProps) {
         <div className="mx-auto flex h-[64px] max-w-[90rem] items-center px-5 md:px-8 xl:grid xl:h-[72px] xl:grid-cols-[minmax(13.25rem,1fr)_auto_minmax(13.25rem,1fr)] xl:gap-4 2xl:gap-5">
           <Link
             href="/#hero"
-            className="flex min-w-[11rem] items-center gap-2 xl:min-w-[13.25rem] xl:gap-2.5"
+            className="flex min-w-[11rem] items-center gap-1.5 xl:min-w-[13.25rem] xl:gap-2"
             onMouseEnter={() => setActiveLabel(null)}
             aria-label="Ractysh home"
           >
             <BrandLogo size="nav" priority decorative className="translate-y-px" />
-            <span className="font-display text-[1.48rem] font-semibold leading-none tracking-normal text-[#111111] md:text-[1.54rem]">
+            <span style={{ color: "var(--nav-text, #111111)" }} className="font-sans text-[1.1rem] font-bold leading-none tracking-tight md:text-[1.15rem]">
               {brandName}
+            </span>
+            <span className="hidden text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#C9A15A] xl:block">
+              Group Limited
             </span>
           </Link>
 
@@ -1067,13 +1120,14 @@ export function Navbar({ logoText, items }: NavbarProps) {
 
               return (
                 <div key={item.label} className="flex h-full items-center" onMouseEnter={() => setActiveLabel(item.menu ? item.label : null)}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "executive-nav-link group relative flex h-full items-center whitespace-nowrap bg-transparent px-1.5 !text-[0.875rem] !font-semibold uppercase !leading-none !tracking-[0] text-[#111111] shadow-none transition-[color,transform] duration-300 ease-out hover:-translate-y-px hover:bg-transparent hover:text-[#8B1118] 2xl:px-2",
-                      (isActive || isOpen) && "is-active text-[#8B1118]"
-                    )}
-                  >
+                    <Link
+                      href={item.href}
+                      style={{ color: "var(--nav-text, #111111)" }}
+                      className={cn(
+                        "executive-nav-link group relative flex h-full items-center whitespace-nowrap bg-transparent px-1.5 !text-[0.875rem] !font-semibold uppercase !leading-none !tracking-[0] shadow-none transition-[color,transform] duration-300 ease-out hover:-translate-y-px hover:bg-transparent hover:text-[#8B1118] 2xl:px-2",
+                        (isActive || isOpen) && "is-active text-[#8B1118]"
+                      )}
+                    >
                     {item.label}
                     <span
                       className={cn(
@@ -1103,19 +1157,13 @@ export function Navbar({ logoText, items }: NavbarProps) {
           </div>
 
           <div className="ml-auto flex items-center gap-2 xl:hidden">
-            <Link
-              href="/book-consultation"
-              aria-label="Book Consultation"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E2C68B]/60 bg-[#6A0008] text-[#C9A15A] shadow-[0_10px_26px_rgba(106,0,8,0.22)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-px hover:shadow-[0_14px_32px_rgba(106,0,8,0.28)]"
-            >
-              <Sparkles className="h-5 w-5" strokeWidth={1.8} />
-            </Link>
             <button
               type="button"
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#ECECEC] bg-white text-[#111111] shadow-[0_10px_26px_rgba(0,0,0,0.06)] xl:hidden"
+              style={{ backgroundColor: "var(--nav-mobile-btn-bg, #ffffff)", borderColor: "var(--nav-mobile-btn-border, #ECECEC)", color: "var(--nav-text, #111111)" }}
+              className="flex h-11 w-11 items-center justify-center rounded-full border shadow-[0_10px_26px_rgba(0,0,0,0.06)] xl:hidden transition-[background,border-color,color] duration-300"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -1127,140 +1175,140 @@ export function Navbar({ logoText, items }: NavbarProps) {
         {activeItem ? <MegaMenu item={activeItem} onClose={() => setActiveLabel(null)} /> : null}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {mobileOpen ? (
-          <motion.div
-            key="mobile-nav-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.24, ease }}
-            className="fixed inset-0 z-[90] bg-black/42 backdrop-blur-md xl:hidden"
-            onClick={() => setMobileOpen(false)}
-          >
-            <motion.aside
-              id="ractysh-mobile-menu"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.38, ease }}
+      {mobileMounted ? createPortal(
+        <AnimatePresence>
+          {mobileOpen ? (
+            <motion.div
+              key="mobile-menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.28, ease }}
+              className="fixed inset-0 z-[240] flex flex-col bg-[#FEFCF8] overflow-y-auto"
               role="dialog"
               aria-modal="true"
               aria-label="Ractysh mobile navigation"
-              onClick={(event) => event.stopPropagation()}
-              className="ml-auto flex h-dvh w-full max-w-[29rem] flex-col overflow-y-auto border-l border-[#E5E7EB] bg-white p-5 text-[#111111] shadow-[-28px_0_90px_rgba(17,17,17,0.16)]"
             >
-              <div className="flex items-center justify-between gap-4">
+              <div
+                aria-hidden
+                className="pointer-events-none fixed inset-0 bg-black/[0.03] backdrop-blur-[1px]"
+              />
+
+              <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-5 pb-4">
                 <Link
                   href="/#hero"
                   onClick={() => setMobileOpen(false)}
-                  className="flex min-w-0 items-center gap-2.5"
                   aria-label="Ractysh home"
+                  className="flex items-center gap-2.5"
                 >
-                  <BrandLogo size="navCompact" priority decorative className="translate-y-px" />
-                  <span className="truncate font-display text-[1.34rem] font-semibold leading-none">{brandName}</span>
+                  <BrandLogo size="navCompact" priority decorative />
+                  <div>
+                    <span className="block font-display text-[1.05rem] font-semibold leading-tight text-[#111111]">
+                      {brandName} GROUP LIMITED
+                    </span>
+                    <span className="mt-0.5 block text-[0.55rem] font-medium uppercase tracking-[0.18em] text-[#9e8a70]">
+                      Integrated Enterprise Ecosystem
+                    </span>
+                  </div>
                 </Link>
                 <button
                   type="button"
                   aria-label="Close menu"
                   onClick={() => setMobileOpen(false)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#111111]"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#E8E0D4] bg-white text-[#111111] shadow-sm"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="mt-7 space-y-2">
-                {primaryNavItems.map((item) => {
-                  if (!item.menu) return null;
-
-                  const expanded = expandedMobile === item.label;
-
-                  return (
-                    <div key={item.label} className="overflow-hidden border-b border-[#E5E7EB] bg-transparent">
-                      <button
-                        type="button"
-                        onClick={() => setExpandedMobile(expanded ? null : item.label)}
-                        className="flex min-h-[3.7rem] w-full items-center justify-between gap-3 bg-transparent px-0 text-left text-[1rem] font-semibold text-[#111111] transition-colors duration-300 hover:text-[#8B1118]"
-                      >
-                        {item.label}
-                        <ChevronDown className={cn("h-4 w-4 text-[#8B1118] transition duration-300", expanded && "rotate-180")} />
-                      </button>
-                      <AnimatePresence initial={false}>
-                        {expanded ? (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.28, ease }}
-                            className="overflow-hidden border-t border-[#E5E7EB]"
+              <nav className="relative z-10 flex-1 px-6">
+                <motion.div
+                  variants={mobileContainerVariants}
+                  initial="hidden"
+                  animate="show"
+                  className="space-y-0"
+                >
+                  {mobileNavItems.map((item) => (
+                    <motion.div key={item.label} variants={mobileItemVariants}>
+                      {item.children ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => toggleMobileExpand(item.label)}
+                            className="flex w-full items-center justify-between border-b border-[#F0EBE2] py-[18px] font-display text-[2rem] font-semibold leading-none tracking-[-0.02em] text-[#111111] transition-colors duration-300 hover:text-[#8B1118] sm:text-[2.6rem]"
                           >
-                            <div className="space-y-1 py-3">
-                              {item.menu.columns.flatMap((column) => column.links).map((link) => {
-                                const Icon = link.Icon;
-
-                                return (
-                                  <Link
-                                    key={`${item.label}-${link.label}`}
-                                    href={link.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="flex items-start gap-3 rounded-none bg-transparent px-0 py-3 text-[#111111] transition-colors duration-300 hover:bg-transparent hover:text-[#8B1118]"
-                                  >
-                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none border-0 bg-transparent text-[#8B1118]">
-                                      <Icon className="h-4 w-4" />
-                                    </span>
-                                    <span>
-                                      <span className="block text-[0.92rem] font-semibold">{link.label}</span>
-                                      <span className="mt-1 block text-[0.78rem] leading-5 text-[#6B7280]">{link.description}</span>
-                                    </span>
-                                  </Link>
-                                );
-                              })}
-                              <Link
-                                href={item.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="mt-2 flex items-center justify-between rounded-[14px] bg-[#8B1118] px-4 py-3 text-sm font-semibold text-white"
+                            {item.label}
+                            <motion.div
+                              animate={{ rotate: mobileExpandedLabels.has(item.label) ? 90 : 0 }}
+                              transition={{ duration: 0.2, ease }}
+                            >
+                              <ChevronRight className="h-6 w-6 text-[#9e8a70]" strokeWidth={2} />
+                            </motion.div>
+                          </button>
+                          <AnimatePresence initial={false}>
+                            {mobileExpandedLabels.has(item.label) && (
+                              <motion.div
+                                key={`${item.label}-children`}
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease }}
+                                className="overflow-hidden"
                               >
-                                Open {item.label}
-                                <ChevronRight className="h-4 w-4" />
-                              </Link>
-                            </div>
-                          </motion.div>
-                        ) : null}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </div>
+                                <div className="pb-4 pt-2 space-y-0">
+                                  {item.children.map((child) => {
+                                    const ChildIcon = child.Icon;
+                                    return (
+                                      <Link
+                                        key={child.label}
+                                        href={child.href}
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex items-center gap-3 border-b border-[#F0EBE2]/50 py-3 pl-4 pr-2 font-sans text-[0.95rem] font-medium leading-snug text-[#5c4f3e] transition-colors duration-300 hover:text-[#8B1118] sm:text-[1.05rem]"
+                                      >
+                                        {ChildIcon && (
+                                          <ChildIcon className="h-4 w-4 shrink-0 text-[#9e8a70]" strokeWidth={1.8} />
+                                        )}
+                                        {child.label}
+                                      </Link>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="block border-b border-[#F0EBE2] py-[18px] font-display text-[2rem] font-semibold leading-none tracking-[-0.02em] text-[#111111] transition-colors duration-300 hover:text-[#8B1118] sm:text-[2.6rem]"
+                        >
+                          {item.label}
+                        </Link>
+                      )}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </nav>
 
-              {consultationNavItem ? (
-                <div className="mt-7 border-t border-[#E5E7EB] pt-5">
-                  <Link
-                    href={consultationNavItem.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="group relative flex min-h-[3.95rem] w-full items-center justify-between overflow-hidden rounded-[8px] border border-[#E2C68B]/70 bg-[#6A0008] px-4 text-left text-[0.98rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] shadow-[0_18px_42px_rgba(106,0,8,0.28),0_0_28px_rgba(201,161,90,0.16),inset_0_1px_0_rgba(255,255,255,0.16)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-px hover:shadow-[0_22px_52px_rgba(106,0,8,0.34),0_0_36px_rgba(201,161,90,0.22),inset_0_1px_0_rgba(255,255,255,0.2)]"
-                  >
-                    <span className="pointer-events-none absolute inset-[1px] rounded-[7px] bg-[linear-gradient(135deg,rgba(255,244,205,0.2),transparent_40%,rgba(214,180,95,0.18))]" />
-                    <span className="relative flex items-center gap-2.5">
-                      <Sparkles className="h-4 w-4 text-[#C9A15A]" strokeWidth={1.8} />
-                      {consultationNavItem.label}
-                    </span>
-                    <ArrowUpRight className="relative h-4 w-4 text-[#C9A15A]" />
-                  </Link>
+              <div className="sticky bottom-0 z-10 border-t border-[#F0EBE2] bg-[#FEFCF8] px-6 py-5">
+                <Link
+                  href="/book-consultation"
+                  onClick={() => setMobileOpen(false)}
+                  className="group flex w-full items-center justify-center gap-3 rounded-[8px] border border-[#C9A45C] bg-[#8B1118] py-4 text-[0.82rem] font-bold uppercase tracking-[0.06em] text-[#FEFCF8] shadow-[0_12px_34px_rgba(139,17,24,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#761015] hover:shadow-[0_18px_44px_rgba(139,17,24,0.32)]"
+                >
+                  <Sparkles className="h-4 w-4 text-[#C9A45C]" strokeWidth={1.8} />
+                  Book Consultation
+                </Link>
+                <div className="mt-3 flex items-center justify-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-[#8B1118]/60">
+                  {COMPANY_CONTACT.locationDisplay}
                 </div>
-              ) : null}
-
-              <section className="mt-7 border-t border-[#E5E7EB] pt-5" aria-label="Company information">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#8B1118]">Company Information</p>
-                <CompanyContactPanel mode="company" tone="transparent" className="mt-4 sm:grid-cols-1" />
-                <p className="mt-4 rounded-[8px] border border-[#E5E7EB] bg-[#F9FAFB] px-4 py-3 text-[0.92rem] font-medium leading-7 text-[#4B5563]">
-                  Architecture, Construction, Real Estate, Trade and OTC Exchange in one premium ecosystem.
-                </p>
-              </section>
-            </motion.aside>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+        document.body
+      ) : null}
 
       <GlobalSearchOverlay
         activeIndex={searchActiveIndex}

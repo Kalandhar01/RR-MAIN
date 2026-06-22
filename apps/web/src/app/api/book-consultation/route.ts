@@ -3,10 +3,7 @@ import { NextResponse } from "next/server";
 import type { Attachment } from "resend";
 import { z } from "zod";
 import { inferDivisionFromText, normalizeDivisionKey } from "@/lib/shared";
-import {
-  createFallbackConsultationRecord,
-  updateFallbackConsultationNotification
-} from "@/lib/consultationWorkflowFallback";
+import { prisma } from "@/lib/server/db";
 import { getRactyshEmailBrand } from "@/emails/branding";
 import { renderInquiryNotificationEmail } from "@/emails/InquiryNotificationEmail";
 import { elapsedMs, logSubmissionTiming, runBackgroundJob } from "@/lib/server/backgroundJobs";
@@ -22,7 +19,6 @@ const MAX_TOTAL_ATTACHMENT_SIZE = 35 * 1024 * 1024;
 const RATE_LIMIT_WINDOW_MS = 10 * 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 8;
 const DEFAULT_RECIPIENT = "noorulsmart1998@gmail.com";
-const DEFAULT_API_URL = "http://localhost:5000";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 
@@ -91,22 +87,8 @@ type SubmissionNotification = {
   sentAt?: string;
 };
 
-type ConsultationWorkflowRecord = {
-  _id?: string;
-  id?: string;
-  trackingToken?: string;
-  notification?: SubmissionNotification;
-};
-
-type BackendConsultationResponse = {
-  message?: string;
-  consultation?: ConsultationWorkflowRecord;
-};
-
 type WorkflowSubmissionResult = {
-  consultation?: ConsultationWorkflowRecord;
-  error?: string;
-  fallback?: boolean;
+  id: string;
 };
 
 function textFromFormData(formData: FormData, ...keys: string[]): string {
@@ -240,10 +222,6 @@ function mailRecipients(): string[] {
   return recipients.length ? recipients : [DEFAULT_RECIPIENT];
 }
 
-function getBackendApiUrl(): string {
-  return (process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || DEFAULT_API_URL).replace(/\/+$/, "");
-}
-
 function clientIdentifier(request: Request): string {
   const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   return forwardedFor || request.headers.get("x-real-ip") || "anonymous";
@@ -278,56 +256,24 @@ function rateLimitRetryAfter(request: Request): number | null {
   return Math.ceil((bucket.resetAt - now) / 1000);
 }
 
-async function createWorkflowRecord(
-  payload: ConsultationPayload,
-  files: File[],
-  skipNotification: boolean
+async function persistConsultation(
+  payload: ConsultationPayload
 ): Promise<WorkflowSubmissionResult> {
-  const apiUrl = getBackendApiUrl();
-  const workflowForm = new FormData();
-
-  workflowForm.append("fullName", payload.fullName);
-  workflowForm.append("companyName", payload.companyName);
-  workflowForm.append("emailAddress", payload.emailAddress);
-  workflowForm.append("phoneNumber", payload.phoneNumber || "");
-  workflowForm.append("serviceType", payload.serviceType);
-  workflowForm.append("division", payload.division || inferDivisionFromText(payload.serviceType));
-  workflowForm.append("budgetRange", payload.budgetRange || "");
-  workflowForm.append("projectTimeline", payload.projectTimeline || "");
-  workflowForm.append("projectDescription", payload.projectDescription);
-  workflowForm.append("preferredConsultationType", payload.preferredConsultationType || "Virtual Meeting");
-  files.forEach((file) => workflowForm.append("requirementFiles", file, file.name));
-
-  try {
-    const requestInit: RequestInit = {
-      method: "POST",
-      body: workflowForm,
-      signal: AbortSignal.timeout(12_000)
-    };
-
-    if (skipNotification) {
-      requestInit.headers = {
-        "x-ractysh-skip-notification": "true"
-      };
+  const doc = await prisma.consultation.create({
+    data: {
+      fullName: payload.fullName,
+      emailAddress: payload.emailAddress,
+      companyName: payload.companyName,
+      serviceType: payload.serviceType,
+      division: payload.division || inferDivisionFromText(payload.serviceType),
+      projectDescription: payload.projectDescription,
+      phoneNumber: payload.phoneNumber || "",
+      budgetRange: payload.budgetRange || "",
+      projectTimeline: payload.projectTimeline || "",
+      preferredConsultationType: payload.preferredConsultationType || "Virtual Meeting"
     }
-
-    const response = await fetch(`${apiUrl}/api/consultations`, {
-      ...requestInit
-    });
-    const result = (await response.json().catch(() => ({}))) as BackendConsultationResponse;
-
-    if (!response.ok || !result.consultation) {
-      return {
-        error: result.message || `Workflow API returned ${response.status}.`
-      };
-    }
-
-    return { consultation: result.consultation };
-  } catch (error) {
-    return {
-      error: error instanceof Error ? error.message : "Workflow API is unavailable."
-    };
-  }
+  });
+  return { id: doc.id };
 }
 
 export async function POST(request: Request) {
@@ -385,25 +331,9 @@ export async function POST(request: Request) {
     runBackgroundJob(
       "consultation-submission",
       async () => {
-        const workflowStartedAt = performance.now();
-        let workflow = await createWorkflowRecord(consultationPayload, files, Boolean(apiKey));
-        const workflowMs = elapsedMs(workflowStartedAt);
-
-        if (workflow.error) {
-          console.warn("Consultation workflow API unavailable; using local fallback record:", workflow.error);
-
-          workflow = {
-            consultation: createFallbackConsultationRecord(consultationPayload, files, submittedAt, {
-              sent: false,
-              skipped: true,
-              error: apiKey
-                ? `Workflow API fallback activated: ${workflow.error}`
-                : `Workflow API fallback activated and email delivery is not configured: ${workflow.error}`
-            }),
-            error: workflow.error,
-            fallback: true
-          };
-        }
+        const started = performance.now();
+        const workflow = await persistConsultation(consultationPayload);
+        const persistMs = elapsedMs(started);
 
         if (apiKey) {
           const emailStartedAt = performance.now();
@@ -428,25 +358,18 @@ export async function POST(request: Request) {
 
             if (!email.sent) {
               notification.skipped = email.skipped;
-              notification.error = email.error || "Email delivery failed after workflow capture.";
+              notification.error = email.error || "Email delivery failed after MongoDB persistence.";
             } else {
               notification.sent = true;
               notification.sentAt = email.sentAt || new Date().toISOString();
             }
           } catch (emailError) {
             console.error("Resend consultation email failed:", emailError);
-            notification.error = "Email delivery failed after workflow capture.";
-          }
-
-          if (workflow.fallback) {
-            updateFallbackConsultationNotification(
-              workflow.consultation?._id || workflow.consultation?.id,
-              notification
-            );
+            notification.error = "Email delivery failed after MongoDB persistence.";
           }
 
           logSubmissionTiming("consultation-email", {
-            consultationId: workflow.consultation?._id || workflow.consultation?.id,
+            consultationId: workflow.id,
             sent: notification.sent,
             skipped: notification.skipped,
             emailMs: elapsedMs(emailStartedAt),
@@ -455,11 +378,11 @@ export async function POST(request: Request) {
         }
 
         logSubmissionTiming("book-consultation-background", {
-          success: Boolean(workflow.consultation),
-          workflowMs,
+          success: true,
+          workflowMs: persistMs,
           emailQueued: Boolean(apiKey),
-          fallback: Boolean(workflow.fallback),
-          consultationId: workflow.consultation?._id || workflow.consultation?.id
+          fallback: false,
+          consultationId: workflow.id
         });
       },
       { email: consultationPayload.emailAddress, serviceType: consultationPayload.serviceType }
@@ -474,12 +397,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Request received.",
+        message: "Request received and stored.",
         submittedAt,
-        workflow: {
-          created: false,
-          queued: true
-        },
+        persisted: true,
         emailQueued: Boolean(apiKey),
         notification: apiKey
           ? { sent: false, queued: true }

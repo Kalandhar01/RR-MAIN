@@ -7,7 +7,9 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import type { DirectorProfile, FounderProfile } from "@/lib/types";
+import SplitText from "./home/SplitText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,25 +76,6 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
     if (!root || reduceMotion) return;
 
     const context = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>("[data-directors-reveal]").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { opacity: 0, y: 50, filter: "blur(6px)", force3D: true },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 1,
-            ease: "power4.out",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: element,
-              start: "top 82%"
-            }
-          }
-        );
-      });
-
       gsap.to("[data-directors-grid]", {
         y: -24,
         duration: 24,
@@ -169,8 +152,19 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
               Executive Leadership
             </p>
             <h1 className="mt-7 font-display text-[clamp(3.15rem,7vw,6.6rem)] font-semibold leading-[0.93] tracking-[-0.055em] text-[#17120f]">
-              Built by vision,
-              <span className="block text-[#70665c]">guided by execution.</span>
+              <SplitText
+                text="Built by vision, guided by execution."
+                tag="span"
+                className="block"
+                splitType="lines"
+                delay={60}
+                duration={0.9}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.3}
+                rootMargin="-80px"
+                textAlign="left"
+              />
             </h1>
             <p className="mt-8 max-w-[34rem] text-[1rem] leading-7 text-[#62584e] md:text-[1.08rem]">
               Ractysh leadership combines infrastructure strategy, spatial intelligence and enterprise execution into
@@ -229,41 +223,40 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
 
       <section className="relative px-5 py-20 md:px-8 md:py-24">
         <div className="mx-auto max-w-[78rem]">
-          <div data-directors-reveal className="max-w-[32rem]">
+          <ScrollReveal className="max-w-[32rem]">
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b1118]">Leadership</p>
             <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.02] tracking-[-0.045em] md:text-[2.7rem]">
               Enterprise presence, without excess.
             </h2>
-          </div>
+          </ScrollReveal>
 
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {profiles.map((profile, index) => (
-              <motion.article
-                key={`${profile.name}-${profile.role}`}
-                data-directors-reveal
-                whileHover={reduceMotion ? undefined : { y: -4 }}
-                transition={{ duration: 0.35, ease }}
-                className="group relative min-h-[15.5rem] overflow-hidden rounded-[8px] border border-[#dfd2b7]/78 bg-[#fffdf8]/62 p-5 shadow-[0_18px_54px_rgba(55,42,24,0.06)]"
-              >
-                <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-[#d6b45f]/40 via-transparent to-transparent" />
-                <div className="flex items-center gap-3">
-                  <img
-                    src={profile.image || "/HeaderBG.webp"}
-                    alt=""
-                    className="h-11 w-11 rounded-full border border-[#d8c7a0] object-cover grayscale contrast-[1.05]"
-                  />
-                  <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#9a7428]">
-                    0{index + 1}
-                  </span>
-                </div>
-                <h3 className="mt-8 font-display text-[1.35rem] font-semibold leading-tight tracking-[-0.035em]">
-                  {profile.name}
-                </h3>
-                <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#8b1118]">
-                  {profile.role}
-                </p>
-                <p className="mt-5 text-[0.92rem] leading-6 text-[#62584e]">{profile.line}</p>
-              </motion.article>
+              <ScrollReveal key={`${profile.name}-${profile.role}`} delay={index * 0.04} className="group relative min-h-[15.5rem] overflow-hidden rounded-[8px] border border-[#dfd2b7]/78 bg-[#fffdf8]/62 p-5 shadow-[0_18px_54px_rgba(55,42,24,0.06)]">
+                <motion.article
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.35, ease }}
+                >
+                  <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-[#d6b45f]/40 via-transparent to-transparent" />
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={profile.image || "/HeaderBG.webp"}
+                      alt=""
+                      className="h-11 w-11 rounded-full border border-[#d8c7a0] object-cover grayscale contrast-[1.05]"
+                    />
+                    <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#9a7428]">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-8 font-display text-[1.35rem] font-semibold leading-tight tracking-[-0.035em]">
+                    {profile.name}
+                  </h3>
+                  <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#8b1118]">
+                    {profile.role}
+                  </p>
+                  <p className="mt-5 text-[0.92rem] leading-6 text-[#62584e]">{profile.line}</p>
+                </motion.article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -271,10 +264,12 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
 
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto grid max-w-[78rem] gap-12 border-y border-[#ded1b8] py-14 md:grid-cols-[0.95fr_1fr] md:items-center">
-          <blockquote data-directors-reveal className="font-display text-[clamp(2.25rem,5vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#17120f]">
-            &ldquo;Execution is the foundation of trust.&rdquo;
-          </blockquote>
-          <div data-directors-reveal className="grid gap-6 sm:grid-cols-2">
+          <ScrollReveal className="font-display text-[clamp(2.25rem,5vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#17120f]">
+            <blockquote>
+              &ldquo;Execution is the foundation of trust.&rdquo;
+            </blockquote>
+          </ScrollReveal>
+          <ScrollReveal className="grid gap-6 sm:grid-cols-2">
             {timeline.map((item, index) => (
               <div key={item} className="border-t border-[#d8c9aa] pt-5">
                 <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#9a7428]">
@@ -285,24 +280,24 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
                 </p>
               </div>
             ))}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       <section className="px-5 pb-28 pt-10 text-center md:px-8 md:pb-32">
-        <div data-directors-reveal className="mx-auto max-w-[38rem]">
+        <ScrollReveal className="mx-auto max-w-[38rem]">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b1118]">Private Briefing</p>
           <h2 className="mt-5 font-display text-[2.25rem] font-semibold leading-[1.02] tracking-[-0.045em] md:text-[3.25rem]">
             Leadership designed for premium execution.
           </h2>
           <Link
-            href="/contact"
+            href="/book-consultation"
             className="group mt-9 inline-flex h-12 items-center justify-center gap-2 rounded-[7px] bg-[#14110f] px-5 text-[0.86rem] font-semibold text-[#fffaf0] shadow-[0_18px_46px_rgba(23,18,15,0.14)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_62px_rgba(23,18,15,0.2),0_0_28px_rgba(214,180,95,0.12)]"
           >
-            Contact Leadership
+            Book Consultation
             <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
           </Link>
-        </div>
+        </ScrollReveal>
       </section>
     </div>
   );

@@ -6,6 +6,8 @@ import { ContactShadows, Environment, Lightformer, PerspectiveCamera, Preload, u
 import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { ContactCTA } from "./home/ContactCTA";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -146,7 +148,7 @@ function ButtonLink({ href, children, variant = "dark" }: { href: string; childr
 
 function SectionHeading({ eyebrow, title, tone = "light" }: { eyebrow: string; title: string; tone?: "light" | "dark" }) {
   return (
-    <div data-reveal className="max-w-[54rem]">
+    <ScrollReveal className="max-w-[54rem]">
       <p
         className={[
           "flex items-center gap-4 text-[0.7rem] font-semibold uppercase tracking-[0.26em]",
@@ -164,7 +166,7 @@ function SectionHeading({ eyebrow, title, tone = "light" }: { eyebrow: string; t
       >
         {title}
       </h2>
-    </div>
+    </ScrollReveal>
   );
 }
 
@@ -317,12 +319,11 @@ export function RealEstateServiceExperience() {
 
     const context = gsap.context(() => {
       const shouldReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-reveal]");
       const imageItems = gsap.utils.toArray<HTMLElement>("[data-property-image]");
       const drawLines = gsap.utils.toArray<SVGPathElement>("[data-re-draw-line]");
 
       if (shouldReduce) {
-        gsap.set([...revealItems, ...imageItems, ...drawLines], { clearProps: "all" });
+        gsap.set([...imageItems, ...drawLines], { clearProps: "all" });
         root.style.setProperty("--re-showcase-progress", "1");
         return;
       }
@@ -348,24 +349,6 @@ export function RealEstateServiceExperience() {
           delay: 0.08
         }
       );
-
-      revealItems.forEach((element, index) => {
-        gsap.fromTo(
-          element,
-          { autoAlpha: 0, y: 48 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.95,
-            delay: Math.min((index % 5) * 0.04, 0.16),
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 84%"
-            }
-          }
-        );
-      });
 
       imageItems.forEach((image) => {
         gsap.to(image, {
@@ -480,17 +463,16 @@ export function RealEstateServiceExperience() {
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <ButtonLink href="/book-consultation">Book Consultation</ButtonLink>
-              <ButtonLink href="/contact" variant="light">Contact Service Desk</ButtonLink>
               <ButtonLink href="#" variant="light">For More Details, Check This</ButtonLink>
             </motion.div>
-            <div data-reveal className="mt-12 hidden max-w-[34rem] grid-cols-3 border-y border-[#d8c59d]/62 py-5 md:grid">
+            <ScrollReveal className="mt-12 hidden max-w-[34rem] grid-cols-3 border-y border-[#d8c59d]/62 py-5 md:grid">
               {["Wealth", "Ownership", "Value"].map((item) => (
                 <div key={item} className="border-r border-[#d8c59d]/52 px-4 first:pl-0 last:border-r-0 last:pr-0">
                   <p className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#8b1118]/70">Real Estate</p>
                   <p className="mt-2 font-display text-[1.35rem] font-semibold leading-none tracking-[0] text-[#211812]">{item}</p>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
           </div>
 
           <motion.div
@@ -528,8 +510,9 @@ export function RealEstateServiceExperience() {
           </div>
 
           {investmentStories.map((story, index) => (
-            <article key={story.title} data-reveal className="real-estate-service-story group shrink-0 overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#fffdf8] text-[#15110d] shadow-[0_34px_110px_rgba(184,138,68,0.12)]">
-              <div className="grid h-full min-h-[39rem] lg:grid-cols-[minmax(0,0.62fr)_minmax(23rem,0.38fr)]">
+            <ScrollReveal key={story.title} delay={index * 0.04} className="real-estate-service-story group shrink-0 overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#fffdf8] text-[#15110d] shadow-[0_34px_110px_rgba(184,138,68,0.12)]">
+              <article>
+                <div className="grid h-full min-h-[39rem] lg:grid-cols-[minmax(0,0.62fr)_minmax(23rem,0.38fr)]">
                 <figure className="relative min-h-[28rem] overflow-hidden bg-[#111]">
                   <img data-property-image src={story.image} alt={`${story.title} real estate asset`} className="h-[112%] w-full object-cover" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.5))]" />
@@ -558,6 +541,7 @@ export function RealEstateServiceExperience() {
                 </div>
               </div>
             </article>
+            </ScrollReveal>
           ))}
         </div>
       </section>
@@ -567,20 +551,20 @@ export function RealEstateServiceExperience() {
         <div className="relative mx-auto max-w-[1420px]">
           <div className="grid gap-7 lg:grid-cols-[0.62fr_0.38fr] lg:items-end">
             <SectionHeading eyebrow="Featured Property Gallery" title="A refined gallery of ownership-grade assets." />
-            <p data-reveal className="max-w-[31rem] text-[1rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
-              Minimal property presentation focused on asset class, location and entry point.
-            </p>
+            <ScrollReveal className="max-w-[31rem] text-[1rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
+              <p>
+                Minimal property presentation focused on asset class, location and entry point.
+              </p>
+            </ScrollReveal>
           </div>
 
           <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {featuredProperties.map((property) => (
-              <motion.article
-                key={property.title}
-                data-reveal
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.45, ease }}
-                className="real-estate-service-property group overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-white shadow-[0_24px_86px_rgba(58,41,18,0.08)]"
-              >
+            {featuredProperties.map((property, index) => (
+              <ScrollReveal key={property.title} delay={index * 0.04} className="real-estate-service-property group overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-white shadow-[0_24px_86px_rgba(58,41,18,0.08)]">
+                <motion.article
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.45, ease }}
+                >
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#ede5d6]">
                   <img data-property-image src={property.image} alt={`${property.title} ${property.type}`} className="h-[112%] w-full object-cover" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_36%,rgba(0,0,0,0.46))]" />
@@ -602,6 +586,7 @@ export function RealEstateServiceExperience() {
                   </div>
                 </div>
               </motion.article>
+            </ScrollReveal>
             ))}
           </div>
         </div>
@@ -611,39 +596,46 @@ export function RealEstateServiceExperience() {
         <div className="mx-auto max-w-[1420px]">
           <div className="grid gap-7 lg:grid-cols-[0.7fr_0.3fr] lg:items-end">
             <SectionHeading eyebrow="Private Portfolio" title="Development imagery for wealth-positioned property decisions." />
-            <p data-reveal className="max-w-[27rem] text-[0.98rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
-              Villa, waterfront and commercial presentations shaped around ownership appetite.
-            </p>
+            <ScrollReveal className="max-w-[27rem] text-[0.98rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
+              <p>
+                Villa, waterfront and commercial presentations shaped around ownership appetite.
+              </p>
+            </ScrollReveal>
           </div>
 
           <div className="mt-14 grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
-            <figure data-reveal className="real-estate-service-property group relative min-h-[34rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_34px_120px_rgba(58,41,18,0.16)]">
-              <img data-property-image src={leadPortfolioAsset.image} alt={leadPortfolioAsset.title} className="h-[112%] w-full object-cover" />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_20%,rgba(0,0,0,0.56)_100%)]" />
-              <figcaption className="absolute bottom-6 left-6 right-6 text-[#fff8ec] md:bottom-8 md:left-8 md:right-8">
-                <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-[#d8b765]">{leadPortfolioAsset.caption}</p>
-                <h3 className="mt-4 max-w-[42rem] font-display text-[clamp(2.6rem,5vw,5.8rem)] font-semibold leading-[0.88] tracking-[0]">
-                  {leadPortfolioAsset.title}
-                </h3>
-              </figcaption>
-            </figure>
+            <ScrollReveal className="real-estate-service-property group relative min-h-[34rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_34px_120px_rgba(58,41,18,0.16)]">
+              <figure>
+                <img data-property-image src={leadPortfolioAsset.image} alt={leadPortfolioAsset.title} className="h-[112%] w-full object-cover" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_20%,rgba(0,0,0,0.56)_100%)]" />
+                <figcaption className="absolute bottom-6 left-6 right-6 text-[#fff8ec] md:bottom-8 md:left-8 md:right-8">
+                  <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-[#d8b765]">{leadPortfolioAsset.caption}</p>
+                  <h3 className="mt-4 max-w-[42rem] font-display text-[clamp(2.6rem,5vw,5.8rem)] font-semibold leading-[0.88] tracking-[0]">
+                    {leadPortfolioAsset.title}
+                  </h3>
+                </figcaption>
+              </figure>
+            </ScrollReveal>
 
             <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-1">
-              {portfolioShowcase.slice(1).map((asset) => (
-                <figure key={asset.title} data-reveal className="real-estate-service-property group relative min-h-[13rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_22px_82px_rgba(58,41,18,0.1)]">
-                  <img data-property-image src={asset.image} alt={asset.title} className="h-[112%] w-full object-cover" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_18%,rgba(0,0,0,0.58)_100%)]" />
-                  <figcaption className="absolute bottom-4 left-4 right-4 text-[#fff8ec]">
-                    <p className="text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-[#d8b765]">{asset.caption}</p>
-                    <h3 className="mt-2 font-display text-[1.85rem] font-semibold leading-none tracking-[0]">{asset.title}</h3>
-                  </figcaption>
-                </figure>
+              {portfolioShowcase.slice(1).map((asset, index) => (
+                <ScrollReveal key={asset.title} delay={index * 0.04} className="real-estate-service-property group relative min-h-[13rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_22px_82px_rgba(58,41,18,0.1)]">
+                  <figure>
+                    <img data-property-image src={asset.image} alt={asset.title} className="h-[112%] w-full object-cover" />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_18%,rgba(0,0,0,0.58)_100%)]" />
+                    <figcaption className="absolute bottom-4 left-4 right-4 text-[#fff8ec]">
+                      <p className="text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-[#d8b765]">{asset.caption}</p>
+                      <h3 className="mt-2 font-display text-[1.85rem] font-semibold leading-none tracking-[0]">{asset.title}</h3>
+                    </figcaption>
+                  </figure>
+                </ScrollReveal>
               ))}
             </div>
           </div>
         </div>
       </section>
 
+      <ContactCTA />
     </article>
   );
 }

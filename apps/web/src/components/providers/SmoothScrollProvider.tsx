@@ -44,6 +44,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
           wheelMultiplier: 0.9,
           touchMultiplier: 1
         });
+        lenis.scrollTo(0, { immediate: true, duration: 0 });
         setLenisInstance(lenis);
 
         tickerUpdate = (time: number) => {

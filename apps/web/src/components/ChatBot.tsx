@@ -11,10 +11,20 @@ interface Message {
 
 export function ChatBot() {
   const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setMobileMenuOpen(document.body.dataset.mobileMenuOpen === "true");
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-mobile-menu-open"] });
+    setMobileMenuOpen(document.body.dataset.mobileMenuOpen === "true");
+    return () => observer.disconnect();
+  }, []);
   const [messages, setMessages] = useState<Message[]>([{ role: "bot", text: getGreeting() }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -24,7 +34,9 @@ export function ChatBot() {
   }, [open]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
   }, [messages]);
 
   const handleSend = () => {
@@ -61,6 +73,8 @@ export function ChatBot() {
     }
   };
 
+  if (mobileMenuOpen) return null;
+
   return (
     <>
       {open && (
@@ -94,7 +108,7 @@ export function ChatBot() {
             </button>
           </div>
 
-          <div className="flex min-h-[320px] max-h-[420px] flex-col gap-3 overflow-y-auto p-4">
+          <div ref={messagesRef} className="flex min-h-[320px] max-h-[420px] flex-col gap-3 overflow-y-auto p-4">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
@@ -135,7 +149,6 @@ export function ChatBot() {
                 </div>
               </div>
             )}
-            <div ref={bottomRef} />
           </div>
 
           <div className="flex items-center gap-2 border-t border-[#d8bf82]/30 px-3 py-3">

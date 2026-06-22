@@ -7,14 +7,16 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitText from "./home/SplitText";
 import {
   ArrowRight,
   BadgeCheck,
-  Globe2,
   Network,
   Workflow,
   type LucideIcon
 } from "lucide-react";
+import { ContactCTA } from "./home/ContactCTA";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -202,14 +204,11 @@ export function ImportExportGlobalTradePage() {
       Boolean(prefersReducedMotion) || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const context = gsap.context(() => {
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-trade-reveal]");
-      const heroItems = gsap.utils.toArray<HTMLElement>("[data-hero-reveal]");
-      const imageRevealItems = gsap.utils.toArray<HTMLElement>("[data-image-reveal]");
       const parallaxImages = gsap.utils.toArray<HTMLElement>("[data-parallax-image]");
       const rules = gsap.utils.toArray<HTMLElement>("[data-advantage-rule]");
 
       if (reduceMotion) {
-        gsap.set([...heroItems, ...revealItems, ...imageRevealItems, "[data-hero-globe]"], {
+        gsap.set(["[data-hero-globe]"], {
           clearProps: "all",
           opacity: 1,
           y: 0,
@@ -221,54 +220,10 @@ export function ImportExportGlobalTradePage() {
       gsap
         .timeline({ defaults: { ease: "power4.out" } })
         .fromTo(
-          heroItems,
-          { opacity: 0, y: 34 },
-          { opacity: 1, y: 0, duration: 0.86, stagger: 0.08 }
-        )
-        .fromTo(
           "[data-hero-globe]",
           { opacity: 0, x: 34, scale: 0.985 },
-          { opacity: 1, x: 0, scale: 1, duration: 1.05 },
-          "-=0.62"
+          { opacity: 1, x: 0, scale: 1, duration: 1.05 }
         );
-
-      revealItems.forEach((item, index) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 42 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.88,
-            delay: Math.min(index * 0.018, 0.16),
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 84%",
-              once: true
-            }
-          }
-        );
-      });
-
-      imageRevealItems.forEach((item) => {
-        gsap.fromTo(
-          item,
-          { clipPath: "inset(14% 0% 14% 0%)", scale: 1.045, opacity: 0.72 },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            scale: 1,
-            opacity: 1,
-            duration: 1.25,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 78%",
-              once: true
-            }
-          }
-        );
-      });
 
       parallaxImages.forEach((image) => {
         const panel = image.closest<HTMLElement>("[data-parallax-panel]") ?? image;
@@ -331,7 +286,7 @@ export function ImportExportGlobalTradePage() {
       <GlobalTradeShowcaseSection />
       <TradeEcosystemSection />
       <EnterpriseAdvantageSection />
-      <ContactCtaSection />
+      <ContactCTA />
 
       <style>{`
         .trade-commerce-page {
@@ -752,36 +707,38 @@ function HeroSection() {
     <section className="relative z-10 min-h-[100svh] px-5 pb-16 pt-28 sm:px-6 md:px-8 lg:flex lg:items-center lg:pt-24 xl:px-10">
       <div className="mx-auto grid w-full max-w-[1420px] gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(32rem,1.1fr)] lg:items-center xl:gap-16">
         <div className="relative z-20 max-w-[47rem]">
-          <p data-hero-reveal className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">
-            RACTYSH GLOBAL TRADE
-          </p>
+          <ScrollReveal className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">
+            <p>RACTYSH GLOBAL TRADE</p>
+          </ScrollReveal>
 
-          <h1
-            aria-label="Global Commerce. Connected Without Borders."
-            data-hero-reveal
-            className="trade-hero-title mt-7 max-w-[52rem] font-display text-[clamp(3.1rem,5.8vw,6.35rem)] font-bold leading-[0.9] tracking-[-0.04em] text-[#17120f]"
-          >
-            <span className="block">Global Commerce.</span>
-            <span className="block text-[#8B1118]">Connected Without Borders.</span>
-          </h1>
+          <ScrollReveal className="trade-hero-title mt-7 max-w-[52rem] font-display text-[clamp(3.1rem,5.8vw,6.35rem)] font-bold leading-[0.9] tracking-[-0.04em] text-[#17120f]">
+            <h1 aria-label="Global Commerce. Connected Without Borders.">
+              <SplitText
+                text="Global Commerce. Connected Without Borders."
+                tag="span"
+                className="block"
+                splitType="lines"
+                delay={60}
+                duration={0.9}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.3}
+                rootMargin="-80px"
+                textAlign="left"
+              />
+            </h1>
+          </ScrollReveal>
 
-          <p data-hero-reveal className="trade-copy mt-7 max-w-[39rem] text-[clamp(1rem,1.1vw,1.12rem)] font-medium leading-[1.9] text-[#51463c]">
-            Cross-border sourcing, import operations, export operations and trade documentation through one enterprise ecosystem.
-          </p>
+          <ScrollReveal className="trade-copy mt-7 max-w-[39rem] text-[clamp(1rem,1.1vw,1.12rem)] font-medium leading-[1.9] text-[#51463c]">
+            <p>Cross-border sourcing, import operations, export operations and trade documentation through one enterprise ecosystem.</p>
+          </ScrollReveal>
 
-          <div data-hero-reveal className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <ScrollReveal className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href="/book-consultation"
               className="trade-button inline-flex min-h-12 items-center justify-center gap-3 rounded-[8px] border border-[#8B1118] bg-[#8B1118] px-6 py-3 text-[0.78rem] font-bold uppercase tracking-[0] text-[#fffaf0] shadow-[0_20px_56px_rgba(139,17,24,0.2)] transition duration-300 hover:bg-[#741016] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]"
             >
               <span className="relative z-10">Book Consultation</span>
-              <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
-            </Link>
-            <Link
-              href="/contact"
-              className="trade-button inline-flex min-h-12 items-center justify-center gap-3 rounded-[8px] border border-[#C9A45C]/58 bg-[#fffaf0] px-6 py-3 text-[0.78rem] font-bold uppercase tracking-[0] text-[#17120f] shadow-[0_18px_46px_rgba(22,22,22,0.08)] backdrop-blur-xl transition duration-300 hover:border-[#8B1118]/45 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]"
-            >
-              <span className="relative z-10">Contact Service Desk</span>
               <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
             </Link>
             <Link
@@ -792,13 +749,13 @@ function HeroSection() {
               <span className="relative z-10">For More Details, Check This</span>
               <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
             </Link>
-          </div>
+          </ScrollReveal>
 
-          <div data-hero-reveal className="trade-hero-corridor mt-12 grid gap-3 border-y border-[#c6a45b]/22 py-4 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#8b1118] sm:grid-cols-3">
+          <ScrollReveal className="trade-hero-corridor mt-12 grid gap-3 border-y border-[#c6a45b]/22 py-4 text-[0.68rem] font-bold uppercase tracking-[0.18em] text-[#8b1118] sm:grid-cols-3">
             <span>Import Operations</span>
             <span>Export Operations</span>
             <span>Market Access</span>
-          </div>
+          </ScrollReveal>
         </div>
 
         <div data-hero-globe className="trade-globe-field relative h-[430px] sm:h-[560px] lg:h-[720px]">
@@ -821,7 +778,7 @@ function GlobalTradeShowcaseSection() {
   return (
     <section id="global-trade-network" className="relative z-10 py-20 lg:py-28">
       <div className="px-5 sm:px-6 md:px-8 xl:px-10">
-        <div data-trade-reveal className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
+        <ScrollReveal className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
           <div>
             <p className="trade-section-kicker">Global Trade Showcase</p>
             <h2 className="mt-5 trade-editorial-heading">
@@ -832,25 +789,27 @@ function GlobalTradeShowcaseSection() {
             Import operations, export execution, supplier networks and trade documentation are presented as large visual systems,
             not fragmented service tiles.
           </p>
-        </div>
+        </ScrollReveal>
       </div>
 
       <div className="mt-14 space-y-3">
         {showcasePanels.map((panel, index) => (
           <article key={panel.title} data-parallax-panel className="trade-full-panel relative overflow-hidden">
-            <div data-image-reveal className="absolute inset-0">
-              <Image
-                data-parallax-image
-                src={panel.image}
-                alt={panel.alt}
-                fill
-                sizes="100vw"
-                quality={86}
-                priority={index === 0}
-                className="trade-panel-image object-cover"
-                style={{ objectPosition: panel.objectPosition }}
-              />
-            </div>
+            <ScrollReveal className="absolute inset-0">
+              <div>
+                <Image
+                  data-parallax-image
+                  src={panel.image}
+                  alt={panel.alt}
+                  fill
+                  sizes="100vw"
+                  quality={86}
+                  priority={index === 0}
+                  className="trade-panel-image object-cover"
+                  style={{ objectPosition: panel.objectPosition }}
+                />
+              </div>
+            </ScrollReveal>
             <div
               className={cx(
                 "absolute inset-0",
@@ -865,15 +824,17 @@ function GlobalTradeShowcaseSection() {
                 panel.align === "right" && "lg:justify-end"
               )}
             >
-              <div data-trade-reveal className="max-w-[43rem] text-[#fffaf0]">
-                <p className="text-[0.72rem] font-bold uppercase text-[#d8b56d]">{panel.kicker}</p>
-                <h3 className="mt-4 trade-display text-[3.4rem] font-semibold leading-[0.9] sm:text-[4.8rem] lg:text-[6.2rem]">
-                  {panel.title}
-                </h3>
-                <p className="trade-copy mt-6 max-w-[34rem] text-[1rem] font-medium leading-8 text-[#f8ecd8] [text-shadow:0_3px_20px_rgba(0,0,0,0.58)] md:text-[1.08rem]">
-                  {panel.body}
-                </p>
-              </div>
+              <ScrollReveal className="max-w-[43rem] text-[#fffaf0]">
+                <div>
+                  <p className="text-[0.72rem] font-bold uppercase text-[#d8b56d]">{panel.kicker}</p>
+                  <h3 className="mt-4 trade-display text-[3.4rem] font-semibold leading-[0.9] sm:text-[4.8rem] lg:text-[6.2rem]">
+                    {panel.title}
+                  </h3>
+                  <p className="trade-copy mt-6 max-w-[34rem] text-[1rem] font-medium leading-8 text-[#f8ecd8] [text-shadow:0_3px_20px_rgba(0,0,0,0.58)] md:text-[1.08rem]">
+                    {panel.body}
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
           </article>
         ))}
@@ -886,7 +847,7 @@ function TradeEcosystemSection() {
   return (
     <section className="relative z-10 px-5 py-20 sm:px-6 md:px-8 lg:py-28 xl:px-10">
       <div className="mx-auto max-w-[1360px]">
-        <div data-trade-reveal className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
+        <ScrollReveal className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
           <div>
             <p className="trade-section-kicker">Trade Ecosystem</p>
             <h2 className="mt-5 trade-editorial-heading">
@@ -897,7 +858,7 @@ function TradeEcosystemSection() {
             Sourcing, import control, export execution, supplier network rhythm, documentation and trade support are composed
             as one premium trade system.
           </p>
-        </div>
+        </ScrollReveal>
 
         <TradeEcosystemLayoutGrid />
       </div>
@@ -916,17 +877,15 @@ function TradeEcosystemLayoutGrid() {
           const isHeroCard = index === 0;
 
           return (
-            <motion.button
-              key={block.id}
-              type="button"
-              layoutId={prefersReducedMotion ? undefined : `ecosystem-${block.id}`}
-              data-trade-reveal
-              onClick={() => setSelectedBlock(block)}
-              className={cx(
-                "trade-layout-block group relative overflow-hidden border border-[#d8b56d]/28 p-0 text-left text-[#fffaf0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]",
-                isHeroCard && "is-featured",
-                block.className
-              )}
+            <ScrollReveal key={block.id} className={cx(
+              "trade-layout-block group relative overflow-hidden border border-[#d8b56d]/28 p-0 text-left text-[#fffaf0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]",
+              isHeroCard && "is-featured",
+              block.className
+            )} delay={index * 0.04}>
+              <motion.button
+                type="button"
+                layoutId={prefersReducedMotion ? undefined : `ecosystem-${block.id}`}
+                onClick={() => setSelectedBlock(block)}
             >
               <Image
                 src={block.image}
@@ -952,6 +911,7 @@ function TradeEcosystemLayoutGrid() {
                 </div>
               </div>
             </motion.button>
+            </ScrollReveal>
           );
         })}
       </div>
@@ -1016,12 +976,14 @@ function EnterpriseAdvantageSection() {
   return (
     <section className="relative z-10 px-5 py-20 sm:px-6 md:px-8 lg:py-28 xl:px-10">
       <div className="mx-auto max-w-[1360px]">
-        <div data-trade-reveal className="max-w-[62rem]">
-          <p className="trade-section-kicker">Enterprise Advantage</p>
-          <h2 className="mt-5 trade-editorial-heading">
-            Editorial operating advantages for global commerce.
-          </h2>
-        </div>
+        <ScrollReveal className="max-w-[62rem]">
+          <div>
+            <p className="trade-section-kicker">Enterprise Advantage</p>
+            <h2 className="mt-5 trade-editorial-heading">
+              Editorial operating advantages for global commerce.
+            </h2>
+          </div>
+        </ScrollReveal>
 
         <div className="mt-14">
           {advantageStories.map((story, index) => {
@@ -1033,42 +995,43 @@ function EnterpriseAdvantageSection() {
                 data-parallax-panel
                 className="grid gap-8 border-t border-[#d8c39b] py-12 last:border-b lg:grid-cols-2 lg:gap-14 lg:py-16"
               >
-                <div
-                  data-image-reveal
-                  className={cx(
-                    "relative min-h-[24rem] overflow-hidden rounded-[8px] border border-[#d8b56d]/26 bg-[#17120f] shadow-[0_28px_88px_rgba(71,53,24,0.14)]",
-                    index % 2 === 1 && "lg:order-2"
-                  )}
-                >
-                  <Image
-                    data-parallax-image
-                    src={story.image}
-                    alt={story.alt}
-                    fill
-                    sizes="(min-width: 1024px) 48vw, 100vw"
-                    quality={86}
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,18,15,0.04),rgba(23,18,15,0.42))]" />
-                </div>
-
-                <div data-trade-reveal className="flex flex-col justify-center">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-[#c6a45b]/30 bg-[#fff6e6] text-[#8b1118]">
-                      <Icon className="h-5 w-5" strokeWidth={1.85} />
-                    </span>
-                    <p className="text-[0.72rem] font-bold uppercase text-[#8b1118]">
-                      {String(index + 1).padStart(2, "0")} / {story.kicker}
-                    </p>
+                <ScrollReveal className={cx(
+                  "relative min-h-[24rem] overflow-hidden rounded-[8px] border border-[#d8b56d]/26 bg-[#17120f] shadow-[0_28px_88px_rgba(71,53,24,0.14)]",
+                  index % 2 === 1 && "lg:order-2"
+                )}>
+                  <div>
+                    <Image
+                      data-parallax-image
+                      src={story.image}
+                      alt={story.alt}
+                      fill
+                      sizes="(min-width: 1024px) 48vw, 100vw"
+                      quality={86}
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,18,15,0.04),rgba(23,18,15,0.42))]" />
                   </div>
-                  <h3 className="mt-6 trade-display text-[3.2rem] font-semibold leading-[0.92] text-[#17120f] sm:text-[4.4rem] lg:text-[5.4rem]">
-                    {story.title}
-                  </h3>
-                  <p className="trade-copy mt-6 max-w-[42rem] text-[1.05rem] font-medium leading-8 text-[#62584a]">
-                    {story.body}
-                  </p>
-                  <div data-advantage-rule className="mt-8 h-px w-full bg-[linear-gradient(90deg,rgba(198,164,91,0.74),transparent)]" />
-                </div>
+                </ScrollReveal>
+
+                <ScrollReveal className="flex flex-col justify-center">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-[#c6a45b]/30 bg-[#fff6e6] text-[#8b1118]">
+                        <Icon className="h-5 w-5" strokeWidth={1.85} />
+                      </span>
+                      <p className="text-[0.72rem] font-bold uppercase text-[#8b1118]">
+                        {String(index + 1).padStart(2, "0")} / {story.kicker}
+                      </p>
+                    </div>
+                    <h3 className="mt-6 trade-display text-[3.2rem] font-semibold leading-[0.92] text-[#17120f] sm:text-[4.4rem] lg:text-[5.4rem]">
+                      {story.title}
+                    </h3>
+                    <p className="trade-copy mt-6 max-w-[42rem] text-[1.05rem] font-medium leading-8 text-[#62584a]">
+                      {story.body}
+                    </p>
+                    <div data-advantage-rule className="mt-8 h-px w-full bg-[linear-gradient(90deg,rgba(198,164,91,0.74),transparent)]" />
+                  </div>
+                </ScrollReveal>
               </article>
             );
           })}
@@ -1078,45 +1041,4 @@ function EnterpriseAdvantageSection() {
   );
 }
 
-function ContactCtaSection() {
-  return (
-    <section className="relative z-10 px-5 pb-24 pt-4 sm:px-6 md:px-8 lg:pb-32 xl:px-10">
-      <div
-        data-trade-reveal
-        className="mx-auto max-w-[980px] border-y border-[#d8c39b] py-14 text-center sm:py-18 lg:py-20"
-      >
-        <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-[8px] border border-[#c6a45b]/32 bg-[#fff6e6] text-[#8b1118]">
-          <Globe2 className="h-5 w-5" strokeWidth={1.85} />
-        </div>
-        <p className="mt-8 trade-section-kicker">Enterprise Trade Consultation</p>
-        <h2 className="mx-auto mt-5 max-w-[54rem] trade-display text-[3rem] font-semibold leading-[0.92] text-[#17120f] sm:text-[4.2rem] lg:text-[5.6rem]">
-          Move Global Commerce Through One Operating Ecosystem
-        </h2>
-        <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href="/book-consultation"
-            className="trade-button inline-flex min-h-12 items-center justify-center gap-3 rounded-[8px] border border-[#8B1118] bg-[#8B1118] px-6 py-3 text-[0.78rem] font-bold uppercase tracking-[0] text-[#fffaf0] shadow-[0_20px_56px_rgba(139,17,24,0.2)] transition duration-300 hover:bg-[#741016] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]"
-          >
-            <span className="relative z-10">Book Consultation</span>
-            <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
-          </Link>
-          <Link
-            href="/contact"
-            className="trade-button inline-flex min-h-12 items-center justify-center gap-3 rounded-[8px] border border-[#C9A45C]/58 bg-[#fffaf0] px-6 py-3 text-[0.78rem] font-bold uppercase tracking-[0] text-[#17120f] shadow-[0_18px_46px_rgba(22,22,22,0.08)] transition duration-300 hover:border-[#8B1118]/45 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]"
-          >
-            <span className="relative z-10">Contact Service Desk</span>
-            <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
-          </Link>
-          <Link
-            href="#"
-            target="_blank"
-            className="trade-button inline-flex min-h-12 items-center justify-center gap-3 rounded-[8px] border border-[#C9A45C]/58 bg-[#fffaf0] px-6 py-3 text-[0.78rem] font-bold uppercase tracking-[0] text-[#8B1118] shadow-[0_18px_46px_rgba(22,22,22,0.08)] transition duration-300 hover:border-[#8B1118]/45 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]"
-          >
-            <span className="relative z-10">For More Details, Check This</span>
-            <ArrowRight className="relative z-10 h-4 w-4" strokeWidth={2.1} />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
+

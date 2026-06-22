@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { ContactCTA } from "./home/ContactCTA";
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -20,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const heroImage = "/services/otc-exchange-private-desk.webp";
+const heroImage = "https://images.unsplash.com/photo-1774770511480-34845e3adc93?w=800&q=80";
 const imageSizes = "(min-width: 1280px) 48vw, (min-width: 768px) 88vw, 100vw";
 const heroImageSizes = "(min-width: 1280px) 52vw, (min-width: 1024px) 48vw, 100vw";
 
@@ -45,8 +47,8 @@ const operationSections: Array<{
     title: "Crypto Based Currency Exchange",
     description:
       "Secure crypto-to-fiat and crypto-to-crypto exchange services with real-time pricing, deep liquidity and institutional-grade settlement for qualified counterparties.",
-    image: "/services/otc-exchange-private-desk.webp",
-    imageAlt: "Crypto currency exchange desk for OTC transactions",
+    image: "https://images.unsplash.com/photo-1748609700323-483a007ed311?w=800&q=80",
+    imageAlt: "Stock and crypto charts analyzed on digital devices",
     label: "Crypto Exchange",
     signal: "Live",
     tone: "light",
@@ -59,8 +61,8 @@ const operationSections: Array<{
     title: "USDT Currency Exchange",
     description:
       "USDT-to-fiat and USDT-to-crypto exchange services with competitive rates, fast settlement and transparent transaction tracking for institutional and retail clients.",
-    image: "/services/otc-exchange-verification-documents.webp",
-    imageAlt: "USDT currency exchange transaction processing",
+    image: "https://images.unsplash.com/photo-1748439435495-722cc1728b7e?w=800&q=80",
+    imageAlt: "Trader desk with financial charts and cryptocurrency data",
     label: "USDT Desk",
     signal: "Active",
     tone: "light",
@@ -73,8 +75,8 @@ const operationSections: Array<{
     title: "FIU Registered & ISO Certified Partnerships",
     description:
       "Our company is partnered with FIU registered and ISO certified institutions, ensuring regulatory compliance, operational excellence and client trust across all OTC operations.",
-    image: "/services/showcase-otc-exchange.webp",
-    imageAlt: "FIU registered and ISO certified partnership documentation",
+    image: "https://images.unsplash.com/photo-1768055104923-a6f76e7478c7?w=800&q=80",
+    imageAlt: "Financial documents and calculator for compliance verification",
     label: "Certified",
     signal: "Compliant",
     tone: "dark",
@@ -87,8 +89,8 @@ const operationSections: Array<{
     title: "KYC Verification for OTC",
     description:
       "Comprehensive KYC verification for OTC transactions — identity verification, document review and compliance screening for qualified counterparties before transaction processing.",
-    image: "/contact/enterprise-architecture-workspace.webp",
-    imageAlt: "KYC verification documents for OTC compliance",
+    image: "https://images.unsplash.com/photo-1716279083500-04bb3c7576ff?w=800&q=80",
+    imageAlt: "Digital identity verification and KYC document processing",
     label: "Verification",
     signal: "Verified",
     tone: "light",
@@ -129,9 +131,8 @@ function SectionImage({
   priority?: boolean;
   className?: string;
 }) {
-  return (
+  const figure = (
     <figure
-      data-scale-reveal={!priority ? true : undefined}
       className={[
         "real-estate-service-property group relative min-h-[31rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_34px_120px_rgba(58,41,18,0.16)] md:min-h-[38rem]",
         className
@@ -159,6 +160,11 @@ function SectionImage({
       </figcaption>
     </figure>
   );
+
+  if (!priority) {
+    return <ScrollReveal>{figure}</ScrollReveal>;
+  }
+  return figure;
 }
 
 export function OtcExchangeServiceExperience() {
@@ -171,13 +177,11 @@ export function OtcExchangeServiceExperience() {
 
     const context = gsap.context(() => {
       const shouldReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-      const scaleItems = gsap.utils.toArray<HTMLElement>("[data-scale-reveal]");
       const imageItems = gsap.utils.toArray<HTMLElement>("[data-property-image]");
       const drawLines = gsap.utils.toArray<SVGPathElement>("[data-re-draw-line]");
 
       if (shouldReduce) {
-        gsap.set([...revealItems, ...scaleItems, ...imageItems, ...drawLines], { clearProps: "all" });
+        gsap.set([...imageItems, ...drawLines], { clearProps: "all" });
         return;
       }
 
@@ -202,43 +206,6 @@ export function OtcExchangeServiceExperience() {
           delay: 0.08
         }
       );
-
-      revealItems.forEach((element, index) => {
-        gsap.fromTo(
-          element,
-          { autoAlpha: 0, y: 48 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.95,
-            delay: Math.min((index % 5) * 0.04, 0.16),
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 84%"
-            }
-          }
-        );
-      });
-
-      scaleItems.forEach((element) => {
-        gsap.fromTo(
-          element,
-          { autoAlpha: 0, y: 54, scale: 0.965, clipPath: "inset(8% 8% 8% 8%)" },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 1.08,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 82%"
-            }
-          }
-        );
-      });
 
       imageItems.forEach((image) => {
         gsap.to(image, {
@@ -332,18 +299,17 @@ export function OtcExchangeServiceExperience() {
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <ButtonLink href="/book-consultation">Book Consultation</ButtonLink>
-              <ButtonLink href="/contact" variant="light">Contact Service Desk</ButtonLink>
               <ButtonLink href="#" variant="light">For More Details, Check This</ButtonLink>
             </motion.div>
 
-            <div data-reveal className="mt-12 hidden max-w-[39rem] grid-cols-3 border-y border-[#d8c59d]/62 py-5 md:grid">
+            <ScrollReveal className="mt-12 hidden max-w-[39rem] grid-cols-3 border-y border-[#d8c59d]/62 py-5 md:grid">
               {valueSignals.map((item) => (
                 <div key={item} className="border-r border-[#d8c59d]/52 px-4 first:pl-0 last:border-r-0 last:pr-0">
                   <p className="text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-[#8b1118]/70">OTC Exchange</p>
                   <p className="mt-2 font-display text-[1.35rem] font-semibold leading-none tracking-[0] text-[#211812]">{item}</p>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
           </div>
 
           <motion.div
@@ -354,7 +320,7 @@ export function OtcExchangeServiceExperience() {
           >
             <SectionImage
               src={heroImage}
-              alt="Executive boardroom overlooking a financial district for private OTC exchange operations"
+              alt="Modern financial district building facade representing institutional OTC operations"
               label="Private Banking Atmosphere"
               signal="Institutional"
               priority
@@ -398,7 +364,7 @@ export function OtcExchangeServiceExperience() {
                 <SectionImage src={section.image} alt={section.imageAlt} label={section.label} signal={section.signal} />
               </div>
 
-              <div data-reveal className={["max-w-[43rem]", !imageFirst ? "lg:order-1" : ""].join(" ")}>
+              <ScrollReveal delay={index * 0.04} className={["max-w-[43rem]", !imageFirst ? "lg:order-1" : ""].join(" ")}>
                 <p
                   className={[
                     "flex items-center gap-4 text-[0.7rem] font-semibold uppercase tracking-[0.26em]",
@@ -446,15 +412,15 @@ export function OtcExchangeServiceExperience() {
                 {section.id === "governance-compliance" ? (
                   <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                     <ButtonLink href="/book-consultation">Book Consultation</ButtonLink>
-                    <ButtonLink href="/contact" variant="light">Contact Service Desk</ButtonLink>
                     <ButtonLink href="#" variant="light">For More Details, Check This</ButtonLink>
                   </div>
                 ) : null}
-              </div>
+              </ScrollReveal>
             </div>
           </section>
         );
       })}
+      <ContactCTA />
     </article>
   );
 }

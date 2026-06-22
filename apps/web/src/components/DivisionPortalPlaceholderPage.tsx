@@ -133,9 +133,9 @@ export function DivisionPortalPlaceholderPage({ division }: { division: Division
         <CompanyContactPanel mode="company" tone="dark" className="mt-5 w-full max-w-[48rem] sm:mt-7" />
 
         <div className="mt-5 flex w-full max-w-[23rem] flex-col items-stretch justify-center gap-3 sm:mt-7 sm:max-w-none sm:flex-row sm:items-center">
-          <Link href="/contact" className="division-portal-button division-portal-button-primary group">
+          <Link href="/book-consultation" className="division-portal-button division-portal-button-primary group">
             <Bell className="h-4 w-4 transition-transform duration-500 group-hover:rotate-6" strokeWidth={1.8} />
-            Notify Me
+            Book Consultation
           </Link>
           <Link href="http://localhost:3000" prefetch={false} className="division-portal-button division-portal-button-secondary group">
             <ArrowLeft className="h-4 w-4 transition-transform duration-500 group-hover:-translate-x-0.5" strokeWidth={1.8} />

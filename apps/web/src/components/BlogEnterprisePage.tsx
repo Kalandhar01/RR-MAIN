@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import type { BlogListPayload, BlogSummary } from "@/lib/api";
 import { subscribeToRactyshNewsletter } from "@/lib/newsletterSubscribe";
+import SplitText from "@/components/home/SplitText";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -86,9 +87,19 @@ export function BlogEnterprisePage({ data }: { data: BlogListPayload | null }) {
             </div>
 
             <h1 className="mt-7 max-w-[57rem] font-display text-[clamp(3.45rem,8vw,8.8rem)] font-semibold leading-[0.86] tracking-normal text-[#1d120f]">
-              Enterprise
-              <br aria-hidden="true" />
-              Editorial Journal
+              <SplitText
+                text="Enterprise Editorial Journal"
+                tag="span"
+                className="block"
+                splitType="lines"
+                delay={60}
+                duration={0.9}
+                from={{ opacity: 0, y: 40 }}
+                to={{ opacity: 1, y: 0 }}
+                threshold={0.3}
+                rootMargin="-80px"
+                textAlign="left"
+              />
             </h1>
 
             <div className="mt-7 max-w-[47rem]">

@@ -3,15 +3,17 @@
 import { Fragment, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitText from "./home/SplitText";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const heroTitleLines = ["Five Professional Services.", "One Commercial Service Desk."] as const;
+const ease = [0.25, 0.1, 0.25, 1] as const;
 
 type ServiceFilter = "Architecture" | "Construction" | "Real Estate" | "Import & Export" | "OTC Exchange";
 
@@ -144,16 +146,14 @@ function HeroSection() {
     const reduceMotion = Boolean(shouldReduceMotion);
 
     const context = gsap.context(() => {
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-services-hero-reveal]");
       const titleChars = gsap.utils.toArray<HTMLElement>("[data-services-hero-char]");
       const ecosystemLabels = gsap.utils.toArray<HTMLElement>("[data-services-ecosystem-label]");
-      const imageReveals = gsap.utils.toArray<HTMLElement>("[data-services-image-reveal]");
       const visualLayers = gsap.utils.toArray<HTMLElement>("[data-services-visual-layer]");
       const depthLayers = gsap.utils.toArray<HTMLElement>("[data-services-hero-depth]");
       const goldPaths = gsap.utils.toArray<SVGPathElement>("[data-services-gold-path]");
 
       if (reduceMotion) {
-        gsap.set([...revealItems, ...titleChars, ...ecosystemLabels, ...imageReveals, ...visualLayers], {
+        gsap.set([...titleChars, ...ecosystemLabels, ...visualLayers], {
           clearProps: "all"
         });
         gsap.set(goldPaths, { strokeDashoffset: 0 });
@@ -168,7 +168,6 @@ function HeroSection() {
         });
       });
 
-      gsap.set(revealItems, { opacity: 0, y: 26, filter: "blur(10px)", force3D: true });
       gsap.set(titleChars, {
         opacity: 0,
         yPercent: 112,
@@ -177,25 +176,11 @@ function HeroSection() {
         force3D: true
       });
       gsap.set(ecosystemLabels, { opacity: 0, y: 20, scale: 0.96, force3D: true });
-      gsap.set(imageReveals, {
-        opacity: 0,
-        clipPath: "inset(0 100% 0 0)",
-        scale: 1.035,
-        y: 18,
-        force3D: true
-      });
       gsap.set(visualLayers, { opacity: 0, y: 18, force3D: true });
 
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
 
       intro
-        .to(revealItems, {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 0.9,
-          stagger: 0.08
-        })
         .to(
           titleChars,
           {
@@ -226,18 +211,6 @@ function HeroSection() {
             ease: "power2.out"
           },
           0.35
-        )
-        .to(
-          imageReveals,
-          {
-            opacity: 1,
-            clipPath: "inset(0 0% 0 0)",
-            scale: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.12
-          },
-          0.46
         )
         .to(
           ecosystemLabels,
@@ -279,23 +252,37 @@ function HeroSection() {
       </div>
       <div className="services-enterprise-shell services-enterprise-hero-grid">
         <div className="services-enterprise-hero-copy">
-          <p className="services-enterprise-badge" data-services-hero-reveal>
-            RACTYSH SERVICES
-          </p>
+          <ScrollReveal className="services-enterprise-badge">
+            <p>RACTYSH SERVICES</p>
+          </ScrollReveal>
 
           <h1
             id="services-page-title"
             className="services-enterprise-title"
-            aria-label="Six Professional Services. One Commercial Service Desk."
+            aria-label="Five Professional Services. One Commercial Service Desk."
           >
-            <AnimatedHeroTitle />
+            <SplitText
+              text="Five Professional Services. One Commercial Service Desk."
+              tag="span"
+              className="block text-center"
+              splitType="lines"
+              delay={60}
+              duration={0.9}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.3}
+              rootMargin="-80px"
+              textAlign="center"
+            />
           </h1>
 
-          <p className="services-enterprise-subtext" data-services-hero-reveal>
-            Professional service offerings separated from the Ractysh business division ecosystem.
-          </p>
+          <ScrollReveal className="services-enterprise-subtext">
+            <p>Professional service offerings separated from the Ractysh business division ecosystem.</p>
+          </ScrollReveal>
 
-          <span className="services-enterprise-copy-rule" aria-hidden="true" data-services-hero-reveal />
+          <ScrollReveal className="services-enterprise-copy-rule">
+            <span aria-hidden="true" />
+          </ScrollReveal>
         </div>
 
         <ArchitecturalOpeningVisual />
@@ -305,39 +292,13 @@ function HeroSection() {
   );
 }
 
-function AnimatedHeroTitle() {
-  return (
-    <>
-      {heroTitleLines.map((line) => {
-        const words = line.split(" ");
-
-        return (
-          <span key={line} className="services-enterprise-title-line" aria-hidden="true">
-            {words.map((word, wordIndex) => (
-              <Fragment key={`${line}-${word}-${wordIndex}`}>
-                <span className="services-enterprise-title-word">
-                  {word.split("").map((char, charIndex) => (
-                    <span key={`${word}-${char}-${charIndex}`} className="services-enterprise-title-char" data-services-hero-char>
-                      {char}
-                    </span>
-                  ))}
-                </span>
-                {wordIndex < words.length - 1 ? <span className="services-enterprise-title-space">&nbsp;</span> : null}
-              </Fragment>
-            ))}
-          </span>
-        );
-      })}
-    </>
-  );
-}
-
 function ArchitecturalOpeningVisual() {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = Boolean(shouldReduceMotion);
 
   return (
-    <div className="services-enterprise-opening-visual" aria-hidden="true" data-services-hero-reveal data-services-hero-depth="0.8">
+    <ScrollReveal className="services-enterprise-opening-visual">
+      <div aria-hidden="true" data-services-hero-depth="0.8">
       <div className="services-enterprise-visual-plate" data-services-visual-layer>
         <span className="services-enterprise-blueprint-grid" data-services-visual-layer />
         <span className="services-enterprise-visual-glow" data-services-visual-layer />
@@ -416,55 +377,55 @@ function ArchitecturalOpeningVisual() {
           <em>Connected Commercial Network</em>
         </motion.div>
 
-        <motion.div
-          className="services-enterprise-image-slab slab-one"
-          data-services-image-reveal
-          data-services-hero-depth="1.2"
-          whileHover={reduceMotion ? undefined : { y: -8, rotateX: 1.4, rotateY: -1.4, scale: 1.018 }}
-          transition={{ duration: 0.55, ease: cinemaEase }}
-        >
-          <Image
-            src="/visualization/gallery-exterior.webp"
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 20vw, 46vw"
-            quality={88}
-            priority
-            className="services-enterprise-visual-image"
-          />
-        </motion.div>
-        <motion.div
-          className="services-enterprise-image-slab slab-two"
-          data-services-image-reveal
-          data-services-hero-depth="0.65"
-          whileHover={reduceMotion ? undefined : { y: -7, rotateX: 1.2, rotateY: 1.5, scale: 1.018 }}
-          transition={{ duration: 0.55, ease: cinemaEase }}
-        >
-          <Image
-            src="/visualization/gallery-lobby.webp"
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 15vw, 36vw"
-            quality={88}
-            className="services-enterprise-visual-image"
-          />
-        </motion.div>
-        <motion.div
-          className="services-enterprise-image-slab slab-three"
-          data-services-image-reveal
-          data-services-hero-depth="1"
-          whileHover={reduceMotion ? undefined : { y: -6, rotateX: 1.1, rotateY: -1, scale: 1.018 }}
-          transition={{ duration: 0.55, ease: cinemaEase }}
-        >
-          <Image
-            src="/services/global-trade-transport.webp"
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 16vw, 40vw"
-            quality={88}
-            className="services-enterprise-visual-image"
-          />
-        </motion.div>
+        <ScrollReveal className="services-enterprise-image-slab slab-one">
+          <motion.div
+            data-services-hero-depth="1.2"
+            whileHover={reduceMotion ? undefined : { y: -8, rotateX: 1.4, rotateY: -1.4, scale: 1.018 }}
+            transition={{ duration: 0.55, ease: cinemaEase }}
+          >
+            <Image
+              src="/visualization/gallery-exterior.webp"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 20vw, 46vw"
+              quality={88}
+              priority
+              className="services-enterprise-visual-image"
+            />
+          </motion.div>
+        </ScrollReveal>
+        <ScrollReveal className="services-enterprise-image-slab slab-two">
+          <motion.div
+            data-services-hero-depth="0.65"
+            whileHover={reduceMotion ? undefined : { y: -7, rotateX: 1.2, rotateY: 1.5, scale: 1.018 }}
+            transition={{ duration: 0.55, ease: cinemaEase }}
+          >
+            <Image
+              src="/visualization/gallery-lobby.webp"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 15vw, 36vw"
+              quality={88}
+              className="services-enterprise-visual-image"
+            />
+          </motion.div>
+        </ScrollReveal>
+        <ScrollReveal className="services-enterprise-image-slab slab-three">
+          <motion.div
+            data-services-hero-depth="1"
+            whileHover={reduceMotion ? undefined : { y: -6, rotateX: 1.1, rotateY: -1, scale: 1.018 }}
+            transition={{ duration: 0.55, ease: cinemaEase }}
+          >
+            <Image
+              src="/services/global-trade-transport.webp"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 16vw, 40vw"
+              quality={88}
+              className="services-enterprise-visual-image"
+            />
+          </motion.div>
+        </ScrollReveal>
 
         {openingStatusCards.map((card) => (
           <motion.div
@@ -479,6 +440,7 @@ function ArchitecturalOpeningVisual() {
         ))}
       </div>
     </div>
+    </ScrollReveal>
   );
 }
 
@@ -638,10 +600,6 @@ function EnterpriseDesk() {
           <div className="services-enterprise-desk-actions">
             <Link href="/book-consultation" className="services-enterprise-button primary">
               Book Consultation
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link href="/contact" className="services-enterprise-button secondary">
-              Connect With Service Team
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

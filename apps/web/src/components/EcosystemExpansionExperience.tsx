@@ -124,13 +124,6 @@ export function EcosystemExpansionExperience({ division }: { division: Ecosystem
     if (!root) return;
 
     const context = gsap.context(() => {
-      const shouldReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (shouldReduce) {
-        gsap.set("[data-expansion-reveal]", { opacity: 1, y: 0, filter: "blur(0px)" });
-        return;
-      }
-
       gsap.to("[data-expansion-grid]", {
         x: 54,
         y: 54,
@@ -147,25 +140,6 @@ export function EcosystemExpansionExperience({ division }: { division: Ecosystem
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-expansion-reveal]").forEach((element, index) => {
-        gsap.fromTo(
-          element,
-          { opacity: 0, y: 60, filter: "blur(8px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 1,
-            delay: Math.min(index * 0.08, 0.24),
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 86%"
-            }
-          }
-        );
       });
 
       gsap.utils.toArray<HTMLElement>("[data-expansion-depth]").forEach((element) => {

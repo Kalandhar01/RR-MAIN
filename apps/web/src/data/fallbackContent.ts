@@ -33,13 +33,12 @@ export const fallbackContent: SiteContent = {
     logoText: "RACTYSH",
     items: [
       { label: "Ecosystem", href: "/#features" },
-      { label: "Services", href: "/services" },
+      { label: "Architecture Service", href: "/architecture-service" },
       { label: "Our Work", href: "/our-projects" },
       { label: "About Us", href: "/about" },
       { label: "Careers", href: "/careers" },
       { label: "Blog", href: "/blog" },
       { label: "Book Consultation", href: "/book-consultation" },
-      { label: "Contact", href: "/contact" },
       { label: "Founder", href: "/founder" }
     ]
   },

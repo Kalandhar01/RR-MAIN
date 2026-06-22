@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, CalendarCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import SplitText from "./home/SplitText";
+import { ContactCTA } from "./home/ContactCTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -174,6 +177,13 @@ export function ArchitectureServiceHubPage() {
   const serviceSectionRef = useRef<HTMLElement>(null);
   const serviceTrackRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  const [visibleCount, setVisibleCount] = useState(5);
+  const totalServices = subServices.length;
+  const hasMore = visibleCount < totalServices;
+
+  const loadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 5, totalServices));
+  };
 
   useEffect(() => {
     const root = rootRef.current;
@@ -184,14 +194,10 @@ export function ArchitectureServiceHubPage() {
 
     const context = gsap.context(() => {
       const shouldReduce = Boolean(reduceMotion) || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-ash-reveal]", root);
       const titleLines = gsap.utils.toArray<HTMLElement>("[data-ash-title-line]", root);
-      const masks = gsap.utils.toArray<HTMLElement>("[data-ash-mask]", root);
       const heroVisual = root.querySelector<HTMLElement>("[data-ash-hero-visual]");
       const heroImageParallax = root.querySelector<HTMLElement>("[data-ash-hero-image-parallax]");
       const heroImage = root.querySelector<HTMLElement>("[data-ash-hero-image]");
-      const panels = gsap.utils.toArray<HTMLElement>("[data-ash-panel]", root);
-      const panelImages = gsap.utils.toArray<HTMLElement>("[data-ash-panel-image]", root);
       const showcaseCards = gsap.utils.toArray<HTMLElement>("[data-ash-showcase-card]", root);
       const showcaseWindows = gsap.utils.toArray<HTMLElement>("[data-ash-showcase-window]", root);
       const showcaseImages = gsap.utils.toArray<HTMLElement>("[data-ash-showcase-image]", root);
@@ -201,18 +207,13 @@ export function ArchitectureServiceHubPage() {
       const showcaseDetails = gsap.utils.toArray<HTMLElement>("[data-ash-showcase-detail]", root);
       const showcaseIcons = gsap.utils.toArray<HTMLElement>("[data-ash-showcase-icon]", root);
       const blueprintPaths = gsap.utils.toArray<SVGPathElement>("[data-ash-draw]", root);
-      const mobileServiceCards = gsap.utils.toArray<HTMLElement>("[data-ash-mobile-service-card]", root);
 
       if (shouldReduce) {
         gsap.set(
           [
-            ...revealItems,
             ...titleLines,
-            ...masks,
             heroImageParallax,
             heroImage,
-            ...panels,
-            ...panelImages,
             ...showcaseCards,
             ...showcaseWindows,
             ...showcaseImages,
@@ -221,8 +222,7 @@ export function ArchitectureServiceHubPage() {
             ...showcaseSubtitles,
             ...showcaseDetails,
             ...showcaseIcons,
-            ...blueprintPaths,
-            ...mobileServiceCards
+            ...blueprintPaths
           ].filter(Boolean),
           {
             clearProps: "all"
@@ -278,41 +278,6 @@ export function ArchitectureServiceHubPage() {
         );
       }
 
-      revealItems.forEach((item) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 42 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.95,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 86%"
-            }
-          }
-        );
-      });
-
-      masks.forEach((mask) => {
-        gsap.fromTo(
-          mask,
-          { clipPath: "inset(0 0 100% 0)", y: 28, scale: 1.02 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            y: 0,
-            scale: 1,
-            duration: 1.2,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: mask,
-              start: "top 78%"
-            }
-          }
-        );
-      });
-
       blueprintPaths.forEach((path, index) => {
         const length = path.getTotalLength();
         gsap.fromTo(
@@ -330,62 +295,6 @@ export function ArchitectureServiceHubPage() {
           }
         );
       });
-
-      panels.forEach((panel, index) => {
-        gsap.fromTo(
-          panel,
-          { opacity: 0, y: 74, x: index % 2 === 0 ? 40 : -40, scale: 0.965 },
-          {
-            opacity: 1,
-            y: 0,
-            x: 0,
-            scale: 1,
-            duration: 1.05,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: panel,
-              start: "top 78%"
-            }
-          }
-        );
-      });
-
-      panelImages.forEach((image) => {
-        gsap.fromTo(
-          image,
-          { clipPath: "inset(0 0 0 36%)", scale: 1.16 },
-          {
-            clipPath: "inset(0 0 0 0%)",
-            scale: 1,
-            duration: 1.25,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: image,
-              start: "top 78%"
-            }
-          }
-        );
-      });
-
-      if (showcaseCards.length) {
-        gsap.fromTo(
-          showcaseCards,
-          { opacity: 0, y: 76, xPercent: 7, clipPath: "inset(0 38% 0 0)" },
-          {
-            opacity: 1,
-            y: 0,
-            xPercent: 0,
-            clipPath: "inset(0 0% 0 0)",
-            duration: 1.05,
-            stagger: 0.12,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: showcaseCards[0],
-              start: "top 78%"
-            }
-          }
-        );
-      }
 
       if (showcaseCards.length) {
         gsap.set(showcaseCards, {
@@ -583,29 +492,6 @@ export function ArchitectureServiceHubPage() {
         });
       });
 
-      serviceMotion.add("(max-width: 1023px)", () => {
-        if (!mobileServiceCards.length) return;
-
-        mobileServiceCards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 36, scale: 0.95, transformOrigin: "50% 72%" },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.9,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 84%",
-                once: true
-              }
-            }
-          );
-        });
-      });
-
       gsap.utils.toArray<HTMLElement>("[data-ash-depth]", root).forEach((layer) => {
         const depth = Number(layer.dataset.ashDepth ?? "1");
         gsap.to(layer, {
@@ -640,50 +526,60 @@ export function ArchitectureServiceHubPage() {
         <div className="relative z-10 mx-auto grid w-full max-w-[1540px] gap-x-9 gap-y-8 lg:grid-cols-[minmax(26rem,0.78fr)_minmax(0,1fr)] lg:items-center xl:gap-x-12">
           <div className="contents lg:block lg:max-w-[42rem] lg:-translate-y-6">
             <div className="order-1 max-w-[42rem] lg:max-w-none">
-              <p data-ash-reveal className="text-xs font-semibold uppercase leading-none tracking-[0.28em] text-[#8B0E14]">
-                RACTYSH ARCHITECTURE
-              </p>
+              <ScrollReveal>
+                <p className="text-xs font-semibold uppercase leading-none tracking-[0.28em] text-[#8B0E14]">
+                  RACTYSH ARCHITECTURE
+                </p>
+              </ScrollReveal>
 
               <h1
-                aria-label="Designing Spaces. Creating Identity."
-                className="ash-hero-title mt-6 overflow-hidden font-display text-6xl font-semibold leading-[0.88] tracking-normal text-[#111111] sm:text-7xl lg:text-8xl"
+                className="ash-hero-title mt-6 overflow-hidden font-display text-[clamp(2.25rem,5.5vw,5rem)] font-semibold leading-[0.88] tracking-normal text-[#111111] sm:text-[clamp(2.8rem,6vw,5.5rem)] lg:text-8xl"
               >
-                <span data-ash-title-line className="ash-display-line block">
-                  Designing Spaces.
-                </span>
-                <span data-ash-title-line className="ash-display-line block text-[#8B0E14] [text-shadow:0_18px_52px_rgba(139,14,20,0.16)]">
-                  Creating Identity.
-                </span>
+                <SplitText
+                  text="Designing Spaces. Creating Identity."
+                  tag="span"
+                  className="block"
+                  splitType="lines"
+                  delay={60}
+                  duration={0.9}
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.3}
+                  rootMargin="-80px"
+                  textAlign="left"
+                />
               </h1>
             </div>
 
-            <p className="order-3 max-w-[28rem] text-base font-medium leading-8 text-[#5f554a] md:text-lg lg:mt-6">
-              A premium design studio for architectural, interior, structural, MEP, landscape, urban, 3D, rendering, furniture, lighting, elevation, commercial, PMC and logo design.
-            </p>
+            <div className="order-3 max-w-[28rem] lg:mt-6">
+              <ScrollReveal delay={0.1}>
+                <p className="text-base font-medium leading-8 text-[#5f554a] md:text-lg">
+                  A premium design studio for architectural, interior, structural, MEP, landscape, urban, 3D, rendering, furniture, lighting, elevation, commercial, PMC and logo design.
+                </p>
+              </ScrollReveal>
+            </div>
 
             <div className="order-4 flex flex-col gap-3 sm:flex-row lg:mt-8">
-              <Link
-                href="/book-consultation"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#8B0E14] bg-[#8B0E14] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#fff8ec] shadow-[0_18px_44px_rgba(139,14,20,0.2)] transition hover:-translate-y-0.5 hover:border-[#B88A44] hover:bg-[#741016]"
-              >
-                Book Consultation
-                <CalendarCheck className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#d8bf82] bg-white/62 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#17120f] transition hover:-translate-y-0.5 hover:border-[#8B0E14]"
-              >
-                Contact Service Desk
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                target="_blank"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#d8bf82] bg-white/62 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#8B0E14] transition hover:-translate-y-0.5 hover:border-[#8B0E14]"
-              >
-                For More Details, Check This
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <ScrollReveal delay={0.15}>
+                <Link
+                  href="/book-consultation"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#8B0E14] bg-[#8B0E14] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#fff8ec] shadow-[0_18px_44px_rgba(139,14,20,0.2)] transition hover:-translate-y-0.5 hover:border-[#B88A44] hover:bg-[#741016]"
+                >
+                  Book Consultation
+                  <CalendarCheck className="h-4 w-4" />
+                </Link>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.25}>
+                <Link
+                  href="#"
+                  target="_blank"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#d8bf82] bg-white/62 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#8B0E14] transition hover:-translate-y-0.5 hover:border-[#8B0E14]"
+                >
+                  For More Details, Check This
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </ScrollReveal>
             </div>
           </div>
 
@@ -720,52 +616,71 @@ export function ArchitectureServiceHubPage() {
 
         <div className="relative z-10 mx-auto mb-7 grid max-w-[1480px] gap-5 lg:mb-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:items-end">
           <div>
-            <p data-ash-reveal className="text-xs font-semibold uppercase tracking-[0.28em] text-[#8B0E14]">
-              Architecture Service Ecosystem
-            </p>
-            <h2 data-ash-reveal className="mt-4 max-w-[43rem] font-display text-4xl font-black leading-[0.98] tracking-normal text-[#15110d] md:text-5xl xl:text-6xl">
-              One Architecture Platform. 14 Specialized Services.
-            </h2>
+            <ScrollReveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#8B0E14]">
+                Architecture Service Ecosystem
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <h2 className="mt-4 max-w-[43rem] font-display text-4xl font-black leading-[0.98] tracking-normal text-[#15110d] md:text-5xl xl:text-6xl">
+                One Architecture Platform. 14 Specialized Services.
+              </h2>
+            </ScrollReveal>
           </div>
-          <p data-ash-reveal className="max-w-[35rem] text-base font-medium leading-8 text-[#665b50] md:text-lg">
-            A connected design platform where architectural, interior, structural, MEP, landscape, urban, 3D, rendering, furniture, lighting, elevation, commercial, PMC and logo design move as one premium studio workflow.
-          </p>
+          <ScrollReveal delay={0.1}>
+            <p className="max-w-[35rem] text-base font-medium leading-8 text-[#665b50] md:text-lg">
+              A connected design platform where architectural, interior, structural, MEP, landscape, urban, 3D, rendering, furniture, lighting, elevation, commercial, PMC and logo design move as one premium studio workflow.
+            </p>
+          </ScrollReveal>
         </div>
 
         <div className="relative z-10 mx-auto flex max-w-[36rem] flex-col gap-6 lg:hidden">
-          {subServices.map((service) => (
-            <Link
-              key={service.name}
-              href={service.href}
-              data-ash-mobile-service-card
-              className="group overflow-hidden rounded-[24px] border border-[#eadab3] bg-[#fffaf2] text-[#15110d] shadow-[0_22px_64px_rgba(54,34,16,0.12)] ring-1 ring-white/80"
-            >
-              <figure className="relative aspect-[1.08/1] min-h-[16rem] overflow-hidden bg-[#0f0c0a]">
-                <img
-                  src={service.image}
-                  alt={service.alt}
-                  className="h-full w-full object-cover opacity-[0.96] transition duration-[1200ms] ease-out group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,12,10,0.02),rgba(15,12,10,0.32))]" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/38 bg-white/86 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#8B0E14] shadow-[0_12px_34px_rgba(18,9,10,0.16)] backdrop-blur-xl">
-                  {service.number} / 14
-                </span>
-              </figure>
+          {subServices.slice(0, visibleCount).map((service, index) => (
+            <ScrollReveal key={service.name} delay={index * 0.04}>
+              <Link
+                href={service.href}
+                className="group overflow-hidden rounded-[24px] border border-[#eadab3] bg-[#fffaf2] text-[#15110d] shadow-[0_22px_64px_rgba(54,34,16,0.12)] ring-1 ring-white/80"
+              >
+                <figure className="relative aspect-[1.08/1] min-h-[16rem] overflow-hidden bg-[#0f0c0a]">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    className="object-cover opacity-[0.96] transition duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                    sizes="(max-width: 1023px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,12,10,0.02),rgba(15,12,10,0.32))]" />
+                  <span className="absolute left-4 top-4 rounded-full border border-white/38 bg-white/86 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#8B0E14] shadow-[0_12px_34px_rgba(18,9,10,0.16)] backdrop-blur-xl">
+                    {service.number} / 14
+                  </span>
+                </figure>
 
-              <div className="px-5 pb-6 pt-5">
-                <h3 className="font-display text-[2.45rem] font-semibold leading-[0.95] tracking-normal text-[#15110d]">
-                  {service.name}
-                </h3>
-                <p className="mt-4 text-[0.96rem] font-medium leading-7 text-[#63584e]">
-                  {service.description}
-                </p>
-              </div>
-            </Link>
+                <div className="px-5 pb-6 pt-5">
+                  <h3 className="font-display text-[2.45rem] font-semibold leading-[0.95] tracking-normal text-[#15110d]">
+                    {service.name}
+                  </h3>
+                  <p className="mt-4 text-[0.96rem] font-medium leading-7 text-[#63584e]">
+                    {service.description}
+                  </p>
+                </div>
+              </Link>
+            </ScrollReveal>
           ))}
         </div>
 
+        {hasMore && (
+          <div className="mt-8 flex justify-center lg:hidden">
+            <button
+              onClick={loadMore}
+              className="group relative inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-[8px] border border-[#d8b765]/50 bg-[#fffaf0] px-8 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#8B0E14] shadow-[0_4px_20px_rgba(184,138,68,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:border-[#d8b765] hover:shadow-[0_12px_40px_rgba(184,138,68,0.12)] animate-[loadMoreFloat_3s_ease-in-out_infinite]"
+            >
+              <span className="relative z-10">Load More</span>
+            </button>
+          </div>
+        )}
+
         <div ref={serviceTrackRef} className="relative z-10 mx-auto hidden max-w-[1480px] flex-col gap-5 lg:flex lg:w-max lg:max-w-none lg:flex-row lg:items-stretch lg:pb-4">
-          {subServices.map((service) => (
+          {subServices.slice(0, visibleCount).map((service) => (
             <Link
               key={service.name}
               href={service.href}
@@ -774,11 +689,13 @@ export function ArchitectureServiceHubPage() {
               className="ash-service-panel ash-ecosystem-panel group grid min-h-[31rem] overflow-hidden rounded-[8px] border border-[#d8bf82] bg-[#fffaf0] text-[#15110d] shadow-[0_34px_110px_rgba(54,34,16,0.12)] transition-[grid-template-columns,transform,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-[#8B0E14]/36 hover:shadow-[0_46px_140px_rgba(54,34,16,0.18)] lg:min-h-[34rem] lg:w-[82vw] lg:max-w-[1180px] lg:grid-cols-[minmax(0,0.58fr)_minmax(24rem,0.42fr)] lg:hover:grid-cols-[minmax(0,0.64fr)_minmax(23rem,0.36fr)]"
             >
               <figure className="relative min-h-[22rem] overflow-hidden bg-[#0f0c0a] lg:min-h-full">
-                <img
+                <Image
                   data-ash-panel-image
                   src={service.image}
                   alt={service.alt}
-                  className="h-full w-full object-cover opacity-[0.94] transition duration-[1400ms] ease-out group-hover:scale-[1.06] group-hover:opacity-100"
+                  fill
+                  className="object-cover opacity-[0.94] transition duration-[1400ms] ease-out group-hover:scale-[1.06] group-hover:opacity-100"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,12,10,0.05),rgba(15,12,10,0.08)_48%,rgba(15,12,10,0.44)),linear-gradient(180deg,transparent,rgba(15,12,10,0.38))]" />
                 <div className="absolute bottom-6 left-6 rounded-[8px] border border-[#d8b765]/36 bg-[#12090a]/52 px-4 py-3 text-[#fff8ec] shadow-[0_18px_48px_rgba(0,0,0,0.22)] backdrop-blur-xl">
@@ -804,6 +721,17 @@ export function ArchitectureServiceHubPage() {
             </Link>
           ))}
         </div>
+
+        {hasMore && (
+          <div className="mt-8 hidden justify-center lg:flex">
+            <button
+              onClick={loadMore}
+              className="group relative inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-[8px] border border-[#d8b765]/50 bg-[#fffaf0] px-8 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#8B0E14] shadow-[0_4px_20px_rgba(184,138,68,0.06)] transition-all duration-500 hover:-translate-y-0.5 hover:border-[#d8b765] hover:shadow-[0_12px_40px_rgba(184,138,68,0.12)] animate-[loadMoreFloat_3s_ease-in-out_infinite]"
+            >
+              <span className="relative z-10">Load More</span>
+            </button>
+          </div>
+        )}
       </section>
 
       <section className="relative overflow-hidden bg-[#fffdf8] px-5 py-20 text-[#15110d] sm:px-6 md:px-8 lg:py-28 xl:px-12">
@@ -811,120 +739,84 @@ export function ArchitectureServiceHubPage() {
         <div className="relative z-10 mx-auto max-w-[1480px]">
           <div className="mb-12 grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:items-end">
             <div>
-              <p data-ash-reveal className="text-xs font-semibold uppercase tracking-[0.28em] text-[#8B0E14]">
-                Showcase
-              </p>
-              <h2 data-ash-reveal className="mt-5 font-display text-5xl font-black leading-[0.95] tracking-normal text-[#15110d] md:text-7xl">
-                Ultra-wide architectural presence.
-              </h2>
+              <ScrollReveal>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#8B0E14]">
+                  Showcase
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={0.05}>
+                <h2 className="mt-5 font-display text-5xl font-black leading-[0.95] tracking-normal text-[#15110d] md:text-7xl">
+                  Ultra-wide architectural presence.
+                </h2>
+              </ScrollReveal>
             </div>
-            <p data-ash-reveal className="max-w-[34rem] text-base font-medium leading-8 text-[#665b50] md:text-lg">
-              Villas, corporate environments, interiors, landscapes, renders and all architecture services are treated as one visual language.
-            </p>
+            <ScrollReveal delay={0.1}>
+              <p className="max-w-[34rem] text-base font-medium leading-8 text-[#665b50] md:text-lg">
+                Villas, corporate environments, interiors, landscapes, renders and all architecture services are treated as one visual language.
+              </p>
+            </ScrollReveal>
           </div>
 
           <div data-ash-showcase-stage className="ash-showcase-stage flex flex-col gap-5">
             {showcaseItems.map((item, index) => (
-              <article
-                key={item.title}
-                data-ash-showcase-card
-                tabIndex={0}
-                className={`ash-showcase-card relative overflow-hidden rounded-[8px] border border-white/12 bg-[#0f0c0a] shadow-[0_34px_120px_rgba(0,0,0,0.28)] outline-none focus-visible:ring-2 focus-visible:ring-[#d8b765]/70 ${
-                  index === 0 ? "min-h-[34rem] lg:min-h-[36rem]" : "min-h-[25rem] lg:min-h-[29rem]"
-                } ${index % 2 === 0 ? "lg:self-start" : "lg:self-end"} lg:w-[84%]`}
-              >
-                <figure data-ash-showcase-window className="absolute inset-0 overflow-hidden">
-                  <img
-                    data-ash-showcase-image
-                    src={item.image}
-                    alt={item.alt}
-                    className="absolute inset-0 h-full w-full object-cover"
+              <ScrollReveal key={item.title} delay={index * 0.1}>
+                <article
+                  data-ash-showcase-card
+                  tabIndex={0}
+                  className={`ash-showcase-card relative overflow-hidden rounded-[8px] border border-white/12 bg-[#0f0c0a] shadow-[0_34px_120px_rgba(0,0,0,0.28)] outline-none focus-visible:ring-2 focus-visible:ring-[#d8b765]/70 ${
+                    index === 0 ? "min-h-[34rem] lg:min-h-[36rem]" : "min-h-[25rem] lg:min-h-[29rem]"
+                  } ${index % 2 === 0 ? "lg:self-start" : "lg:self-end"} lg:w-[84%]`}
+                >
+                  <figure data-ash-showcase-window className="absolute inset-0 overflow-hidden">
+                    <Image
+                      data-ash-showcase-image
+                      src={item.image}
+                      alt={item.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 84vw, 100vw"
+                    />
+                  </figure>
+                  <div
+                    data-ash-showcase-overlay
+                    className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,9,8,0.78),rgba(13,9,8,0.18)_52%,rgba(13,9,8,0.46)),linear-gradient(180deg,rgba(13,9,8,0),rgba(13,9,8,0.72))]"
                   />
-                </figure>
-                <div
-                  data-ash-showcase-overlay
-                  className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,9,8,0.78),rgba(13,9,8,0.18)_52%,rgba(13,9,8,0.46)),linear-gradient(180deg,rgba(13,9,8,0),rgba(13,9,8,0.72))]"
-                />
-                <div className="pointer-events-none absolute inset-x-8 top-8 h-px bg-[linear-gradient(90deg,rgba(216,183,101,0.82),rgba(255,248,236,0.2),transparent)] opacity-80" />
-                <div className="absolute bottom-0 left-0 right-0 flex flex-wrap items-end justify-between gap-6 p-6 md:p-10">
-                  <div className="max-w-[46rem]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#d8b765]">0{index + 1}</p>
-                    <h3 data-ash-showcase-title className="mt-3 font-display text-4xl font-semibold leading-none tracking-normal text-[#fff8ec] md:text-6xl">
-                      {item.title}
-                    </h3>
-                    <p data-ash-showcase-subtitle className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-[#d8b765]">
-                      {item.subtitle}
-                    </p>
-                    <div
-                      data-ash-showcase-detail
-                      className="mt-5 max-w-[33rem]"
-                      style={{ opacity: 0, transform: "translate3d(0, 18px, 0)" }}
-                    >
-                      <span className="block h-px w-28 bg-[linear-gradient(90deg,#d8b765,transparent)]" />
-                      <p className="mt-4 text-base font-medium leading-7 text-[#fff8ec]/78 md:text-lg">
-                        {item.detail}
+                  <div className="pointer-events-none absolute inset-x-8 top-8 h-px bg-[linear-gradient(90deg,rgba(216,183,101,0.82),rgba(255,248,236,0.2),transparent)] opacity-80" />
+                  <div className="absolute bottom-0 left-0 right-0 flex flex-wrap items-end justify-between gap-6 p-6 md:p-10">
+                    <div className="max-w-[46rem]">
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">0{index + 1}</p>
+                      <h3 data-ash-showcase-title className="mt-3 font-display text-4xl font-semibold leading-none tracking-normal text-white md:text-6xl">
+                        {item.title}
+                      </h3>
+                      <p data-ash-showcase-subtitle className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                        {item.subtitle}
                       </p>
+                      <div
+                        data-ash-showcase-detail
+                        className="mt-5 max-w-[33rem]"
+                        style={{ opacity: 0, transform: "translate3d(0, 18px, 0)" }}
+                      >
+                        <span className="block h-px w-28 bg-[linear-gradient(90deg,#d8b765,transparent)]" />
+                        <p className="mt-4 text-base font-medium leading-7 text-white/80 md:text-lg">
+                          {item.detail}
+                        </p>
+                      </div>
                     </div>
+                    <span
+                      data-ash-showcase-icon
+                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d8b765]/42 bg-white/10 text-white/90 backdrop-blur-xl"
+                    >
+                      <Sparkles className="h-5 w-5" />
+                    </span>
                   </div>
-                  <span
-                    data-ash-showcase-icon
-                    className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d8b765]/42 bg-white/10 text-[#d8b765] backdrop-blur-xl"
-                  >
-                    <Sparkles className="h-5 w-5" />
-                  </span>
-                </div>
-              </article>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden px-5 py-20 sm:px-6 md:px-8 lg:py-28 xl:px-12">
-        <ArchitectureAtmosphere compact />
-        <div data-ash-mask className="relative mx-auto min-h-[38rem] max-w-[1480px] overflow-hidden rounded-[8px] border border-[#d8b765]/28 bg-[#13090b] px-6 py-10 text-[#fff8ec] shadow-[0_44px_140px_rgba(52,29,15,0.24)] md:px-10 md:py-14 lg:px-14">
-          <img
-            data-ash-depth="1"
-            src="/contact/enterprise-architecture-workspace.webp"
-            alt="Architecture consultation workspace"
-            className="absolute inset-0 h-[112%] w-full object-cover opacity-[0.58]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,8,8,0.94),rgba(13,8,8,0.55)_52%,rgba(13,8,8,0.78)),radial-gradient(circle_at_76%_24%,rgba(216,183,101,0.2),transparent_30rem)]" />
-          <BlueprintDrawing dark className="opacity-10" />
-          <div className="relative z-10 flex min-h-[30rem] max-w-[52rem] flex-col justify-end">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d8b765]">Architecture Consultation</p>
-            <h2 className="mt-5 font-display text-5xl font-black leading-[0.92] tracking-normal text-[#fff8ec] md:text-7xl">
-              Start Your Design Journey
-            </h2>
-            <p className="mt-6 max-w-[34rem] text-base font-medium leading-8 text-[#fff8ec]/72 md:text-lg">
-              Bring the site, ambition and desired identity. The studio will shape the right path forward.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/book-consultation"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#8B0E14] bg-[#8B0E14] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#fff8ec] shadow-[0_18px_44px_rgba(139,14,20,0.2)] transition hover:-translate-y-0.5 hover:border-[#d8b765] hover:bg-[#741016]"
-              >
-                Book Consultation
-                <CalendarCheck className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#d8b765] bg-[#fffaf0] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#17120f] transition hover:-translate-y-0.5 hover:border-[#8B0E14] hover:bg-white"
-              >
-                Contact Service Desk
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                target="_blank"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#d8b765] bg-[#fffaf0] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#8B0E14] transition hover:-translate-y-0.5 hover:border-[#8B0E14] hover:bg-white"
-              >
-                For More Details, Check This
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactCTA />
     </article>
   );
 }
@@ -942,21 +834,4 @@ function ArchitectureAtmosphere({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function BlueprintDrawing({ className = "", dark = false }: { className?: string; dark?: boolean }) {
-  const stroke = dark ? "#d8b765" : "#8B0E14";
-  const softStroke = dark ? "#fff8ec" : "#B88A44";
 
-  return (
-    <svg className={`pointer-events-none absolute inset-0 z-10 ${className}`} viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden>
-      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path data-ash-draw d="M126 600 L284 336 L450 600 Z" stroke={stroke} strokeWidth="1.4" opacity="0.42" />
-        <path data-ash-draw d="M366 600 L598 198 L840 600 Z" stroke={softStroke} strokeWidth="1.6" opacity="0.5" />
-        <path data-ash-draw d="M520 600 L520 382 L710 382 L710 600" stroke={stroke} strokeWidth="1.2" opacity="0.34" />
-        <path data-ash-draw d="M160 600 H1038" stroke={softStroke} strokeWidth="1.1" opacity="0.36" />
-        <path data-ash-draw d="M240 512 H962" stroke={stroke} strokeWidth="1" opacity="0.28" />
-        <path data-ash-draw d="M304 424 H898" stroke={softStroke} strokeWidth="1" opacity="0.28" />
-        <path data-ash-draw d="M388 336 H812" stroke={stroke} strokeWidth="1" opacity="0.24" />
-      </g>
-    </svg>
-  );
-}

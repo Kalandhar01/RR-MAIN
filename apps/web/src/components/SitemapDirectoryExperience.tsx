@@ -35,12 +35,11 @@ const companyLinks: DirectoryLink[] = [
   { label: "Directors", href: "/directors", description: "Executive leadership and governance presence." },
   { label: "Careers", href: "/careers", description: "Premium career paths, internships and team opportunities." },
   { label: "Blog", href: "/blog", description: "Enterprise briefings, editorial updates and operating insights." },
-  { label: "Contact", href: "/contact", description: "Direct communication with the Ractysh enterprise desk." },
   { label: "Book Consultation", href: "/book-consultation", description: "A structured intake for project, design and trade requirements." }
 ];
 
 const ecosystemLinks: DirectoryLink[] = [
-  { label: "Services", href: "/services", description: "A consolidated view of Ractysh service capabilities." },
+  { label: "Architecture Service", href: "/architecture-service", description: "Premium architecture design, planning and visualization services." },
   { label: "Our Work", href: "/our-projects", description: "Selected environments across Architecture, Construction, Real Estate, Trade and OTC Exchange." },
   { label: "Architecture", href: "/architecture", description: "Design ecosystem overview and spatial intelligence." },
   { label: "Construction", href: "/construction", description: "Construction execution, site control and turnkey delivery systems." },
@@ -137,7 +136,7 @@ export function SitemapDirectoryExperience({ content }: SitemapDirectoryExperien
     {
       eyebrow: "Company",
       title: "Corporate Routes",
-      description: "Core destinations for understanding Ractysh, contacting the team and starting a consultation.",
+      description: "Core destinations for understanding Ractysh and starting a consultation.",
       links: companyLinks
     },
     {

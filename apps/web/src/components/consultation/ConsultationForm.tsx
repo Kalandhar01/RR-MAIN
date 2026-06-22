@@ -22,23 +22,12 @@ const serviceTypes = [
 
 const consultationTypes = ["Virtual Meeting", "Office Consultation", "Site Visit"] as const;
 
-const budgetRanges = [
-  "Strategic advisory only",
-  "Under INR 10 lakh",
-  "INR 10 lakh - INR 50 lakh",
-  "INR 50 lakh - INR 2 crore",
-  "INR 2 crore - INR 10 crore",
-  "INR 10 crore+ enterprise program"
-];
 
-const projectTimelines = ["Immediate", "30 - 60 days", "This quarter", "3 - 6 months", "6+ months", "Exploratory"];
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const toSelectOptions = (items: readonly string[]) => items.map((item) => ({ value: item, label: item }));
 
 const serviceTypeOptions = toSelectOptions(serviceTypes);
-const budgetRangeOptions = toSelectOptions(budgetRanges);
-const projectTimelineOptions = toSelectOptions(projectTimelines);
 
 const allowedFileTypes = [
   "application/pdf",
@@ -87,8 +76,6 @@ const consultationFormSchema = z.object({
       (value) => serviceTypes.includes(value as (typeof serviceTypes)[number]),
       "Please select a consultation topic."
     ),
-  budgetRange: trimOptionalText(80, "Budget range is too long."),
-  projectTimeline: trimOptionalText(80, "Project timeline is too long."),
   projectDescription: z
     .string()
     .trim()
@@ -146,8 +133,6 @@ const formFieldNames = [
   "emailAddress",
   "phoneNumber",
   "serviceType",
-  "budgetRange",
-  "projectTimeline",
   "projectDescription",
   "requirementFiles",
   "preferredConsultationType"
@@ -321,8 +306,6 @@ export function ConsultationForm() {
       emailAddress: "",
       phoneNumber: "",
       serviceType: "",
-      budgetRange: "",
-      projectTimeline: "",
       projectDescription: "",
       preferredConsultationType: "Virtual Meeting"
     }
@@ -331,8 +314,6 @@ export function ConsultationForm() {
   const selectedFiles = watch("requirementFiles");
   const preferredType = watch("preferredConsultationType");
   const serviceTypeValue = watch("serviceType") ?? "";
-  const budgetRangeValue = watch("budgetRange") ?? "";
-  const projectTimelineValue = watch("projectTimeline") ?? "";
   const fileList = useMemo(() => (selectedFiles ? Array.from(selectedFiles) : []), [selectedFiles]);
   const isDelivered = Boolean(deliveryReceipt);
 
@@ -373,8 +354,6 @@ export function ConsultationForm() {
       emailAddress: "",
       phoneNumber: "",
       serviceType: "",
-      budgetRange: "",
-      projectTimeline: "",
       projectDescription: "",
       preferredConsultationType: "Virtual Meeting"
     });
@@ -390,8 +369,6 @@ export function ConsultationForm() {
       payload.append("emailAddress", values.emailAddress);
       payload.append("phoneNumber", values.phoneNumber);
       payload.append("serviceType", values.serviceType);
-      payload.append("budgetRange", values.budgetRange);
-      payload.append("projectTimeline", values.projectTimeline);
       payload.append("projectDescription", values.projectDescription);
       payload.append("preferredConsultationType", values.preferredConsultationType);
 
@@ -472,7 +449,7 @@ export function ConsultationForm() {
               exit={{ opacity: 0, y: -10, scale: 0.985 }}
               viewport={{ once: true, amount: 0.18 }}
               transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-              className="mx-auto mt-10 overflow-hidden rounded-[2rem] border border-white/70 bg-white/72 p-4 shadow-[0_34px_110px_rgba(23,36,58,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-2xl md:p-6"
+              className="mx-auto mt-10 overflow-hidden rounded-[2rem] border border-white/70 bg-white/72 p-4 pb-0 shadow-[0_34px_110px_rgba(23,36,58,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-2xl md:p-6 md:pb-0"
             >
           <div className="grid gap-5 lg:grid-cols-2">
             <FieldShell id="fullName" label="Full Name" required error={errors.fullName?.message}>
@@ -540,34 +517,6 @@ export function ConsultationForm() {
                 placeholder="Select topic"
                 options={serviceTypeOptions}
                 onChange={(nextValue) => setValue("serviceType", nextValue, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
-              />
-            </FieldShell>
-
-            <FieldShell id="budgetRange" label="Budget Range" error={errors.budgetRange?.message}>
-              <input type="hidden" {...register("budgetRange")} />
-              <PremiumSelect
-                id="budgetRange"
-                disabled={isSubmitting}
-                invalid={Boolean(errors.budgetRange)}
-                describedBy={errors.budgetRange ? "budgetRange-error" : undefined}
-                value={budgetRangeValue}
-                placeholder="Select range"
-                options={budgetRangeOptions}
-                onChange={(nextValue) => setValue("budgetRange", nextValue, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
-              />
-            </FieldShell>
-
-            <FieldShell id="projectTimeline" label="Project Timeline" error={errors.projectTimeline?.message}>
-              <input type="hidden" {...register("projectTimeline")} />
-              <PremiumSelect
-                id="projectTimeline"
-                disabled={isSubmitting}
-                invalid={Boolean(errors.projectTimeline)}
-                describedBy={errors.projectTimeline ? "projectTimeline-error" : undefined}
-                value={projectTimelineValue}
-                placeholder="Select timeline"
-                options={projectTimelineOptions}
-                onChange={(nextValue) => setValue("projectTimeline", nextValue, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
               />
             </FieldShell>
 

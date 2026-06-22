@@ -17,12 +17,7 @@ export function MarketingChrome({ content, children, className }: MarketingChrom
       <main className="min-h-screen bg-[#f8f4ea] text-[#201714]">
         {children}
       </main>
-      <Footer
-        headline={content.footer.headline}
-        description={content.footer.description}
-        links={content.footer.links}
-        socialLinks={content.footer.socialLinks}
-      />
+      <Footer />
     </>
   );
 

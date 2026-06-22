@@ -46,7 +46,7 @@ export async function subscribeNewsletterSubscriber(input: {
 
       try {
         const subscriber = await prisma.newsletterSubscriber.create({
-          data: { email, division: input.division || "ractysh-group" }
+          data: { email, division: input.division || "ractysh-group", source: input.source || "footer_newsletter" }
         });
         const dbMs = elapsedMs(dbStartedAt);
 

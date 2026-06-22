@@ -232,10 +232,10 @@ export function TermsConditionsExperience({ content, document: legalDocument }: 
               For enterprise legal inquiries, connect with the Ractysh operations desk.
             </p>
             <Link
-              href="/contact"
+              href="/book-consultation"
               className="group mt-6 inline-flex min-h-12 items-center justify-center gap-2.5 rounded-[12px] border border-[#d6b45f]/42 bg-[#11100e] px-5 text-[0.86rem] font-semibold text-[#fff8ec] shadow-[0_16px_38px_rgba(15,14,12,0.21),0_0_18px_rgba(214,180,95,0.14)] transition duration-300 hover:-translate-y-0.5 hover:border-[#d6b45f]/70 hover:shadow-[0_20px_50px_rgba(15,14,12,0.27),0_0_30px_rgba(214,180,95,0.24)] md:mt-0"
             >
-              Contact Enterprise Desk
+              Book Consultation
               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </Reveal>

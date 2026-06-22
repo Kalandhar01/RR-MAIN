@@ -235,14 +235,14 @@ const knowledgeBase: KnowledgeEntry[] = [
     category: "OTC Exchange"
   },
   {
-    keywords: ["book consultation", "consultation", "contact", "book", "appointment"],
+    keywords: ["book consultation", "consultation", "book", "appointment"],
     title: "Book a Consultation",
-    content: "You can book a consultation with Ractysh Group by visiting the Book Consultation page or contacting via email at noorulsmart1998@gmail.com or phone at +91 9080844114.",
+    content: "You can book a consultation with Ractysh Group by visiting the Book Consultation page or using email at noorulsmart1998@gmail.com or phone at +91 9080844114.",
     category: "General"
   },
   {
-    keywords: ["contact", "email", "phone", "address", "location"],
-    title: "Contact Information",
+    keywords: ["email", "phone", "address", "location"],
+    title: "Consultation Information",
     content: "Email: noorulsmart1998@gmail.com, Mobile: +91 9080844114, Office: +91 9443855819. Locations: Coimbatore, Palani, Dindigul.",
     category: "General"
   },

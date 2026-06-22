@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitText from "./home/SplitText";
 import {
   ArrowRight,
   Armchair,
@@ -17,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { ServiceRequestCTA } from "@/components/ServiceRequestCTA";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -95,7 +97,6 @@ export function InteriorDesignCinematicPage() {
     if (!root) return;
 
     const context = gsap.context(() => {
-      const revealItems = gsap.utils.toArray<HTMLElement>("[data-interior-reveal]", root);
       const parallaxLayers = gsap.utils.toArray<HTMLElement>("[data-interior-parallax]", root);
       const imageLayers = gsap.utils.toArray<HTMLElement>("[data-interior-image]", root);
       const glowLayers = gsap.utils.toArray<HTMLElement>("[data-interior-glow]", root);
@@ -104,7 +105,6 @@ export function InteriorDesignCinematicPage() {
       const materialHighlights = gsap.utils.toArray<HTMLElement>("[data-interior-material-highlight]", root);
 
       if (reduceMotion) {
-        gsap.set(revealItems, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" });
         gsap.set(parallaxLayers, { yPercent: 0, xPercent: 0 });
         gsap.set(imageLayers, { yPercent: 0, scale: 1 });
         gsap.set([sceneShell, ...sceneAccents, ...materialHighlights].filter(Boolean), {
@@ -115,25 +115,7 @@ export function InteriorDesignCinematicPage() {
         return;
       }
 
-      gsap.set(revealItems, { opacity: 0, y: 70, scale: 0.985, filter: "blur(8px)", force3D: true });
       gsap.set(sceneShell, { opacity: 0, y: 42, scale: 0.985, filter: "blur(12px)", force3D: true });
-
-      revealItems.forEach((item, index) => {
-        gsap.to(item, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          duration: 1.1,
-          delay: Math.min(index * 0.04, 0.18),
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 84%",
-            once: true
-          }
-        });
-      });
 
       parallaxLayers.forEach((layer) => {
         const speed = Number(layer.dataset.speed || 8);
@@ -305,35 +287,36 @@ function InteriorHero({
       />
       <div className="relative mx-auto grid w-full max-w-[1320px] gap-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(28rem,1.18fr)] lg:items-center xl:gap-16">
         <div className="relative z-20">
-          <motion.p
-            data-interior-reveal
-            className="text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#9A7428]"
-          >
-            Luxury Interior Systems
-          </motion.p>
+          <ScrollReveal>
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#9A7428]">
+              Luxury Interior Systems
+            </p>
+          </ScrollReveal>
           <h1
             aria-label="Crafting interiors with spatial emotion."
-            className="mt-6 max-w-[46rem] font-display text-[3.25rem] font-[650] leading-[0.94] tracking-normal text-[#181512] sm:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.35rem]"
+            className="mt-6 max-w-[46rem] font-display text-[clamp(2.2rem,5.5vw,3.25rem)] font-[650] leading-[0.94] tracking-normal text-[#181512] sm:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.35rem]"
           >
-            {["Crafting interiors", "with spatial emotion."].map((line, index) => (
-              <motion.span
-                key={line}
-                data-interior-reveal
-                aria-hidden="true"
-                className={index === 1 ? "block text-[#74675b]" : "block"}
-              >
-                {line}
-              </motion.span>
-            ))}
+            <SplitText
+              text="Crafting interiors with spatial emotion."
+              tag="span"
+              className="block"
+              splitType="lines"
+              delay={60}
+              duration={0.9}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.3}
+              rootMargin="-80px"
+              textAlign="left"
+            />
           </h1>
-          <motion.p
-            data-interior-reveal
-            className="mt-7 max-w-[38rem] text-[1rem] font-medium leading-7 text-[#665f55] md:text-[1.08rem]"
-          >
-            Luxury interiors, premium materials, cinematic lighting and spatial storytelling designed for modern
-            residential and commercial environments.
-          </motion.p>
-          <motion.div data-interior-reveal className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <ScrollReveal>
+            <p className="mt-7 max-w-[38rem] text-[1rem] font-medium leading-7 text-[#665f55] md:text-[1.08rem]">
+              Luxury interiors, premium materials, cinematic lighting and spatial storytelling designed for modern
+              residential and commercial environments.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal className="mt-10 flex flex-col gap-3 sm:flex-row">
             <Link
               href="#interior-stories"
               className="group inline-flex min-h-[3.05rem] items-center justify-center gap-2.5 rounded-[8px] border border-[#181512]/10 bg-[#090807] px-5 text-[0.9rem] font-semibold text-[#fff8ec] shadow-[0_18px_48px_rgba(24,21,18,0.18),0_0_30px_rgba(214,180,95,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_58px_rgba(24,21,18,0.24),0_0_40px_rgba(214,180,95,0.24)]"
@@ -348,7 +331,7 @@ function InteriorHero({
               View Spatial Concepts
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-          </motion.div>
+          </ScrollReveal>
         </div>
 
         <motion.div
@@ -395,7 +378,7 @@ function InteriorStoryIntro() {
   return (
     <section id="interior-stories" className="relative z-10 px-5 py-16 sm:px-6 md:px-8 lg:py-24">
       <div className="mx-auto max-w-[1180px]">
-        <div data-interior-reveal className="max-w-[48rem]">
+        <ScrollReveal className="max-w-[48rem]">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#9A7428]">
             Spatial Concepts
           </p>
@@ -406,7 +389,7 @@ function InteriorStoryIntro() {
             Every room is treated as a sequence of atmosphere, proportion, material and light, designed to feel effortless
             while remaining technically controlled.
           </p>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -436,11 +419,11 @@ function InteriorStorySection({
         }`}
       >
         <div className={reverse ? "lg:order-2" : ""}>
-          <motion.div
-            data-interior-reveal
-            whileHover={{ y: -8, scale: 1.006 }}
-            transition={{ duration: 0.45, ease }}
-            className="group relative min-h-[420px] overflow-hidden rounded-[1.55rem] border border-[#d8c99d]/54 bg-[#efe5d7] shadow-[0_34px_110px_rgba(82,61,32,0.13),inset_0_1px_0_rgba(255,255,255,0.78)] lg:min-h-[620px]"
+          <ScrollReveal delay={index * 0.04}>
+            <motion.div
+              whileHover={{ y: -8, scale: 1.006 }}
+              transition={{ duration: 0.45, ease }}
+              className="group relative min-h-[420px] overflow-hidden rounded-[1.55rem] border border-[#d8c99d]/54 bg-[#efe5d7] shadow-[0_34px_110px_rgba(82,61,32,0.13),inset_0_1px_0_rgba(255,255,255,0.78)] lg:min-h-[620px]"
           >
             <div
               data-interior-image
@@ -461,11 +444,12 @@ function InteriorStorySection({
                 </span>
               ))}
             </div>
-          </motion.div>
+            </motion.div>
+          </ScrollReveal>
         </div>
 
         <div className={reverse ? "lg:order-1" : ""}>
-          <div data-interior-reveal className="max-w-[35rem]">
+          <ScrollReveal className="max-w-[35rem]" delay={index * 0.04 + 0.06}>
             <div className="flex h-12 w-12 items-center justify-center rounded-[0.9rem] border border-[#d6b45f]/24 bg-[#fffdf8]/72 text-[#9A7428] shadow-[0_14px_34px_rgba(98,78,34,0.09)]">
               <Icon className="h-5 w-5" strokeWidth={1.8} />
             </div>
@@ -490,7 +474,7 @@ function InteriorStorySection({
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
@@ -502,8 +486,7 @@ function InteriorFinalCTA() {
     <section className="relative z-10 isolate overflow-hidden px-5 py-20 sm:px-6 md:px-8 lg:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(214,180,95,0.22),transparent_34rem),linear-gradient(180deg,transparent,#F5F1E9)]" />
       <div className="interior-ambient-grid pointer-events-none absolute inset-0 opacity-[0.34]" />
-      <div
-        data-interior-reveal
+      <ScrollReveal
         className="relative mx-auto max-w-[1100px] overflow-hidden rounded-[1.7rem] border border-[#d8c99d]/58 bg-[#fffdf8]/70 px-6 py-16 text-center shadow-[0_34px_110px_rgba(82,61,32,0.13),inset_0_1px_0_rgba(255,255,255,0.88)] md:px-10 md:py-20"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(214,180,95,0.2),transparent_26rem),linear-gradient(135deg,rgba(255,255,255,0.78),rgba(214,180,95,0.06))]" />
@@ -527,13 +510,13 @@ function InteriorFinalCTA() {
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <ServiceRequestCTA className="items-center" showLabel={false} />
-            <Link href="/contact" className="premium-cta-secondary group min-w-[12rem]">
-              Contact Studio
+            <Link href="/book-consultation" className="premium-cta-secondary group min-w-[12rem]">
+              Book Consultation
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

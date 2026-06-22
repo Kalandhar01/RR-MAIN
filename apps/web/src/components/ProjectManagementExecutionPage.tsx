@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import SplitText from "./home/SplitText";
 import {
   ArrowRight,
   BarChart3,
@@ -415,20 +416,21 @@ function HeroSection() {
 
           <h1
             aria-label="Project execution coordinated through precision systems."
-            className="mt-7 max-w-[760px] font-display text-[3.35rem] font-semibold leading-[0.94] text-[#18130f] sm:text-[4.65rem] lg:text-[5.25rem] xl:text-[5.9rem]"
+            className="mt-7 max-w-[760px] font-display text-[clamp(2.2rem,5.5vw,3.35rem)] font-semibold leading-[0.94] text-[#18130f] sm:text-[4.65rem] lg:text-[5.25rem] xl:text-[5.9rem]"
           >
-            {["Project execution", "coordinated through", "precision systems."].map((line, index) => (
-              <motion.span
-                key={line}
-                aria-hidden="true"
-                initial={{ opacity: 0, y: 34 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.86, delay: 0.08 + index * 0.1, ease }}
-                className="block"
-              >
-                {line}
-              </motion.span>
-            ))}
+            <SplitText
+              text="Project execution coordinated through precision systems."
+              tag="span"
+              className="block"
+              splitType="lines"
+              delay={60}
+              duration={0.9}
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.3}
+              rootMargin="-80px"
+              textAlign="left"
+            />
           </h1>
 
           <motion.p
@@ -727,13 +729,6 @@ function ProjectExecutionCTA() {
           Bring project planning, construction coordination and delivery oversight into one calm operating layer.
         </p>
         <div className="mt-11 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link
-            href="/book-consultation"
-            className="pm-primary-cta group inline-flex min-h-[3.15rem] w-full items-center justify-center gap-2 rounded-[8px] border border-[#11100e] bg-[#11100e] px-6 text-[0.94rem] font-semibold text-[#fffaf0] transition duration-300 hover:-translate-y-1 hover:bg-[#050505] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b] sm:w-auto"
-          >
-            Book Consultation
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2.1} />
-          </Link>
           <ServiceRequestCTA
             className="w-full sm:w-auto"
             showLabel={false}

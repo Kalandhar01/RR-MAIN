@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ArrowLeft, Bell, DraftingCompass, Globe2 } from "lucide-react";
 import Link from "next/link";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
 
 interface FutureWorkConfig {
@@ -60,24 +61,6 @@ function FutureWorkPreview({ config }: { config: FutureWorkConfig }) {
     if (!root) return;
 
     const context = gsap.context(() => {
-      if (reduceMotion) {
-        gsap.set("[data-future-reveal]", { opacity: 1, y: 0, filter: "blur(0px)" });
-        return;
-      }
-
-      gsap.fromTo(
-        "[data-future-reveal]",
-        { opacity: 0, y: 34, filter: "blur(7px)" },
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 0.95,
-          stagger: 0.07,
-          ease: "power4.out"
-        }
-      );
-
       gsap.to("[data-future-glow]", {
         xPercent: 5,
         yPercent: -4,
@@ -100,55 +83,47 @@ function FutureWorkPreview({ config }: { config: FutureWorkConfig }) {
       <PreviewAtmosphere variant={config.atmosphere} />
 
       <section className="relative z-10 mx-auto flex w-full max-w-[720px] flex-col items-center text-center">
-        <motion.div
-          data-future-reveal
-          animate={reduceMotion ? undefined : { y: [0, -7, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="relative mb-5 flex h-[7.1rem] w-[7.1rem] items-center justify-center will-change-transform sm:mb-7 sm:h-[10.25rem] sm:w-[10.25rem]"
-          aria-hidden="true"
-        >
-          <Visual reduceMotion={Boolean(reduceMotion)} />
-        </motion.div>
+        <ScrollReveal className="relative mb-5 flex h-[7.1rem] w-[7.1rem] items-center justify-center will-change-transform sm:mb-7 sm:h-[10.25rem] sm:w-[10.25rem]">
+          <motion.div
+            animate={reduceMotion ? undefined : { y: [0, -7, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            aria-hidden="true"
+          >
+            <Visual reduceMotion={Boolean(reduceMotion)} />
+          </motion.div>
+        </ScrollReveal>
 
-        <p
-          data-future-reveal
-          className="text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#d6b45f] sm:text-[0.64rem]"
-        >
-          {config.label}
-        </p>
+        <ScrollReveal className="text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#d6b45f] sm:text-[0.64rem]">
+          <p>{config.label}</p>
+        </ScrollReveal>
 
-        <h1
-          data-future-reveal
-          className="mt-4 max-w-[680px] font-display text-[2.12rem] font-[650] leading-[0.95] tracking-[-0.04em] text-[#fff8ec] sm:mt-5 sm:text-[clamp(2.75rem,5.05vw,4.75rem)]"
-        >
-          {config.titleLines.map((line, index) => (
-            <span
-              key={line}
-              className={index === config.mutedLineIndex ? "block text-[#cfc2ad]" : "block text-[#f6ead8]"}
-            >
-              {line}
+        <ScrollReveal className="mt-4 max-w-[680px] font-display text-[2.12rem] font-[650] leading-[0.95] tracking-[-0.04em] text-[#fff8ec] sm:mt-5 sm:text-[clamp(2.75rem,5.05vw,4.75rem)]">
+          <h1>
+            {config.titleLines.map((line, index) => (
+              <span
+                key={line}
+                className={index === config.mutedLineIndex ? "block text-[#cfc2ad]" : "block text-[#f6ead8]"}
+              >
+                {line}
+              </span>
+            ))}
+          </h1>
+        </ScrollReveal>
+
+        <ScrollReveal className="mt-4 max-w-[520px] text-[0.86rem] font-medium leading-[1.6] text-[#b9ac9a] sm:mt-5 sm:text-[0.92rem] md:text-[0.95rem]">
+          <p>{config.body}</p>
+        </ScrollReveal>
+
+        <ScrollReveal className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-[#d6b45f]/20 bg-[#fff7e8]/[0.045] px-3.5 py-2 shadow-[0_16px_42px_rgba(0,0,0,0.2)] sm:mt-6">
+          <div>
+            <span className="future-status-dot relative h-2 w-2 rounded-full bg-[#d6b45f]" />
+            <span className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[#d8ccb8] sm:text-[0.62rem]">
+              {config.status}
             </span>
-          ))}
-        </h1>
+          </div>
+        </ScrollReveal>
 
-        <p
-          data-future-reveal
-          className="mt-4 max-w-[520px] text-[0.86rem] font-medium leading-[1.6] text-[#b9ac9a] sm:mt-5 sm:text-[0.92rem] md:text-[0.95rem]"
-        >
-          {config.body}
-        </p>
-
-        <div
-          data-future-reveal
-          className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-[#d6b45f]/20 bg-[#fff7e8]/[0.045] px-3.5 py-2 shadow-[0_16px_42px_rgba(0,0,0,0.2)] sm:mt-6"
-        >
-          <span className="future-status-dot relative h-2 w-2 rounded-full bg-[#d6b45f]" />
-          <span className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[#d8ccb8] sm:text-[0.62rem]">
-            {config.status}
-          </span>
-        </div>
-
-        <div data-future-reveal className="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row">
+        <ScrollReveal className="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row"><div>
           <Link
             href={config.primaryHref}
             className="group inline-flex min-h-[2.62rem] items-center justify-center gap-2 rounded-[0.58rem] border border-[#fff7e8]/[0.12] bg-[#fff7e8] px-[1.05rem] text-[0.8rem] font-semibold text-[#11100e] shadow-[0_18px_50px_rgba(214,180,95,0.16)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(214,180,95,0.24)] sm:min-h-[2.75rem]"
@@ -157,13 +132,14 @@ function FutureWorkPreview({ config }: { config: FutureWorkConfig }) {
             Return Home
           </Link>
           <Link
-            href="/contact"
+            href="/book-consultation"
             className="group inline-flex min-h-[2.62rem] items-center justify-center gap-2 rounded-[0.58rem] border border-[#d6b45f]/[0.24] bg-[#fff7e8]/[0.045] px-[1.05rem] text-[0.8rem] font-semibold text-[#fff7e8] shadow-[0_16px_44px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[box-shadow,transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-[#fff7e8]/[0.075] hover:shadow-[0_20px_54px_rgba(0,0,0,0.28),0_0_28px_rgba(214,180,95,0.12)] sm:min-h-[2.75rem]"
           >
-            Notify Me
+            Book Consultation
             <Bell className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-6" />
           </Link>
         </div>
+        </ScrollReveal>
       </section>
     </main>
   );
