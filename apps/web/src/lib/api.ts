@@ -5,10 +5,9 @@ import type { ConsultationRequest, SiteContent } from "@/lib/types";
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 export const INTERNAL_API_URL = process.env.INTERNAL_API_URL || API_URL;
 
-function normalizeImageUrl(url: string | null | undefined): string {
+export function normalizeImageUrl(url: string | null | undefined): string {
   if (!url) return "";
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
-  if (url.startsWith("/")) return `${API_URL}${url}`;
   return url;
 }
 
@@ -118,6 +117,52 @@ function mergeById<T extends { id: string }>(contentItems: T[] | undefined, fall
   return [...mergedFallbackOrder, ...extraContentItems];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeImageUrls<T extends Record<string, any>>(obj: T, imageKeys: string[]): T {
+  const result = { ...obj };
+  for (const key of imageKeys) {
+    const val = result[key];
+    if (typeof val === "string") {
+      (result as Record<string, unknown>)[key] = normalizeImageUrl(val);
+    }
+    if (Array.isArray(val)) {
+      (result as Record<string, unknown>)[key] = val.map((item: unknown) => (typeof item === "string" ? normalizeImageUrl(item) : item));
+    }
+  }
+  return result;
+}
+
+function deepMergeFounder(mongo?: Partial<SiteContent["founder"]> | null, fallback?: SiteContent["founder"]): SiteContent["founder"] {
+  if (!mongo) return fallback!;
+  return {
+    ...fallback!,
+    ...mongo,
+    image: normalizeImageUrl(mongo.image || fallback!.image),
+    heroImage: normalizeImageUrl(mongo.heroImage || fallback!.heroImage),
+    gallery: mongo.gallery?.length
+      ? mongo.gallery.map((url: string) => normalizeImageUrl(url))
+      : fallback!.gallery.map((url: string) => normalizeImageUrl(url)),
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function deepMergeArray<T extends Record<string, any>>(
+  items: T[] | undefined | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fallbackItems: any[],
+  imageFields: string[]
+): T[] {
+  if (!items?.length) return fallbackItems as T[];
+  const fallbackById = new Map(fallbackItems.map((item, i) => [(item as Record<string, unknown>).id as string || String(i), item]));
+  return items.map((item) => {
+    const id = (item as Record<string, unknown>).id as string | undefined;
+    const fallback = id ? fallbackById.get(id) : undefined;
+    if (!fallback) return normalizeImageUrls(item, imageFields);
+    const merged = { ...fallback, ...item } as T;
+    return normalizeImageUrls(merged, imageFields);
+  });
+}
+
 function normalizeSiteContent(payload: Partial<SiteContent> | null | undefined): SiteContent {
   const content = payload || {};
   const hasEnterpriseNav = Boolean(content.nav?.items?.some((item) => ["Careers", "Blog", "About Us"].includes(item.label)));
@@ -128,7 +173,8 @@ function normalizeSiteContent(payload: Partial<SiteContent> | null | undefined):
     ...content,
     seo: {
       ...fallbackContent.seo,
-      ...content.seo
+      ...content.seo,
+      ogImage: normalizeImageUrl((content.seo?.ogImage || fallbackContent.seo.ogImage) as string)
     },
     theme: {
       ...fallbackContent.theme,
@@ -153,13 +199,17 @@ function normalizeSiteContent(payload: Partial<SiteContent> | null | undefined):
     blogs: content.blogs?.length
       ? content.blogs.map((b) => ({ ...b, image: normalizeImageUrl(b.image) }))
       : [],
-    founder: content.founder || fallbackContent.founder,
-    directors: content.directors?.length ? content.directors : fallbackContent.directors,
-    businessDivisions: mergeById(content.businessDivisions, fallbackContent.businessDivisions),
+    founder: deepMergeFounder(content.founder as Partial<SiteContent["founder"]> | null, fallbackContent.founder),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    directors: deepMergeArray(content.directors as any, fallbackContent.directors, ["image"]),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    businessDivisions: deepMergeArray(content.businessDivisions as any, fallbackContent.businessDivisions, ["image"]),
     locations: content.locations?.length ? content.locations : fallbackContent.locations,
     legal: {
       ...fallbackContent.legal,
       ...content.legal,
+      certificateUrl: normalizeImageUrl(content.legal?.certificateUrl || fallbackContent.legal.certificateUrl),
+      certificatePreviewUrl: normalizeImageUrl(content.legal?.certificatePreviewUrl || fallbackContent.legal.certificatePreviewUrl),
       documents: content.legal?.documents?.length ? content.legal.documents : fallbackContent.legal.documents
     },
     popup: {
@@ -182,7 +232,8 @@ function normalizeSiteContent(payload: Partial<SiteContent> | null | undefined):
       jobs: content.careers?.jobs?.length ? content.careers.jobs : fallbackContent.careers.jobs,
       internships: content.careers?.internships?.length ? content.careers.internships : fallbackContent.careers.internships
     },
-    pages: content.pages?.length ? content.pages : fallbackContent.pages,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pages: deepMergeArray(content.pages as any, fallbackContent.pages, ["image"]),
     certifications: content.certifications?.length ? content.certifications : fallbackContent.certifications,
     milestones: content.milestones?.length ? content.milestones : fallbackContent.milestones,
     partners: content.partners?.length ? content.partners : fallbackContent.partners,
