@@ -46,15 +46,24 @@ const stats = [
   { value: "5+", label: "Years Experience" },
 ];
 
-export function OurProjectsPage() {
+export function OurProjectsPage({ initialProjects }: { initialProjects?: PortfolioProject[] }) {
   const pathname = usePathname();
   const brand = getCompanyBrand(pathname);
-  const [projects, setProjects] = useState<PortfolioProject[]>([]);
-  const [loading, setLoading] = useState(true);
+  const isStatic = !!initialProjects;
+  const [projects, setProjects] = useState<PortfolioProject[]>(initialProjects || []);
+  const [loading, setLoading] = useState(!isStatic);
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (isStatic) {
+      setProjects(
+        activeFilter === "All"
+          ? initialProjects!
+          : initialProjects!.filter((p) => p.category === activeFilter)
+      );
+      return;
+    }
     async function fetchProjects() {
       try {
         const params = new URLSearchParams({ limit: "50" });
@@ -79,7 +88,7 @@ export function OurProjectsPage() {
       }
     }
     fetchProjects();
-  }, [activeFilter]);
+  }, [activeFilter, isStatic, initialProjects]);
 
   const reveal = reduceMotion
     ? {}
@@ -231,7 +240,7 @@ export function OurProjectsPage() {
                 >
                   <Link href={`/our-work/${project.slug}`} className="block">
                     <div className="relative aspect-[16/11] overflow-hidden bg-[#ede5d6]">
-                      {project.coverImage && !project.coverImage.startsWith("/") ? (
+                      {project.coverImage ? (
                         <Image
                           src={project.coverImage}
                           alt={project.title}
