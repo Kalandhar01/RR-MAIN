@@ -528,7 +528,7 @@ export function ArchitectureServiceHubPage() {
             <div className="order-1 max-w-[42rem] lg:max-w-none">
               <ScrollReveal>
                 <p className="text-xs font-semibold uppercase leading-none tracking-[0.28em] text-[#8B0E14]">
-                  RACTYSH ARCHITECTURE
+                  RACTYSH Design Pvt Ltd
                 </p>
               </ScrollReveal>
 

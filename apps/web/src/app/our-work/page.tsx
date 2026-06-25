@@ -4,8 +4,8 @@ import { OurProjectsPage } from "@/components/OurProjectsPage";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Our Recent Works | Ractysh Group",
-  description: "Selected Architecture, Construction, Real Estate, Export-Import and OTC Exchange work from Ractysh Group."
+  title: "Our Recent Works | RACTYSH",
+  description: "Selected Architecture, Construction, Real Estate, Export-Import and OTC Exchange work from RACTYSH."
 };
 
 export default async function OurWorkRoute() {

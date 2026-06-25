@@ -1,36 +1,26 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
+import { useState, useRef, useCallback } from "react";
+import { motion, useInView } from "framer-motion";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import {
   ArrowUpRight,
   Sparkles,
-  Search,
   MapPin,
   Clock,
-  Users,
   Briefcase,
   Star,
-  Target,
   Monitor,
   BookOpen,
-  Code,
-  Palette,
-  Smartphone,
-  CheckCircle,
-  Send,
   Building2,
   Globe,
   Award,
   Heart,
   HardHat,
-  X,
-  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { CareerApplicationModal } from "@/components/CareerApplicationModal";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -196,7 +186,7 @@ function HeroSection() {
           {[
             { value: "10+", label: "Open Positions" },
             { value: "48+", label: "Team Members" },
-            { value: "200+", label: "Projects Delivered" },
+            { value: "100+", label: "Projects Delivered" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-2xl font-bold text-[#111] md:text-3xl lg:text-4xl">{stat.value}</div>
@@ -340,225 +330,6 @@ function PositionsSection({ onApply }: { onApply: (position: string) => void }) 
   );
 }
 
-type FormStatus = "idle" | "submitting" | "success" | "error";
-
-function ApplyModal({
-  open,
-  onClose,
-  preselectedPosition,
-}: {
-  open: boolean;
-  onClose: () => void;
-  preselectedPosition: string;
-}) {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && status !== "submitting") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose, status]);
-
-  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus("submitting");
-    setErrorMsg("");
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const name = (formData.get("fullName") as string)?.trim();
-    const email = (formData.get("email") as string)?.trim();
-    const phone = (formData.get("phone") as string)?.trim();
-
-    if (!name || !email || !phone) {
-      setErrorMsg("Please fill in all required fields.");
-      setStatus("error");
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setErrorMsg("Please enter a valid email address.");
-      setStatus("error");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/careers/apply", { method: "POST", body: formData });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.message || data.error || "Submission failed.");
-      }
-      setStatus("success");
-      form.reset();
-    } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-      setStatus("error");
-    }
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease }}
-          className="fixed inset-0 z-[500] flex items-center justify-center overflow-y-auto bg-black/40 px-4 py-10 backdrop-blur-sm"
-          onClick={(e) => { if (e.target === e.currentTarget && status !== "submitting") onClose(); }}
-        >
-          <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ duration: 0.3, ease }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white shadow-2xl"
-          >
-            {status === "success" ? (
-              <div className="flex flex-col items-center justify-center px-8 py-20 text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="flex h-20 w-20 items-center justify-center rounded-full bg-[#C9A15A]/10"
-                >
-                  <CheckCircle className="h-10 w-10 text-[#C9A15A]" />
-                </motion.div>
-                <h3 className="mt-6 text-2xl font-semibold text-[#111]">Application Submitted!</h3>
-                <p className="mt-3 max-w-md text-sm leading-relaxed text-[#666]">
-                  Thank you for applying. We&apos;ll review your application and reach out within 48 hours.
-                  A confirmation email has been sent to your inbox.
-                </p>
-                <button
-                  onClick={onClose}
-                  className="mt-8 rounded-xl bg-[#C9A15A] px-8 py-3 text-sm font-semibold text-white shadow-[0_4px_16px_rgba(201,161,90,0.2)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(201,161,90,0.25)]"
-                >
-                  Done
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between border-b border-[#e5e7eb] px-6 py-4 md:px-8">
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#111]">Apply for Internship</h3>
-                    <p className="text-xs text-[#999]">{preselectedPosition}</p>
-                  </div>
-                  <button
-                    onClick={onClose}
-                    disabled={status === "submitting"}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e5e7eb] text-[#999] transition-colors hover:border-[#d1d5db] hover:text-[#666]"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-
-                <form onSubmit={handleSubmit} className="p-6 md:p-8" noValidate>
-                  <div className="space-y-4">
-                    <input type="hidden" name="position" value={preselectedPosition} />
-                    <input type="hidden" name="experience" value="Internship" />
-
-                    <div>
-                      <label htmlFor="modal-fullName" className="block text-sm font-medium text-[#333]">
-                        Full Name <span className="text-[#ef4444]">*</span>
-                      </label>
-                      <input
-                        id="modal-fullName"
-                        name="fullName"
-                        type="text"
-                        required
-                        placeholder="John Doe"
-                        className="mt-1.5 block w-full rounded-xl border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder:text-[#999] transition-colors focus:border-[#C9A15A] focus:outline-none focus:ring-1 focus:ring-[#C9A15A]/20"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="modal-email" className="block text-sm font-medium text-[#333]">
-                        Email Address <span className="text-[#ef4444]">*</span>
-                      </label>
-                      <input
-                        id="modal-email"
-                        name="email"
-                        type="email"
-                        required
-                        placeholder="john@example.com"
-                        className="mt-1.5 block w-full rounded-xl border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder:text-[#999] transition-colors focus:border-[#C9A15A] focus:outline-none focus:ring-1 focus:ring-[#C9A15A]/20"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="modal-phone" className="block text-sm font-medium text-[#333]">
-                        Phone Number <span className="text-[#ef4444]">*</span>
-                      </label>
-                      <input
-                        id="modal-phone"
-                        name="phone"
-                        type="tel"
-                        required
-                        placeholder="+91 98765 43210"
-                        className="mt-1.5 block w-full rounded-xl border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder:text-[#999] transition-colors focus:border-[#C9A15A] focus:outline-none focus:ring-1 focus:ring-[#C9A15A]/20"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="modal-message" className="block text-sm font-medium text-[#333]">
-                        Message <span className="text-[#999]">(Optional)</span>
-                      </label>
-                      <textarea
-                        id="modal-message"
-                        name="message"
-                        rows={3}
-                        placeholder="Tell us why you're interested..."
-                        className="mt-1.5 block w-full resize-none rounded-xl border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#111] placeholder:text-[#999] transition-colors focus:border-[#C9A15A] focus:outline-none focus:ring-1 focus:ring-[#C9A15A]/20"
-                      />
-                    </div>
-                  </div>
-
-                  {errorMsg && (
-                    <div className="mt-4 rounded-xl bg-[#fef2f2] px-4 py-3 text-sm text-[#ef4444]">{errorMsg}</div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={status === "submitting"}
-                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A15A] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(201,161,90,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(201,161,90,0.3)] disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {status === "submitting" ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" />
-                        Apply for Internship
-                      </>
-                    )}
-                  </button>
-                </form>
-              </>
-            )}
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 function FinalCTASection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -623,10 +394,10 @@ export function PremiumCareersPage() {
       <WhyJoinSection />
       <PositionsSection onApply={handleApply} />
       <FinalCTASection />
-      <ApplyModal
-        open={modalOpen}
+      <CareerApplicationModal
+        isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        preselectedPosition={selectedPosition}
+        roleTitle={selectedPosition}
       />
     </div>
   );

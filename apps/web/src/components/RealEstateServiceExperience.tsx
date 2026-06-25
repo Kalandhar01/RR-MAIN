@@ -103,30 +103,6 @@ const featuredProperties = [
   }
 ] as const;
 
-const portfolioShowcase = [
-  {
-    title: "Land & Building Promotion",
-    caption: "End-to-end project development and promotion",
-    image: "/visualization/gallery-exterior.webp"
-  },
-  {
-    title: "Luxury Villa Projects",
-    caption: "Premium villa estates with modern design",
-    image: "/services/showcase-real-estate.webp"
-  },
-  {
-    title: "Plotted Developments",
-    caption: "Prime plots with clear titles and infrastructure",
-    image: "/visualization/presentation-standards.webp"
-  },
-  {
-    title: "Gated Communities",
-    caption: "Secure living with premium shared amenities",
-    image: "/visualization/gallery-lobby.webp"
-  }
-] as const;
-
-const leadPortfolioAsset = portfolioShowcase[0];
 const towerModelPath = "/models/luxury-glass-tower.glb";
 
 function ButtonLink({ href, children, variant = "dark" }: { href: string; children: ReactNode; variant?: "dark" | "light" }) {
@@ -310,7 +286,6 @@ useGLTF.preload(towerModelPath);
 export function RealEstateServiceExperience() {
   const rootRef = useRef<HTMLElement>(null);
   const showcaseSectionRef = useRef<HTMLElement>(null);
-  const showcaseTrackRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -383,27 +358,8 @@ export function RealEstateServiceExperience() {
         );
       });
 
-      if (showcaseSectionRef.current && showcaseTrackRef.current) {
-        const section = showcaseSectionRef.current;
-        const track = showcaseTrackRef.current;
-        const getDistance = () => Math.max(0, track.scrollWidth - section.clientWidth + 48);
-
-        gsap.to(track, {
-          x: () => -getDistance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${Math.max(getDistance(), window.innerHeight * 1.2)}`,
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              root.style.setProperty("--re-showcase-progress", self.progress.toFixed(3));
-            }
-          }
-        });
+      if (showcaseSectionRef.current) {
+        root.style.setProperty("--re-showcase-progress", "1");
       }
     }, root);
 
@@ -486,63 +442,145 @@ export function RealEstateServiceExperience() {
         </div>
       </section>
 
-      <section id="investment-showcase" ref={showcaseSectionRef} className="real-estate-service-showcase relative z-10 min-h-[100svh] overflow-hidden bg-[#fbf6ec] px-5 py-20 text-[#15110d] sm:px-6 md:px-8 lg:py-24 xl:px-12">
+      <section id="investment-showcase" ref={showcaseSectionRef} className="real-estate-service-showcase relative z-10 bg-[#fbf6ec] px-5 py-20 text-[#15110d] sm:px-6 md:px-8 lg:py-24 xl:px-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_22%,rgba(197,155,86,0.16),transparent_28rem),radial-gradient(circle_at_82%_66%,rgba(255,255,255,0.72),transparent_32rem),linear-gradient(180deg,#fffdf8,#f3e7d4)]" />
         <PropertyBlueprint className="opacity-28" />
-        <div className="real-estate-service-progress absolute left-5 right-5 top-6 h-px bg-[#d8c59d]/70 md:left-8 md:right-8" aria-hidden />
 
-        <div ref={showcaseTrackRef} className="real-estate-service-track relative z-10 flex w-max items-stretch gap-6">
-          <div className="real-estate-service-intro flex shrink-0 flex-col justify-between rounded-[8px] border border-[#dfcfaa] bg-white/76 p-6 shadow-[0_28px_90px_rgba(184,138,68,0.08)] backdrop-blur-xl md:p-8">
-            <div>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#9d742a]">Investment Showcase</p>
-              <h2 className="mt-6 font-display text-[clamp(2.55rem,5vw,5.7rem)] font-semibold leading-[0.9] tracking-[0] text-[#15110d]">
-                Property categories built for ownership decisions.
-              </h2>
-              <p className="mt-6 max-w-[28rem] text-[15px] font-medium leading-[1.8] text-[#62594f]">
-                A horizontal asset story moving from private living to portfolio-grade opportunities.
-              </p>
-            </div>
-            <div className="mt-10 flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#9d742a]">
-              <span>Scroll</span>
-              <ArrowRight className="h-4 w-4" />
-              <span>Assets</span>
-            </div>
+        <div className="relative mx-auto max-w-[1420px]">
+          <div className="grid gap-7 lg:grid-cols-[0.62fr_0.38fr] lg:items-end">
+            <SectionHeading eyebrow="Investment Showcase" title="Property categories built for ownership decisions." />
+            <ScrollReveal className="max-w-[31rem] text-[1rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
+              <p>A horizontal asset story moving from private living to portfolio-grade opportunities.</p>
+            </ScrollReveal>
           </div>
 
-          {investmentStories.map((story, index) => (
-            <ScrollReveal key={story.title} delay={index * 0.04} className="real-estate-service-story group shrink-0 overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#fffdf8] text-[#15110d] shadow-[0_34px_110px_rgba(184,138,68,0.12)]">
-              <article>
-                <div className="grid h-full min-h-[39rem] lg:grid-cols-[minmax(0,0.62fr)_minmax(23rem,0.38fr)]">
-                <figure className="relative min-h-[28rem] overflow-hidden bg-[#111]">
-                  <img data-property-image src={story.image} alt={`${story.title} real estate asset`} className="h-[112%] w-full object-cover" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.5))]" />
-                  <figcaption className="absolute bottom-5 left-5 rounded-full border border-white/22 bg-black/28 px-4 py-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#fff8ec] backdrop-blur-xl">
-                    {story.number}
-                  </figcaption>
-                </figure>
+          <div className="mt-14 grid gap-5 md:grid-cols-1 lg:grid-cols-2">
+            {investmentStories.map((story, index) => (
+              <ScrollReveal key={story.title} delay={index * 0.04} className="real-estate-service-story group overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#fffdf8] text-[#15110d] shadow-[0_34px_110px_rgba(184,138,68,0.12)]">
+                <article>
+                  <div className="grid h-full min-h-[39rem] lg:grid-cols-[minmax(0,0.62fr)_minmax(23rem,0.38fr)]">
+                  <figure className="relative min-h-[28rem] overflow-hidden bg-[#111]">
+                    <img data-property-image src={story.image} alt={`${story.title} real estate asset`} className="h-[112%] w-full object-cover" />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.5))]" />
+                    <figcaption className="absolute bottom-5 left-5 rounded-full border border-white/22 bg-black/28 px-4 py-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#fff8ec] backdrop-blur-xl">
+                      {story.number}
+                    </figcaption>
+                  </figure>
 
-                <div className="flex flex-col justify-between p-6 md:p-8">
-                  <div>
-                    <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[#8b1118]/72">Asset Class</p>
-                    <h3 className="mt-5 font-display text-[clamp(2.8rem,4.9vw,5.4rem)] font-semibold leading-[0.88] tracking-[0] text-[#15110d]">
-                      {story.title}
-                    </h3>
-                    <p className="mt-6 text-[15px] font-medium leading-[1.85] text-[#62564c]">{story.caption}</p>
-                  </div>
-                  <div className="mt-10 border-t border-[#d8c188]/48 pt-5">
-                    <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#9a7428]">
-                      Wealth & Ownership
-                    </p>
-                    <div className="mt-4 flex items-center gap-3 text-[#8b1118]">
-                      <span className="h-px w-10 bg-[#d6b45f]" />
-                      {index < investmentStories.length - 1 ? <ArrowRight className="h-4 w-4" /> : <IndianRupee className="h-4 w-4" />}
+                  <div className="flex flex-col justify-between p-6 md:p-8">
+                    <div>
+                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[#8b1118]/72">Asset Class</p>
+                      <h3 className="mt-5 font-display text-[clamp(2.8rem,4.9vw,5.4rem)] font-semibold leading-[0.88] tracking-[0] text-[#15110d]">
+                        {story.title}
+                      </h3>
+                      <p className="mt-6 text-[15px] font-medium leading-[1.85] text-[#62564c]">{story.caption}</p>
+                    </div>
+                    <div className="mt-10 border-t border-[#d8c188]/48 pt-5">
+                      <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#9a7428]">
+                        Wealth & Ownership
+                      </p>
+                      <div className="mt-4 flex items-center gap-3 text-[#8b1118]">
+                        <span className="h-px w-10 bg-[#d6b45f]" />
+                        {index < investmentStories.length - 1 ? <ArrowRight className="h-4 w-4" /> : <IndianRupee className="h-4 w-4" />}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </article>
+              </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 bg-[#fffaf0] px-5 py-20 sm:px-6 md:px-8 lg:py-32 xl:px-12">
+        <PropertyBlueprint className="opacity-28" />
+        <div className="relative mx-auto max-w-[1420px]">
+          <div className="grid gap-7 lg:grid-cols-[0.62fr_0.38fr] lg:items-end">
+            <SectionHeading eyebrow="Premium Real Estate Solutions" title="Our Real Estate Services" />
+            <ScrollReveal className="max-w-[31rem] text-[1rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
+              <p>End-to-end real estate services across residential, commercial, luxury, and advisory verticals.</p>
             </ScrollReveal>
-          ))}
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                title: "Residential Properties",
+                description: "Building Dreams, One Home at a Time. Premium apartments, row houses, and gated community living.",
+                image: "/visualization/gallery-exterior.webp",
+                icon: "Home"
+              },
+              {
+                title: "Commercial Properties",
+                description: "Prime Spaces for Business Growth. Office complexes, retail buildings, and mixed-use developments.",
+                image: "/services/showcase-real-estate.webp",
+                icon: "Building2"
+              },
+              {
+                title: "Luxury Villas",
+                description: "Exquisite Living, Unmatched Elegance. Premium villa estates with modern architecture and luxury finishes.",
+                image: "/visualization/gallery-lobby.webp",
+                icon: "Building"
+              },
+              {
+                title: "Investment Advisory",
+                description: "Smart Decisions, Maximum Returns. Strategic land identification, feasibility analysis, and portfolio guidance.",
+                image: "/visualization/hero-studio.webp",
+                icon: "TrendingUp"
+              },
+              {
+                title: "Property Management",
+                description: "Hassle-Free Asset Care. End-to-end management with 24/7 maintenance, tenant relations, and compliance tracking.",
+                image: "/visualization/presentation-standards.webp",
+                icon: "Shield"
+              },
+              {
+                title: "Legal Assistance",
+                description: "Expert Guidance, Complete Compliance. Title verification, documentation, and regulatory approval support.",
+                image: "/visualization/gallery-interior.webp",
+                icon: "Scale"
+              }
+            ].map((service, index) => (
+              <ScrollReveal key={service.title} delay={index * 0.04}>
+                <motion.article
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.45, ease }}
+                  className="group overflow-hidden rounded-[20px] border border-[#dfcfaa]/60 bg-white shadow-[0_24px_86px_rgba(58,41,18,0.08)] transition-all duration-500 hover:border-[#C9A45C]/80 hover:shadow-[0_32px_100px_rgba(58,41,18,0.14)]"
+                >
+                  <div className="relative aspect-[16/11] overflow-hidden bg-[#ede5d6]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                  <div className="flex flex-col gap-4 p-6 md:p-7">
+                    <h3 className="font-display text-[1.65rem] font-semibold leading-[1.1] tracking-[0] text-[#15110d]">
+                      {service.title}
+                    </h3>
+                    <p className="text-[0.92rem] font-medium leading-[1.75] text-[#62594f]">
+                      {service.description}
+                    </p>
+                    <div className="mt-auto flex items-center gap-3 border-t border-[#dfcfaa]/50 pt-5">
+                      <Link
+                        href="/book-consultation"
+                        className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[#8B1118] transition-colors hover:text-[#741016]"
+                      >
+                        Learn More
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2} />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.article>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal className="mt-16 flex justify-center">
+            <ButtonLink href="/book-consultation">Book a Consultation</ButtonLink>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -592,48 +630,7 @@ export function RealEstateServiceExperience() {
         </div>
       </section>
 
-      <section className="relative z-10 bg-[linear-gradient(180deg,#fffaf0,#f6ead8)] px-5 pb-24 pt-8 sm:px-6 md:px-8 lg:pb-32 lg:pt-14 xl:px-12">
-        <div className="mx-auto max-w-[1420px]">
-          <div className="grid gap-7 lg:grid-cols-[0.7fr_0.3fr] lg:items-end">
-            <SectionHeading eyebrow="Private Portfolio" title="Development imagery for wealth-positioned property decisions." />
-            <ScrollReveal className="max-w-[27rem] text-[0.98rem] font-medium leading-8 text-[#62594f] lg:justify-self-end">
-              <p>
-                Villa, waterfront and commercial presentations shaped around ownership appetite.
-              </p>
-            </ScrollReveal>
-          </div>
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)]">
-            <ScrollReveal className="real-estate-service-property group relative min-h-[34rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_34px_120px_rgba(58,41,18,0.16)]">
-              <figure>
-                <img data-property-image src={leadPortfolioAsset.image} alt={leadPortfolioAsset.title} className="h-[112%] w-full object-cover" />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_20%,rgba(0,0,0,0.56)_100%)]" />
-                <figcaption className="absolute bottom-6 left-6 right-6 text-[#fff8ec] md:bottom-8 md:left-8 md:right-8">
-                  <p className="text-[0.64rem] font-semibold uppercase tracking-[0.22em] text-[#d8b765]">{leadPortfolioAsset.caption}</p>
-                  <h3 className="mt-4 max-w-[42rem] font-display text-[clamp(2.6rem,5vw,5.8rem)] font-semibold leading-[0.88] tracking-[0]">
-                    {leadPortfolioAsset.title}
-                  </h3>
-                </figcaption>
-              </figure>
-            </ScrollReveal>
-
-            <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-1">
-              {portfolioShowcase.slice(1).map((asset, index) => (
-                <ScrollReveal key={asset.title} delay={index * 0.04} className="real-estate-service-property group relative min-h-[13rem] overflow-hidden rounded-[8px] border border-[#dfcfaa] bg-[#15110d] shadow-[0_22px_82px_rgba(58,41,18,0.1)]">
-                  <figure>
-                    <img data-property-image src={asset.image} alt={asset.title} className="h-[112%] w-full object-cover" />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_18%,rgba(0,0,0,0.58)_100%)]" />
-                    <figcaption className="absolute bottom-4 left-4 right-4 text-[#fff8ec]">
-                      <p className="text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-[#d8b765]">{asset.caption}</p>
-                      <h3 className="mt-2 font-display text-[1.85rem] font-semibold leading-none tracking-[0]">{asset.title}</h3>
-                    </figcaption>
-                  </figure>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <ContactCTA />
     </article>

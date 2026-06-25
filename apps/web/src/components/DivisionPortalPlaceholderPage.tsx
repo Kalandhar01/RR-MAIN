@@ -1,3 +1,5 @@
+"use client";
+
 import type { CSSProperties } from "react";
 import {
   ArrowLeft,
@@ -8,62 +10,23 @@ import {
   HardHat,
   Network,
   ShieldCheck,
-  type LucideIcon
 } from "lucide-react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { CompanyContactPanel } from "@/components/CompanyContactPanel";
-
-export type DivisionPortalKey = "architecture" | "construction" | "real-estate" | "import-export" | "otc-exchange";
-
-type DivisionPortalVisualKind = "architecture" | "construction" | "real-estate" | "trade" | "network";
-
-interface DivisionPortalConfig {
-  title: string;
-  label: string;
-  metadataDescription: string;
-  visualKind: DivisionPortalVisualKind;
-  Icon: LucideIcon;
-}
+import { getCompanyBrand } from "@/lib/branding";
+import { usePathname } from "next/navigation";
+import { divisionPortalConfig } from "@/data/divisionPortals";
+import type { DivisionPortalKey, DivisionPortalVisualKind } from "@/data/divisionPortals";
 
 type PortalStyle = CSSProperties & Record<`--${string}`, string>;
 
-export const divisionPortalConfig: Record<DivisionPortalKey, DivisionPortalConfig> = {
-  architecture: {
-    title: "Architecture Division",
-    label: "Architectural blueprint wireframe",
-    metadataDescription: "Architecture Division launching soon inside the Ractysh Group enterprise ecosystem.",
-    visualKind: "architecture",
-    Icon: DraftingCompass
-  },
-  construction: {
-    title: "Construction Division",
-    label: "Structural framework animation",
-    metadataDescription: "Construction Division launching soon inside the Ractysh Group enterprise ecosystem.",
-    visualKind: "construction",
-    Icon: HardHat
-  },
-  "real-estate": {
-    title: "Real Estate Division",
-    label: "Luxury property silhouette",
-    metadataDescription: "Real Estate Division launching soon inside the Ractysh Group enterprise ecosystem.",
-    visualKind: "real-estate",
-    Icon: Building2
-  },
-  "import-export": {
-    title: "Export & Import Division",
-    label: "Global trade network",
-    metadataDescription: "Export & Import Division launching soon inside the Ractysh Group enterprise ecosystem.",
-    visualKind: "trade",
-    Icon: Globe2
-  },
-  "otc-exchange": {
-    title: "OTC Exchange Division",
-    label: "Enterprise network visualization",
-    metadataDescription: "OTC Exchange Division launching soon inside the Ractysh Group enterprise ecosystem.",
-    visualKind: "network",
-    Icon: ShieldCheck
-  }
+const iconMap: Record<DivisionPortalKey, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+  architecture: DraftingCompass,
+  construction: HardHat,
+  "real-estate": Building2,
+  "import-export": Globe2,
+  "otc-exchange": ShieldCheck,
 };
 
 const particles = [
@@ -89,6 +52,8 @@ function portalStyle(x: string, y: string, delay: string): PortalStyle {
 
 export function DivisionPortalPlaceholderPage({ division }: { division: DivisionPortalKey }) {
   const config = divisionPortalConfig[division];
+  const pathname = usePathname();
+  const companyBrand = getCompanyBrand(pathname);
 
   return (
     <main
@@ -98,13 +63,13 @@ export function DivisionPortalPlaceholderPage({ division }: { division: Division
       <PortalAtmosphere />
 
       <section className="relative z-10 mx-auto flex w-full max-w-[56rem] flex-col items-center text-center">
-        <div className="division-portal-brand" aria-label="Ractysh Group">
+        <div className="division-portal-brand" aria-label={companyBrand.shortName}>
           <BrandLogo size="lg" priority decorative imageClassName="drop-shadow-[0_0_28px_rgba(214,180,95,0.24)]" />
           <p className="mt-2 text-[0.82rem] font-semibold uppercase leading-none tracking-[0] text-[#f6dfad] sm:mt-3 sm:text-[0.9rem]">
-            RACTYSH GROUP
+            {companyBrand.shortName}
           </p>
           <p className="mt-1.5 text-[0.76rem] font-medium leading-none tracking-[0] text-[#b7aa99] sm:mt-2 sm:text-[0.84rem]">
-            Private Enterprise Ecosystem
+            {companyBrand.legalName}
           </p>
         </div>
 
@@ -124,7 +89,7 @@ export function DivisionPortalPlaceholderPage({ division }: { division: Division
           </h1>
         </div>
 
-        <DivisionPortalVisual config={config} />
+        <DivisionPortalVisual division={division} />
 
         <p className="mt-4 max-w-[41rem] text-[0.9rem] font-medium leading-6 tracking-[0] text-[#c9bdad] sm:mt-6 sm:text-[1rem] sm:leading-7">
           This enterprise division is currently under development and will soon launch as a dedicated platform within the Ractysh ecosystem.
@@ -144,7 +109,7 @@ export function DivisionPortalPlaceholderPage({ division }: { division: Division
         </div>
 
         <p className="mt-4 text-[0.72rem] font-semibold leading-none tracking-[0] text-[#8f8374] sm:mt-7 sm:text-[0.78rem]">
-          Part of the Ractysh Group Ecosystem
+            Part of the {companyBrand.legalName} Ecosystem
         </p>
       </section>
     </main>
@@ -167,8 +132,9 @@ function PortalAtmosphere() {
   );
 }
 
-function DivisionPortalVisual({ config }: { config: DivisionPortalConfig }) {
-  const Icon = config.Icon;
+function DivisionPortalVisual({ division }: { division: DivisionPortalKey }) {
+  const config = divisionPortalConfig[division];
+  const Icon = iconMap[division];
 
   return (
     <div className="division-portal-visual relative mt-5 flex h-[11.75rem] w-[11.75rem] items-center justify-center sm:mt-8 sm:h-[16.5rem] sm:w-[16.5rem] md:h-[18.5rem] md:w-[18.5rem]">

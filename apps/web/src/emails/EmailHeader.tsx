@@ -62,8 +62,8 @@ const styles = {
 export function EmailHeader({ brand, deskLabel = "Enterprise Ecosystem" }: EmailHeaderProps) {
   return (
     <Section style={styles.wrapper}>
-      <Img src={brand.logoUrl} width="74" height="74" alt="Ractysh Group" style={styles.logo} />
-      <Text style={styles.wordmark}>Ractysh Group</Text>
+      <Img src={brand.logoUrl} width="74" height="74" alt="RACTYSH" style={styles.logo} />
+      <Text style={styles.wordmark}>RACTYSH</Text>
       <Text style={styles.desk}>{deskLabel}</Text>
       <Text style={styles.divisions}>{brand.divisions.join(" • ")}</Text>
       <Section style={styles.divider} />

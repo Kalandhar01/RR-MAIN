@@ -4,7 +4,7 @@ import { PremiumCareersPage } from "@/components/PremiumCareersPage";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Careers | Ractysh Group",
+  title: "Careers | RACTYSH",
   description: "Premium career opportunities across the Ractysh enterprise ecosystem."
 };
 

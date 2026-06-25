@@ -51,7 +51,7 @@ export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutiv
 
   const profiles = useMemo<LeadershipProfile[]>(() => {
     const founderProfile: LeadershipProfile = {
-      name: founder.name || "Kalandhar Naina Mohamed",
+      name: founder.name || "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A.",
       role: founder.role || "Founder & Executive Director",
       line: "Operational ecosystems with premium execution intelligence.",
       image: founder.image || heroImage

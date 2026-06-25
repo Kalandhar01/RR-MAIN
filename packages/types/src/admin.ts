@@ -398,6 +398,8 @@ export type AdminCommandCenterData = {
   auditLogs: AuditLogRow[];
   notifications: NotificationRow[];
   unreadNotifications: number;
+  projectUnreadCounts: Record<string, number>;
+  entityUnreadCounts: Record<string, number>;
   activities: ActivityRow[];
   criticalAlerts: AlertRow[];
   pendingReviews: ReviewRow[];

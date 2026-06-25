@@ -4,9 +4,9 @@ import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Construction Service | Ractysh Group",
+  title: "Construction Service | RACTYSH",
   description:
-    "Premium Ractysh Group construction services across infrastructure, commercial buildings, residential developments and turnkey execution."
+    "Premium RACTYSH construction services across infrastructure, commercial buildings, residential developments and turnkey execution."
 };
 
 export default async function ConstructionServicePage() {

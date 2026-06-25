@@ -10,9 +10,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitText from "./home/SplitText";
 import {
   ArrowRight,
-  BadgeCheck,
-  Network,
-  Workflow,
   type LucideIcon
 } from "lucide-react";
 import { ContactCTA } from "./home/ContactCTA";
@@ -35,26 +32,6 @@ interface ShowcasePanel {
   alt: string;
   align: "left" | "right";
   objectPosition: string;
-}
-
-interface EcosystemBlock {
-  id: string;
-  title: string;
-  body: string;
-  image: string;
-  alt: string;
-  detailImage: string;
-  detailAlt: string;
-  className: string;
-}
-
-interface AdvantageStory {
-  title: string;
-  kicker: string;
-  body: string;
-  image: string;
-  alt: string;
-  Icon: LucideIcon;
 }
 
 const tradeImage = (photoId: string) => `/images/${photoId}.webp`;
@@ -98,95 +75,8 @@ const showcasePanels: ShowcasePanel[] = [
   }
 ];
 
-const ecosystemBlocks: EcosystemBlock[] = [
-  {
-    id: "global-sourcing",
-    title: "Global Sourcing",
-    body: "Supplier discovery, product qualification and origin-side readiness aligned before commercial commitments move.",
-    image: tradeImage("photo-1758611972678-bc3b29b4718f"),
-    alt: "Enterprise colleagues reviewing supplier market documents",
-    detailImage: tradeImage("photo-1565966245341-5a3f55bbf545"),
-    detailAlt: "Organized inventory for supplier market planning",
-    className: "md:col-span-2 lg:col-span-6 lg:row-span-2"
-  },
-  {
-    id: "import-operations",
-    title: "Import Operations",
-    body: "Inbound shipment release, customs readiness and receiving windows sequenced before bottlenecks form.",
-    image: tradeImage("photo-1773952984178-f91248ce704f"),
-    alt: "Container vessel berthed at a terminal for import operations",
-    detailImage: tradeImage("photo-1774929103406-59c8882a9954"),
-    detailAlt: "Container vessels and shipping containers at a working port",
-    className: "md:col-span-1 lg:col-span-6"
-  },
-  {
-    id: "export-operations",
-    title: "Export Operations",
-    body: "Global shipping support prepared around origin dispatch, freight bookings and buyer-side delivery signals.",
-    image: tradeImage("photo-1770710000993-6a75881ec618"),
-    alt: "Loaded container vessel prepared for export shipping support",
-    detailImage: tradeImage("photo-1773596952711-25da086477db"),
-    detailAlt: "Large container ships docked at a busy export terminal",
-    className: "md:col-span-1 lg:col-span-6"
-  },
-  {
-    id: "supplier-network",
-    title: "Supplier Network",
-    body: "Vendor commitments, readiness signals and operating updates kept in sync across every handoff.",
-    image: tradeImage("photo-1758519288948-e3c87d2d78d8"),
-    alt: "Enterprise supplier meeting with executives reviewing market options",
-    detailImage: tradeImage("photo-1758691737212-3eebbc8f84ed"),
-    detailAlt: "Supplier team coordinating documents in a modern enterprise workspace",
-    className: "md:col-span-1 lg:col-span-4"
-  },
-  {
-    id: "trade-documentation",
-    title: "Trade Documentation",
-    body: "Compliance records, commercial paperwork and shipment documentation paired with live trade milestones.",
-    image: tradeImage("photo-1758876020343-c8c2add9d527"),
-    alt: "Trade documentation review at an enterprise compliance desk",
-    detailImage: tradeImage("photo-1693620714112-a79a7d27308b"),
-    detailAlt: "International travel and identity documents arranged for compliance review",
-    className: "md:col-span-1 lg:col-span-4"
-  },
-  {
-    id: "market-access",
-    title: "Market Access",
-    body: "Destination readiness, route context, buyer expectations and handoff decisions connected for cross-border commerce.",
-    image: tradeImage("photo-1759272548470-d0686d071036"),
-    alt: "International commerce terminal prepared for market access support",
-    detailImage: tradeImage("photo-1721937127582-ed331de95a04"),
-    detailAlt: "Warehouse aisle prepared for cross-border commerce support",
-    className: "md:col-span-2 lg:col-span-4"
-  }
-];
 
-const advantageStories: AdvantageStory[] = [
-  {
-    title: "Global Reach",
-    kicker: "Network Access",
-    body: "Ractysh structures trade movement across supplier markets, gateway ports and destination corridors so enterprise teams can source beyond local limits without losing operating control.",
-    image: tradeImage("photo-1670121180583-39ab653a071c"),
-    alt: "Ocean freight vessel moving through an international trade lane",
-    Icon: Network
-  },
-  {
-    title: "Operational Precision",
-    kicker: "Execution Discipline",
-    body: "Documentation, supplier readiness, import release and export handoffs are treated as one sequence, reducing ambiguity across the moments where international commerce usually fragments.",
-    image: tradeImage("photo-1654630023059-1517b0c836bc"),
-    alt: "Commercial cargo arranged for precise trade control",
-    Icon: Workflow
-  },
-  {
-    title: "Trusted Partnerships",
-    kicker: "Relationship Control",
-    body: "Supplier and buyer conversations stay anchored to clear responsibility, documentation maturity and milestone visibility, giving executive stakeholders a composed operating layer.",
-    image: tradeImage("photo-1556761175-b413da4baf72"),
-    alt: "Executive partnership discussion for trusted commerce",
-    Icon: BadgeCheck
-  }
-];
+
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -283,9 +173,7 @@ export function ImportExportGlobalTradePage() {
       </div>
 
       <HeroSection />
-      <GlobalTradeShowcaseSection />
-      <TradeEcosystemSection />
-      <EnterpriseAdvantageSection />
+      <SouthIndianExportSection />
       <ContactCTA />
 
       <style>{`
@@ -708,7 +596,7 @@ function HeroSection() {
       <div className="mx-auto grid w-full max-w-[1420px] gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(32rem,1.1fr)] lg:items-center xl:gap-16">
         <div className="relative z-20 max-w-[47rem]">
           <ScrollReveal className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">
-            <p>RACTYSH GLOBAL TRADE</p>
+            <p>RACTYSH Exim Pvt Ltd</p>
           </ScrollReveal>
 
           <ScrollReveal className="trade-hero-title mt-7 max-w-[52rem] font-display text-[clamp(3.1rem,5.8vw,6.35rem)] font-bold leading-[0.9] tracking-[-0.04em] text-[#17120f]">
@@ -761,6 +649,78 @@ function HeroSection() {
         <div data-hero-globe className="trade-globe-field relative h-[430px] sm:h-[560px] lg:h-[720px]">
           <TradeGlobeScene />
         </div>
+      </div>
+    </section>
+  );
+}
+
+function SouthIndianExportSection() {
+  return (
+    <section className="relative z-10 py-20 lg:py-28 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 top-1/4 h-72 w-72 rounded-full bg-[#c6a45b]/8 blur-3xl" />
+        <div className="absolute -right-32 bottom-1/4 h-72 w-72 rounded-full bg-[#8b1118]/6 blur-3xl" />
+      </div>
+      <div className="px-5 sm:px-6 md:px-8 xl:px-10">
+        <ScrollReveal className="mx-auto max-w-[1360px]">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="trade-section-kicker">South Indian Export</p>
+              <h2 className="mt-5 trade-editorial-heading">
+                Specialised export services from South India&apos;s key production corridors.
+              </h2>
+              <p className="trade-copy mt-6 max-w-[42rem] text-[1rem] font-medium leading-8 text-[#62584a]">
+                South India is a major hub for spices, textiles, engineering goods, agricultural products
+                and marine exports. Ractysh Exim coordinates the end-to-end export pathway — from supplier
+                readiness and documentation to shipping and destination handoff — across Tamil Nadu, Kerala,
+                Karnataka, Andhra Pradesh and Telangana.
+              </p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {[
+                  { label: "Spices & Agri Products", desc: "Pepper, cardamom, turmeric, coffee, tea and cashew from South Indian estates." },
+                  { label: "Textiles & Garments", desc: "Cotton yarn, woven fabrics, readymade garments and home textiles from major clusters." },
+                  { label: "Engineering Goods", desc: "Automotive components, pumps, valves and industrial machinery from manufacturing hubs." },
+                  { label: "Marine & Processed Foods", desc: "Frozen seafood, processed fruits, coconut products and value-added agri exports." }
+                ].map((item) => (
+                  <div key={item.label} className="rounded-xl border border-[#d8c39b]/40 bg-white/60 p-5 backdrop-blur-sm">
+                    <p className="text-[0.82rem] font-bold text-[#8b1118]">{item.label}</p>
+                    <p className="mt-1.5 text-[0.82rem] font-medium leading-relaxed text-[#62584a]">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative min-h-[28rem] overflow-hidden rounded-2xl border border-[#d8b56d]/30 bg-[#17120f] shadow-[0_28px_88px_rgba(71,53,24,0.14)]">
+              <Image
+                src={tradeImage("photo-1494412574643-ff11b0a5c1c3")}
+                alt="South Indian export goods and trade commodities"
+                fill
+                sizes="(min-width: 1024px) 48vw, 100vw"
+                quality={86}
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,18,15,0.08),rgba(23,18,15,0.54))]" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full border border-[#d8b56d]/30 bg-[#8b1118]/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] backdrop-blur-sm">
+                    Tamil Nadu
+                  </span>
+                  <span className="rounded-full border border-[#d8b56d]/30 bg-[#8b1118]/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] backdrop-blur-sm">
+                    Kerala
+                  </span>
+                  <span className="rounded-full border border-[#d8b56d]/30 bg-[#8b1118]/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] backdrop-blur-sm">
+                    Karnataka
+                  </span>
+                  <span className="rounded-full border border-[#d8b56d]/30 bg-[#8b1118]/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] backdrop-blur-sm">
+                    Andhra Pradesh
+                  </span>
+                  <span className="rounded-full border border-[#d8b56d]/30 bg-[#8b1118]/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#fffaf0] backdrop-blur-sm">
+                    Telangana
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -843,202 +803,6 @@ function GlobalTradeShowcaseSection() {
   );
 }
 
-function TradeEcosystemSection() {
-  return (
-    <section className="relative z-10 px-5 py-20 sm:px-6 md:px-8 lg:py-28 xl:px-10">
-      <div className="mx-auto max-w-[1360px]">
-        <ScrollReveal className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:items-end">
-          <div>
-            <p className="trade-section-kicker">Trade Ecosystem</p>
-            <h2 className="mt-5 trade-editorial-heading">
-              A command-grade operating layer for global commerce.
-            </h2>
-          </div>
-          <p className="trade-copy max-w-[39rem] text-[1rem] font-medium leading-8 text-[#62584a] lg:justify-self-end">
-            Sourcing, import control, export execution, supplier network rhythm, documentation and trade support are composed
-            as one premium trade system.
-          </p>
-        </ScrollReveal>
 
-        <TradeEcosystemLayoutGrid />
-      </div>
-    </section>
-  );
-}
-
-function TradeEcosystemLayoutGrid() {
-  const [selectedBlock, setSelectedBlock] = useState<EcosystemBlock | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  return (
-    <>
-      <div className="trade-bento-grid mt-14 grid auto-rows-[18rem] gap-4 md:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[16.75rem] lg:gap-5">
-        {ecosystemBlocks.map((block, index) => {
-          const isHeroCard = index === 0;
-
-          return (
-            <ScrollReveal key={block.id} className={cx(
-              "trade-layout-block group relative overflow-hidden border border-[#d8b56d]/28 p-0 text-left text-[#fffaf0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c6a45b]",
-              isHeroCard && "is-featured",
-              block.className
-            )} delay={index * 0.04}>
-              <motion.button
-                type="button"
-                layoutId={prefersReducedMotion ? undefined : `ecosystem-${block.id}`}
-                onClick={() => setSelectedBlock(block)}
-            >
-              <Image
-                src={block.image}
-                alt={block.alt}
-                fill
-                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 50vw, 100vw"
-                quality={86}
-                className="object-cover"
-              />
-
-              <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-6 lg:p-7">
-                <div className="max-w-[36rem]">
-                  <h3 className={cx("trade-display font-semibold leading-none text-[#fffaf0]", isHeroCard ? "max-w-[35rem] text-[3.1rem] sm:text-[4.35rem]" : "text-[2.3rem] sm:text-[3rem]")}>
-                    {block.title}
-                  </h3>
-                  <p className={cx("mt-4 max-w-[34rem] font-medium leading-7 text-[#f4e6cc]", isHeroCard ? "text-[1rem] sm:text-[1.05rem]" : "text-[0.94rem]")}>
-                    {block.body}
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase text-[#d8b56d]">
-                    Open operating detail
-                    <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-1" strokeWidth={2} />
-                  </span>
-                </div>
-              </div>
-            </motion.button>
-            </ScrollReveal>
-          );
-        })}
-      </div>
-
-      <AnimatePresence>
-        {selectedBlock ? (
-          <motion.div
-            className="fixed inset-0 z-[80] grid place-items-center bg-[#17120f]/64 px-5 backdrop-blur-xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.28, ease }}
-            onClick={() => setSelectedBlock(null)}
-          >
-            <motion.div
-              layoutId={prefersReducedMotion ? undefined : `ecosystem-${selectedBlock.id}`}
-              className="trade-layout-modal relative grid max-h-[86svh] w-full max-w-[980px] overflow-hidden border border-[#d8b56d]/34 bg-[#17120f] text-[#fffaf0] md:grid-cols-[0.9fr_1.1fr]"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="relative min-h-[20rem] md:min-h-[34rem]">
-                <Image
-                  src={selectedBlock.detailImage}
-                  alt={selectedBlock.detailAlt}
-                  fill
-                  sizes="(min-width: 768px) 42vw, 100vw"
-                  quality={86}
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,18,15,0.08),rgba(23,18,15,0.54))]" />
-              </div>
-              <div className="relative p-6 sm:p-8 lg:p-10">
-                <button
-                  type="button"
-                  onClick={() => setSelectedBlock(null)}
-                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-[8px] border border-[#d8b56d]/30 bg-[#fff6e6]/10 text-[#fff6e6] transition duration-300 hover:bg-[#fff6e6]/16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d8b56d]"
-                  aria-label="Close trade ecosystem detail"
-                >
-                  x
-                </button>
-                <p className="text-[0.72rem] font-bold uppercase text-[#d8b56d]">Trade Ecosystem Block</p>
-                <h3 className="mt-5 max-w-[31rem] trade-display text-[3rem] font-semibold leading-[0.9] sm:text-[4.4rem]">
-                  {selectedBlock.title}
-                </h3>
-                <p className="trade-copy mt-6 max-w-[34rem] text-[1rem] font-medium leading-8 text-[#f4e6cc]">
-                  {selectedBlock.body}
-                </p>
-                <div className="mt-8 h-px w-full bg-[linear-gradient(90deg,rgba(216,181,109,0.72),transparent)]" />
-                <p className="trade-copy mt-6 text-[0.9rem] font-semibold leading-7 text-[#d8ccb8]">
-                  Designed for enterprise teams that need supplier conversations, operating handoffs and documentation
-                  maturity to remain visible through the full trade movement.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </>
-  );
-}
-
-function EnterpriseAdvantageSection() {
-  return (
-    <section className="relative z-10 px-5 py-20 sm:px-6 md:px-8 lg:py-28 xl:px-10">
-      <div className="mx-auto max-w-[1360px]">
-        <ScrollReveal className="max-w-[62rem]">
-          <div>
-            <p className="trade-section-kicker">Enterprise Advantage</p>
-            <h2 className="mt-5 trade-editorial-heading">
-              Editorial operating advantages for global commerce.
-            </h2>
-          </div>
-        </ScrollReveal>
-
-        <div className="mt-14">
-          {advantageStories.map((story, index) => {
-            const Icon = story.Icon;
-
-            return (
-              <article
-                key={story.title}
-                data-parallax-panel
-                className="grid gap-8 border-t border-[#d8c39b] py-12 last:border-b lg:grid-cols-2 lg:gap-14 lg:py-16"
-              >
-                <ScrollReveal className={cx(
-                  "relative min-h-[24rem] overflow-hidden rounded-[8px] border border-[#d8b56d]/26 bg-[#17120f] shadow-[0_28px_88px_rgba(71,53,24,0.14)]",
-                  index % 2 === 1 && "lg:order-2"
-                )}>
-                  <div>
-                    <Image
-                      data-parallax-image
-                      src={story.image}
-                      alt={story.alt}
-                      fill
-                      sizes="(min-width: 1024px) 48vw, 100vw"
-                      quality={86}
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,18,15,0.04),rgba(23,18,15,0.42))]" />
-                  </div>
-                </ScrollReveal>
-
-                <ScrollReveal className="flex flex-col justify-center">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-[#c6a45b]/30 bg-[#fff6e6] text-[#8b1118]">
-                        <Icon className="h-5 w-5" strokeWidth={1.85} />
-                      </span>
-                      <p className="text-[0.72rem] font-bold uppercase text-[#8b1118]">
-                        {String(index + 1).padStart(2, "0")} / {story.kicker}
-                      </p>
-                    </div>
-                    <h3 className="mt-6 trade-display text-[3.2rem] font-semibold leading-[0.92] text-[#17120f] sm:text-[4.4rem] lg:text-[5.4rem]">
-                      {story.title}
-                    </h3>
-                    <p className="trade-copy mt-6 max-w-[42rem] text-[1.05rem] font-medium leading-8 text-[#62584a]">
-                      {story.body}
-                    </p>
-                    <div data-advantage-rule className="mt-8 h-px w-full bg-[linear-gradient(90deg,rgba(198,164,91,0.74),transparent)]" />
-                  </div>
-                </ScrollReveal>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 

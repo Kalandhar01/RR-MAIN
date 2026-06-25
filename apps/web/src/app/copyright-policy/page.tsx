@@ -3,7 +3,7 @@ import { CopyrightPolicyExperience } from "@/components/CopyrightPolicyExperienc
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Copyright Policy | Ractysh Group",
+  title: "Copyright Policy | RACTYSH",
   description: "The intellectual property and content usage standards governing the Ractysh ecosystem."
 };
 

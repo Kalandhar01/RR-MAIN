@@ -9,9 +9,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
 
   return {
-    title: `${content.founder.name} | Chairman & Founder | Ractysh Group`,
+    title: `${content.founder.name} | Chairman & Founder | RACTYSH Group Of Companies`,
     description:
-      "Founder profile for Ractysh Group, presenting enterprise leadership, vision, trust and long-term execution."
+      "Founder profile for RACTYSH, presenting enterprise leadership, vision, trust and long-term execution."
   };
 }
 

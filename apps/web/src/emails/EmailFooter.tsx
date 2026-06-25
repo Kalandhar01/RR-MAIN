@@ -57,7 +57,7 @@ const styles = {
 export function EmailFooter({ brand }: EmailFooterProps) {
   return (
     <Section style={styles.wrapper}>
-      <Text style={styles.name}>Ractysh Group</Text>
+      <Text style={styles.name}>RACTYSH</Text>
       <Text style={styles.ecosystem}>Enterprise Ecosystem</Text>
       {brand.divisions.map((division) => (
         <Text key={division} style={styles.division}>

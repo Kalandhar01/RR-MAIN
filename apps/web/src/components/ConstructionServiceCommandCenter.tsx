@@ -59,9 +59,6 @@ const ConstructionHeroScene = dynamic<ConstructionSceneProps>(() => import("@/co
   loading: () => <ConstructionSceneFallback />
 });
 
-const commercialTowerImage = "/services/construction-india-commercial-tower.webp";
-const reinforcementDeckImage = "/services/construction-india-rebar-deck.webp";
-const infrastructureViaductImage = "/services/construction-india-infrastructure-viaduct.webp";
 const siteGovernanceImage = "/services/construction-india-site-governance.webp";
 
 const capabilities: {
@@ -245,30 +242,6 @@ const capabilities: {
     Icon: Truck,
     image: "https://images.unsplash.com/photo-1768321902156-9358b5373d0a?w=800&q=80",
     alt: "Interior renovation with construction materials and supplies"
-  }
-];
-
-const projectShowcases = [
-  {
-    label: "Commercial Tower",
-    title: "High-rise concrete frame execution",
-    body: "Tower cranes, reinforcement, concrete sequencing and facade readiness managed through one delivery rhythm.",
-    image: commercialTowerImage,
-    alt: "Indian commercial tower construction site with cranes and engineers at golden hour"
-  },
-  {
-    label: "Reinforcement Works",
-    title: "Structural steel and slab preparation",
-    body: "Rebar placement, embedded services and site team coordination before concrete pour approvals.",
-    image: reinforcementDeckImage,
-    alt: "Active construction deck with reinforcement steel and site engineers"
-  },
-  {
-    label: "Infrastructure Shell",
-    title: "Large-format structure control",
-    body: "Framework, scaffolding and heavy construction systems shaped for high-value enterprise developments.",
-    image: infrastructureViaductImage,
-    alt: "Indian infrastructure viaduct construction site with cranes and concrete framework at golden hour"
   }
 ];
 
@@ -462,7 +435,7 @@ export function ConstructionServiceCommandCenter() {
               className="inline-flex items-center gap-3 text-[0.76rem] font-bold uppercase leading-none tracking-[0] text-[#8B1118] md:text-[0.82rem]"
             >
               <span className="h-px w-10 bg-[#C9A45C]" />
-              RACTYSH CONSTRUCTION DIVISION
+              RACTYSH Infra Pvt Ltd
             </p>
             <h1
               data-csc-hero-copy
@@ -474,7 +447,7 @@ export function ConstructionServiceCommandCenter() {
               data-csc-hero-copy
               className="mt-7 max-w-[37rem] text-[1rem] font-medium leading-8 text-[#5c5148] md:text-[1.08rem]"
             >
-               Ractysh Group delivers civil &amp; MEP engineering, commercial &amp; residential buildings, PEB structures, turnkey projects, interior works, landscape, swimming pools, lifts, mega structures, government tenders, labour contracts, project management, surveys, soil testing and building stability testing — all with disciplined execution control.
+               RACTYSH Infra Pvt Ltd delivers civil &amp; MEP engineering, commercial &amp; residential buildings, PEB structures, turnkey projects, interior works, landscape, swimming pools, lifts, mega structures, government tenders, labour contracts, project management, surveys, soil testing and building stability testing — all with disciplined execution control.
             </p>
             <div data-csc-hero-copy className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -578,7 +551,7 @@ export function ConstructionServiceCommandCenter() {
             </p>
           </ScrollReveal>
 
-          <div className="mt-12 flex flex-col gap-6">
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {capabilities.slice(0, visibleCapabilities).map(({ title, body, image, alt }, index) => (
               <ScrollReveal key={title} delay={index * 0.04}>
                 <article
@@ -624,67 +597,7 @@ export function ConstructionServiceCommandCenter() {
         </div>
       </section>
 
-      <section
-        id="construction-projects"
-        className="relative isolate overflow-hidden bg-[#161616] px-5 py-20 text-[#F8F4EE] sm:px-6 md:px-8 lg:px-10 lg:py-28 xl:px-14"
-      >
-        <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(201,164,92,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(201,164,92,0.12)_1px,transparent_1px)] [background-size:76px_76px]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C9A45C]/70 to-transparent" />
 
-        <div className="relative z-10 mx-auto max-w-[1500px]">
-          <ScrollReveal className="max-w-[50rem]">
-            <p className="text-[0.76rem] font-bold uppercase leading-none tracking-[0] text-[#C9A45C]">
-              Project Showcase
-            </p>
-            <h2 className="mt-5 font-display text-[3rem] font-semibold leading-[0.94] tracking-[0] text-[#F8F4EE] sm:text-[4.2rem] lg:text-[5.8rem]">
-              Active construction, visible control.
-            </h2>
-            <p className="mt-7 max-w-[36rem] text-[1rem] font-medium leading-8 text-[#d8cbb7]">
-              Site execution is presented as progress, not promise: cranes moving, reinforcement rising, concrete
-              frameworks forming and engineering decisions staying close to the work.
-            </p>
-          </ScrollReveal>
-
-          <div className="csc-project-gallery mt-12">
-            <div className="grid gap-4 lg:min-h-[58rem] lg:grid-cols-5 lg:grid-rows-2">
-              {projectShowcases.map((project, index) => (
-                <ScrollReveal key={project.title} delay={index * 0.04}>
-                <article
-                  data-csc-project-card
-                  className={`csc-project-panel group relative min-h-[28rem] overflow-hidden rounded-[8px] border border-[#C9A45C]/28 bg-[#161616] ${
-                    index === 0 ? "lg:col-span-3 lg:row-span-2" : "lg:col-span-2"
-                  }`}
-                >
-                  <div data-csc-project-parallax className="csc-project-panel-media absolute inset-0">
-                    <Image
-                      data-csc-project-image
-                      src={project.image}
-                      alt={project.alt}
-                      fill
-                      quality={index === 0 ? 88 : 82}
-                      sizes={index === 0 ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 38vw, 100vw"}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="csc-project-panel-wash absolute inset-0" />
-                  <div className="absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
-                    <p className="text-[0.72rem] font-bold uppercase leading-none tracking-[0] text-[#C9A45C]">
-                      {project.label}
-                    </p>
-                    <h3 className="mt-3 max-w-[32rem] font-display text-[2.35rem] font-semibold leading-[0.94] tracking-[0] text-white sm:text-[3.1rem]">
-                      {project.title}
-                    </h3>
-                    <p className="csc-project-panel-body mt-4 max-w-[30rem] text-[0.96rem] font-medium leading-7">
-                      {project.body}
-                    </p>
-                  </div>
-                </article>
-              </ScrollReveal>
-            ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section
         data-csc-process

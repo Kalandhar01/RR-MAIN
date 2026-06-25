@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { getCompanyBrand } from "@/lib/branding";
 
 export default function NotFound() {
+  const pathname = usePathname();
+  const brand = getCompanyBrand(pathname);
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#fbfaf6] px-6 text-center text-[#292c2d]">
       <div>
-        <p className="text-sm font-medium uppercase tracking-[0.26em] text-[#9a8a58]">Ractysh Group</p>
+        <p className="text-sm font-medium uppercase tracking-[0.26em] text-[#9a8a58]">{brand.shortName}</p>
         <h1 className="mt-4 font-display text-5xl font-bold tracking-[-0.06em]">Page not found</h1>
         <p className="mx-auto mt-4 max-w-md text-base leading-7 text-[#686868]">
           The page you are looking for is not available in this experience.

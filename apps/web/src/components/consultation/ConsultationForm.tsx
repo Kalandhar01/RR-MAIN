@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, FileUp, Loader2, Monitor, PhoneCall, Send, UploadCloud } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { AlertTriangle, Loader2, Send } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CompanyContactPanel } from "@/components/CompanyContactPanel";
@@ -20,34 +20,11 @@ const serviceTypes = [
   "OTC Exchange"
 ] as const;
 
-const consultationTypes = ["Virtual Meeting", "Office Consultation", "Site Visit"] as const;
-
-
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const toSelectOptions = (items: readonly string[]) => items.map((item) => ({ value: item, label: item }));
 
 const serviceTypeOptions = toSelectOptions(serviceTypes);
-
-const allowedFileTypes = [
-  "application/pdf",
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/heic",
-  "image/heif"
-];
-
-const allowedExtensions = [".pdf", ".jpg", ".jpeg", ".png", ".webp", ".heic", ".heif", ".dwg", ".dxf", ".ifc", ".rvt"];
-const maxTotalUploadSize = 35 * 1024 * 1024;
-
-const trimOptionalText = (maxLength: number, message: string) =>
-  z
-    .string()
-    .trim()
-    .max(maxLength, message)
-    .optional()
-    .transform((value) => value ?? "");
 
 const consultationFormSchema = z.object({
   fullName: z
@@ -56,18 +33,17 @@ const consultationFormSchema = z.object({
     .min(1, "Please enter your full name.")
     .min(3, "Full name must be at least 3 characters.")
     .max(120, "Full name is too long."),
-  companyName: z
-    .string()
-    .trim()
-    .min(1, "Please enter your company.")
-    .max(160, "Company name is too long."),
   emailAddress: z
     .string()
     .trim()
     .min(1, "Please enter your email.")
     .max(180, "Email is too long.")
-    .refine((value) => value.length === 0 || emailPattern.test(value), "Please enter a valid email."),
-  phoneNumber: trimOptionalText(40, "Phone number is too long."),
+    .refine((value) => emailPattern.test(value), "Please enter a valid email."),
+  phoneNumber: z
+    .string()
+    .trim()
+    .min(1, "Please enter your phone number.")
+    .max(40, "Phone number is too long."),
   serviceType: z
     .string()
     .trim()
@@ -76,33 +52,6 @@ const consultationFormSchema = z.object({
       (value) => serviceTypes.includes(value as (typeof serviceTypes)[number]),
       "Please select a consultation topic."
     ),
-  projectDescription: z
-    .string()
-    .trim()
-    .min(1, "Please enter your message.")
-    .max(4000, "Message is too long."),
-  requirementFiles: z
-    .custom<FileList | undefined>()
-    .optional()
-    .refine((files) => !files || files.length <= 5, "Upload up to 5 files.")
-    .refine(
-      (files) => !files || Array.from(files).every((file) => file.size <= 15 * 1024 * 1024),
-      "Each file must be 15MB or less."
-    )
-    .refine(
-      (files) => !files || Array.from(files).reduce((total, file) => total + file.size, 0) <= maxTotalUploadSize,
-      "Combined uploads must be 35MB or less."
-    )
-    .refine(
-      (files) =>
-        !files ||
-        Array.from(files).every((file) => {
-          const lowerName = file.name.toLowerCase();
-          return allowedFileTypes.includes(file.type) || allowedExtensions.some((extension) => lowerName.endsWith(extension));
-        }),
-      "Upload PDFs, images or blueprint files only."
-    ),
-  preferredConsultationType: z.enum(consultationTypes)
 });
 
 type ConsultationFormInput = z.input<typeof consultationFormSchema>;
@@ -129,13 +78,9 @@ type SubmissionResult = {
 
 const formFieldNames = [
   "fullName",
-  "companyName",
   "emailAddress",
   "phoneNumber",
-  "serviceType",
-  "projectDescription",
-  "requirementFiles",
-  "preferredConsultationType"
+  "serviceType"
 ] as const;
 
 type ConsultationFormField = (typeof formFieldNames)[number];
@@ -302,19 +247,13 @@ export function ConsultationForm() {
     resolver: zodResolver(consultationFormSchema),
     defaultValues: {
       fullName: "",
-      companyName: "",
       emailAddress: "",
       phoneNumber: "",
-      serviceType: "",
-      projectDescription: "",
-      preferredConsultationType: "Virtual Meeting"
+      serviceType: ""
     }
   });
 
-  const selectedFiles = watch("requirementFiles");
-  const preferredType = watch("preferredConsultationType");
   const serviceTypeValue = watch("serviceType") ?? "";
-  const fileList = useMemo(() => (selectedFiles ? Array.from(selectedFiles) : []), [selectedFiles]);
   const isDelivered = Boolean(deliveryReceipt);
 
   useEffect(() => {
@@ -350,12 +289,9 @@ export function ConsultationForm() {
     persistConsultationTracker(result?.consultation);
     reset({
       fullName: "",
-      companyName: "",
       emailAddress: "",
       phoneNumber: "",
-      serviceType: "",
-      projectDescription: "",
-      preferredConsultationType: "Virtual Meeting"
+      serviceType: ""
     });
   }
 
@@ -365,14 +301,9 @@ export function ConsultationForm() {
     try {
       const payload = new FormData();
       payload.append("fullName", values.fullName);
-      payload.append("companyName", values.companyName);
       payload.append("emailAddress", values.emailAddress);
       payload.append("phoneNumber", values.phoneNumber);
       payload.append("serviceType", values.serviceType);
-      payload.append("projectDescription", values.projectDescription);
-      payload.append("preferredConsultationType", values.preferredConsultationType);
-
-      fileList.forEach((file) => payload.append("requirementFiles", file));
 
       const response = await fetch("/api/book-consultation", {
         method: "POST",
@@ -451,7 +382,7 @@ export function ConsultationForm() {
               transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
               className="mx-auto mt-10 overflow-hidden rounded-[2rem] border border-white/70 bg-white/72 p-4 pb-0 shadow-[0_34px_110px_rgba(23,36,58,0.12),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-2xl md:p-6 md:pb-0"
             >
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             <FieldShell id="fullName" label="Full Name" required error={errors.fullName?.message}>
               <input
                 id="fullName"
@@ -462,19 +393,6 @@ export function ConsultationForm() {
                 aria-describedby={errors.fullName ? "fullName-error" : undefined}
                 className={fieldClass(errors.fullName?.message)}
                 {...register("fullName")}
-              />
-            </FieldShell>
-
-            <FieldShell id="companyName" label="Company" required error={errors.companyName?.message}>
-              <input
-                id="companyName"
-                placeholder="Company"
-                required
-                disabled={isSubmitting}
-                aria-invalid={Boolean(errors.companyName)}
-                aria-describedby={errors.companyName ? "companyName-error" : undefined}
-                className={fieldClass(errors.companyName?.message)}
-                {...register("companyName")}
               />
             </FieldShell>
 
@@ -492,11 +410,12 @@ export function ConsultationForm() {
               />
             </FieldShell>
 
-            <FieldShell id="phoneNumber" label="Phone Number" error={errors.phoneNumber?.message}>
+            <FieldShell id="phoneNumber" label="Phone Number" required error={errors.phoneNumber?.message}>
               <input
                 id="phoneNumber"
                 type="tel"
                 placeholder="Phone Number"
+                required
                 disabled={isSubmitting}
                 aria-invalid={Boolean(errors.phoneNumber)}
                 aria-describedby={errors.phoneNumber ? "phoneNumber-error" : undefined}
@@ -519,97 +438,6 @@ export function ConsultationForm() {
                 onChange={(nextValue) => setValue("serviceType", nextValue, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
               />
             </FieldShell>
-
-            <div className="lg:row-span-2">
-              <FieldShell id="projectDescription" label="Message" required error={errors.projectDescription?.message}>
-                <textarea
-                  id="projectDescription"
-                  placeholder="Message"
-                  rows={8}
-                  required
-                  disabled={isSubmitting}
-                  aria-invalid={Boolean(errors.projectDescription)}
-                  aria-describedby={errors.projectDescription ? "projectDescription-error" : undefined}
-                  className={cn(fieldClass(errors.projectDescription?.message), "h-full min-h-[9.2rem] resize-none leading-[1.7]")}
-                  {...register("projectDescription")}
-                />
-              </FieldShell>
-            </div>
-
-            <div>
-              <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-[#7f786c]">Preferred Consultation Type</p>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {consultationTypes.map((type) => {
-                  const Icon = type === "Virtual Meeting" ? Monitor : type === "Office Consultation" ? PhoneCall : FileUp;
-                  const active = preferredType === type;
-
-                  return (
-                    <button
-                      key={type}
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() => setValue("preferredConsultationType", type, { shouldValidate: true })}
-                      className={cn(
-                        "flex min-h-28 flex-col items-start justify-between rounded-2xl border p-4 text-left text-[14px] font-medium transition duration-300 disabled:cursor-not-allowed disabled:opacity-60",
-                        active
-                          ? "border-[#c6a45b]/80 bg-[#fff7df] text-[#17243a] shadow-[0_0_0_4px_rgba(198,164,91,0.1)]"
-                          : "border-[#e0d8c9] bg-white/58 text-[#625d54] hover:border-[#c6a45b]/60 hover:bg-white"
-                      )}
-                    >
-                      <Icon className={cn("h-5 w-5", active ? "text-[#9a7428]" : "text-[#777166]")} strokeWidth={1.8} />
-                      <span>{type}</span>
-                    </button>
-                  );
-                })}
-              </div>
-              {errors.preferredConsultationType?.message ? (
-                <p className="mt-2 text-xs font-medium text-[#a33a2e]">{errors.preferredConsultationType.message}</p>
-              ) : null}
-            </div>
-
-            <div className="lg:col-span-2">
-              <label
-                htmlFor="requirementFiles"
-                className={cn(
-                  "flex cursor-pointer flex-col items-center justify-center rounded-[1.5rem] border border-dashed bg-[#fbfaf6]/72 p-6 text-center transition duration-300 hover:border-[#c6a45b]/70 hover:bg-white",
-                  isSubmitting && "pointer-events-none opacity-65",
-                  errors.requirementFiles?.message ? "border-[#d56a5e]" : "border-[#d8d0c1]"
-                )}
-              >
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#17243a] text-[#f5df9a]">
-                  <UploadCloud className="h-5 w-5" strokeWidth={1.8} />
-                </span>
-                <span className="mt-4 text-[14px] font-semibold text-[#17243a]">Upload Requirement Files</span>
-                <span className="mt-2 max-w-xl text-[14px] leading-[1.7] text-[#706b62]/80">
-                  PDFs, images, blueprints, DWG, DXF, IFC or RVT files. Up to 5 files, 15MB each, 35MB combined.
-                </span>
-                <input
-                  id="requirementFiles"
-                  type="file"
-                  multiple
-                  accept="application/pdf,image/*,.dwg,.dxf,.ifc,.rvt"
-                  className="hidden"
-                  disabled={isSubmitting}
-                  {...register("requirementFiles")}
-                />
-              </label>
-              {fileList.length ? (
-                <div className="mt-3 grid gap-2 md:grid-cols-2">
-                  {fileList.map((file) => (
-                    <div
-                      key={`${file.name}-${file.size}`}
-                      className="flex items-center gap-2 rounded-xl border border-[#e0d8c9] bg-white/62 px-3 py-2 text-xs font-medium text-[#625d54]"
-                    >
-                      <FileUp className="h-4 w-4 text-[#9a7428]" strokeWidth={1.8} />
-                      <span className="min-w-0 truncate">{file.name}</span>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              {errors.requirementFiles?.message ? (
-                <p className="mt-2 text-xs font-medium text-[#a33a2e]">{errors.requirementFiles.message}</p>
-              ) : null}
-            </div>
           </div>
 
           <div className="mt-6 flex flex-col gap-5 border-t border-[#e7dfd1] pt-5 xl:flex-row xl:items-center xl:justify-between">

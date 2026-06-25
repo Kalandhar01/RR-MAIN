@@ -29,6 +29,7 @@ import { servicePages } from "@/data/servicePages";
 import { COMPANY_CONTACT } from "@/lib/companyContact";
 import type { NavItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { getCompanyBrand } from "@/lib/branding";
 
 interface NavbarProps {
   logoText: string;
@@ -87,7 +88,7 @@ const ecosystemAnchorHref = "/#features";
 
 const menuModels: Record<string, MegaDefinition> = {
   Ecosystem: {
-    eyebrow: "Ractysh Group",
+    eyebrow: "RACTYSH",
     title: "Business divisions across one premium enterprise ecosystem.",
     description: "Move between Ractysh business divisions across Architecture, Construction, Real Estate, Import-Export operations and OTC Exchange.",
     image: "/images/photo-1486406146926-c627a92ad1ab.webp",
@@ -154,7 +155,7 @@ const menuModels: Record<string, MegaDefinition> = {
   "About Us": {
     eyebrow: "Company",
     title: "Leadership, locations and enterprise identity.",
-    description: `Learn about Ractysh Group, the founder, directors, trademark layer and ${COMPANY_CONTACT.locationDisplay}.`,
+    description: `Learn about RACTYSH, the founder, directors, trademark layer and ${COMPANY_CONTACT.locationDisplay}.`,
     image: "/images/photo-1518005020951-eccb494ad742.webp",
     ctaLabel: "About Ractysh",
     ctaHref: "/about",
@@ -792,6 +793,7 @@ export function Navbar({ logoText, items }: NavbarProps) {
   const consultationNavItem = useMemo(() => navItems.find((item) => item.variant === "cta"), [navItems]);
   const activeItem = activeLabel ? navItems.find((item) => item.label === activeLabel && item.menu) : null;
   const brandName = logoText && !logoText.toLowerCase().includes("audit") ? logoText : "Ractysh";
+  const companyBrand = getCompanyBrand(pathname);
   const isLandscapePlanningRoute = pathname === "/landscape-planning";
   const displayedSearchItems = useMemo(() => {
     if (!searchQuery.trim()) return quickAccessSearchItems;
@@ -913,6 +915,12 @@ export function Navbar({ logoText, items }: NavbarProps) {
 
       if (insideHomeHero || currentScroll <= 8 || interactionLocked) {
         showHeader(insideHomeHero || currentScroll <= 8 ? 0.36 : showDuration());
+        lastScrollY = currentScroll;
+        return;
+      }
+
+      if (window.innerWidth >= 1280) {
+        showHeader(0.3);
         lastScrollY = currentScroll;
         return;
       }
@@ -1104,15 +1112,19 @@ export function Navbar({ logoText, items }: NavbarProps) {
             onMouseEnter={() => setActiveLabel(null)}
             aria-label="Ractysh home"
           >
-            <BrandLogo size="nav" priority decorative className="translate-y-px" />
-            <span style={{ color: "var(--nav-text, #111111)" }} className="font-sans text-[1.1rem] font-bold leading-none tracking-tight md:text-[1.15rem]">
-              {brandName}
-            </span>
+            <BrandLogo size="navCompact" priority decorative className="xl:hidden translate-y-[2px] !h-[37px] !w-[37px]" />
+            <div>
+              <span style={{ color: "var(--nav-text, #111111)" }} className="block font-sans text-[1.1rem] font-bold leading-tight tracking-tight md:text-[1.15rem]">
+                {brandName}
+              </span>
+              <span className="block text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#C9A15A] xl:hidden">
+                {companyBrand.subtitle}
+              </span>
+            </div>
             <span className="hidden text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#C9A15A] xl:block">
-              Group Limited
+              {companyBrand.subtitle}
             </span>
           </Link>
-
           <nav className="mx-auto hidden h-full items-center justify-center gap-0.5 xl:flex 2xl:gap-1" aria-label="Primary navigation">
             {primaryNavItems.map((item) => {
               const isActive = isActiveHref(item.href, pathname);
@@ -1204,10 +1216,10 @@ export function Navbar({ logoText, items }: NavbarProps) {
                   <BrandLogo size="navCompact" priority decorative />
                   <div>
                     <span className="block font-display text-[1.05rem] font-semibold leading-tight text-[#111111]">
-                      {brandName} GROUP LIMITED
+                      {brandName}
                     </span>
                     <span className="mt-0.5 block text-[0.55rem] font-medium uppercase tracking-[0.18em] text-[#9e8a70]">
-                      Integrated Enterprise Ecosystem
+                      {companyBrand.subtitle}
                     </span>
                   </div>
                 </Link>

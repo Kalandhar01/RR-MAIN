@@ -3,7 +3,7 @@ import { PrivacyPolicyExperience } from "@/components/PrivacyPolicyExperience";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Ractysh Group",
+  title: "Privacy Policy | RACTYSH",
   description: "How Ractysh collects, manages and protects enterprise information across the ecosystem."
 };
 

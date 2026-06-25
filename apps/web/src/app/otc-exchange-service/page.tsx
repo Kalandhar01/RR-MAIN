@@ -4,7 +4,7 @@ import { OtcExchangeServiceExperience } from "@/components/OtcExchangeServiceExp
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "OTC Exchange Operations | Ractysh Group",
+  title: "OTC Exchange Operations | RACTYSH",
   description: "Private transaction coordination, settlement governance and institutional exchange management."
 };
 

@@ -27,7 +27,7 @@ export class BaseRepository<T extends Document> {
 
   async findById(id: string): Promise<T | null> {
     try {
-      return await this.model.findById(id).lean();
+      return await this.model.findById(id).lean() as unknown as T | null;
     } catch {
       return null;
     }
@@ -35,7 +35,7 @@ export class BaseRepository<T extends Document> {
 
   async findOne(filter: FilterQuery<T>): Promise<T | null> {
     try {
-      return await this.model.findOne(filter).lean();
+      return await this.model.findOne(filter).lean() as unknown as T | null;
     } catch {
       return null;
     }
@@ -145,15 +145,16 @@ export class BaseRepository<T extends Document> {
   }
 
   async aggregate(pipeline: Record<string, unknown>[]): Promise<unknown[]> {
-    return this.model.aggregate(pipeline);
+    const result = await this.model.aggregate(pipeline as any);
+    return result as unknown as unknown[];
   }
 
   async increment(id: string, field: string, amount = 1): Promise<T | null> {
-    const doc = await this.model.findByIdAndUpdate(
+    const doc = (await this.model.findByIdAndUpdate(
       id,
-      { $inc: { [field]: amount } },
+      { $inc: { [field]: amount } } as any,
       { new: true }
-    ).lean();
-    return doc as T | null;
+    ).lean()) as unknown as T | null;
+    return doc;
   }
 }

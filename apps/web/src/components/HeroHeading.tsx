@@ -2,9 +2,11 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { HeroContent } from "@/lib/types";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getCompanyBrand } from "@/lib/branding";
 
 interface HeroHeadingProps {
   hero: HeroContent;
@@ -29,6 +31,8 @@ const headlineCharacterCount = headlineLines.reduce(
 
 export function HeroHeading({ hero, isReady, onTypingComplete }: HeroHeadingProps) {
   void hero;
+  const pathname = usePathname();
+  const brand = getCompanyBrand(pathname);
 
   const [visibleCharacters, setVisibleCharacters] = useState(0);
   const [hasTyped, setHasTyped] = useState(false);
@@ -114,7 +118,7 @@ export function HeroHeading({ hero, isReady, onTypingComplete }: HeroHeadingProp
         data-hero-eyebrow
         className="mb-6 inline-flex items-center gap-4 text-[0.88rem] font-medium text-[#343434]"
       >
-        <span>Ractysh Group Ecosystem</span>
+        <span>{brand.shortName} Ecosystem</span>
         <span className="h-5 w-px bg-[#c9c7c1]" />
         <Link href="/about" className="inline-flex items-center gap-1.5">
           Know More
@@ -178,7 +182,7 @@ export function HeroHeading({ hero, isReady, onTypingComplete }: HeroHeadingProp
           hasTyped ? "opacity-100" : "opacity-0"
         )}
       >
-        <span className="block">Ractysh Group operates across five private enterprise pillars.</span>
+          <span className="block">{brand.shortName} operates across five private enterprise pillars.</span>
         <span className="block">One premium ecosystem for spatial, delivery, asset, Trade and Private Exchange workflows.</span>
       </p>
     </div>

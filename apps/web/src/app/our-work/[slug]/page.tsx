@@ -13,8 +13,8 @@ let ProjectModel: mongoose.Model<Record<string, unknown>>;
 
 function getModel() {
   if (!ProjectModel) {
-    const schema = new mongoose.Schema({}, { strict: false });
-    ProjectModel = mongoose.models.PortfolioProject || mongoose.model("PortfolioProject", schema);
+    const schema = new mongoose.Schema({}, { strict: false, collection: "ourworks" });
+    ProjectModel = mongoose.models.OurWork || mongoose.model("OurWork", schema);
   }
   return ProjectModel;
 }
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProject(slug);
   if (!project) return { title: "Project Not Found" };
   return {
-    title: `${project.title as string} | Ractysh Group Portfolio`,
+    title: `${project.title as string} | RACTYSH Portfolio`,
     description: project.description as string | undefined,
   };
 }

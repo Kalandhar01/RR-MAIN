@@ -268,7 +268,7 @@ export function OtcExchangeServiceExperience() {
               className="flex items-center gap-4 text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[#8b1118]"
             >
               <span className="h-px w-12 bg-[#b88a44]" />
-              RACTYSH OTC EXCHANGE
+              RACTYSH Associates Pvt Ltd
             </motion.p>
 
             <h1

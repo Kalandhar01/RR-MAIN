@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { NewsletterModel, SubscriberModel, type INewsletter, type ISubscriber } from "../models/Newsletter.js";
 import type { NewsletterCreateInput, NewsletterSubscribeInput, NewsletterUpdateInput } from "../validation/newsletter.js";
 import { safelyIngestLead, safelyIngestNewsletter } from "./ingestionService.js";
@@ -152,7 +153,7 @@ async function ensureUniqueSlug(base: string, existingId?: string): Promise<stri
   let suffix = 2;
 
   while (true) {
-    const existing = await NewsletterModel.findOne({ slug: candidate }).select("_id").lean();
+    const existing = await NewsletterModel.findOne({ slug: candidate }).select("_id").lean() as { _id: unknown } | null;
     if (!existing || (existingId && String(existing._id) === existingId)) return candidate;
 
     candidate = `${slugify(base)}-${suffix}`;
@@ -247,7 +248,7 @@ export async function listAdminNewsletters(): Promise<NewsletterDto[]> {
     .sort({ updatedAt: -1, createdAt: -1 })
     .lean();
 
-  return newsletters.map((record) => mapNewsletter(record as INewsletter, true));
+  return newsletters.map((record) => mapNewsletter(record as unknown as unknown as INewsletter, true));
 }
 
 export async function createNewsletter(input: NewsletterCreateInput): Promise<NewsletterDto> {
@@ -261,7 +262,7 @@ export async function createNewsletter(input: NewsletterCreateInput): Promise<Ne
     ? await NewsletterModel.findById(newsletter._id).lean()
     : newsletter.toObject();
 
-  const record = (fresh || newsletter.toObject()) as INewsletter;
+  const record = (fresh || newsletter.toObject()) as unknown as unknown as INewsletter;
   await safelyIngestNewsletter(newsletterIngestionPayload(record, "created"));
   return mapNewsletter(record, true);
 }
@@ -272,14 +273,15 @@ export async function updateNewsletter(id: string, input: NewsletterUpdateInput)
   const data = await normalizeUpdateInput(id, input);
   const newsletter = await NewsletterModel.findByIdAndUpdate(id, { $set: data }, { new: true }).lean();
   if (!newsletter) throw new NewsletterNotFoundError();
+  const n = newsletter as unknown as unknown as INewsletter;
 
-  await normalizeFeatured(id, (data.featured as boolean) || newsletter.featured);
+  await normalizeFeatured(id, (data.featured as boolean) || n.featured);
 
-  const fresh = newsletter.featured
+  const fresh = n.featured
     ? await NewsletterModel.findById(id).lean()
     : newsletter;
 
-  const record = (fresh || newsletter) as INewsletter;
+  const record = (fresh || newsletter) as unknown as unknown as INewsletter;
   await safelyIngestNewsletter(newsletterIngestionPayload(record, "updated"));
   return mapNewsletter(record, true);
 }
@@ -300,9 +302,9 @@ export async function getPublicNewsletterBySlug(slug: string): Promise<Newslette
 
     if (!record) return null;
 
-    await NewsletterModel.findByIdAndUpdate(record._id, { $inc: { views: 1 } });
-    const updated = await NewsletterModel.findById(record._id).lean();
-    return mapNewsletter((updated || record) as INewsletter, true);
+    await NewsletterModel.findByIdAndUpdate((record as unknown as unknown as INewsletter)._id, { $inc: { views: 1 } });
+    const updated = await NewsletterModel.findById((record as unknown as unknown as INewsletter)._id).lean();
+    return mapNewsletter((updated || record) as unknown as unknown as INewsletter, true);
   } catch (error) {
     if (!newsletterMongoEnabled) return null;
     throw error;
@@ -318,13 +320,13 @@ export async function getFeaturedNewsletter(): Promise<NewsletterDto | null> {
       ...publicWhere()
     }).sort({ publishDate: -1, updatedAt: -1 }).lean();
 
-    if (record) return mapNewsletter(record as INewsletter);
+    if (record) return mapNewsletter(record as unknown as unknown as INewsletter);
 
     const latest = await NewsletterModel.findOne(publicWhere())
       .sort({ publishDate: -1, updatedAt: -1 })
       .lean();
 
-    return latest ? mapNewsletter(latest as INewsletter) : null;
+    return latest ? mapNewsletter(latest as unknown as unknown as INewsletter) : null;
   } catch (error) {
     if (!newsletterMongoEnabled) return null;
     throw error;
@@ -339,7 +341,7 @@ export async function getLatestNewsletter(): Promise<NewsletterDto | null> {
       .sort({ publishDate: -1, updatedAt: -1 })
       .lean();
 
-    return record ? mapNewsletter(record as INewsletter) : null;
+    return record ? mapNewsletter(record as unknown as unknown as INewsletter) : null;
   } catch (error) {
     if (!newsletterMongoEnabled) return null;
     throw error;
@@ -364,8 +366,8 @@ export async function getExecutiveIntelligence(limit = 6) {
       NewsletterModel.countDocuments(where)
     ]);
 
-    const mapped = newsletters.map((record) => mapNewsletter(record as INewsletter));
-    const trendingDto = trending ? mapNewsletter(trending as INewsletter) : null;
+    const mapped = newsletters.map((record) => mapNewsletter(record as unknown as unknown as INewsletter));
+    const trendingDto = trending ? mapNewsletter(trending as unknown as unknown as INewsletter) : null;
     const ticker: NewsletterTickerItem[] = [
       latest ? { label: "Latest Publication", title: latest.title, category: latest.category, slug: latest.slug } : null,
       featured ? { label: "Featured Insight", title: featured.title, category: featured.category, slug: featured.slug } : null,
@@ -414,7 +416,18 @@ export async function subscribeToNewsletter(input: NewsletterSubscribeInput) {
       }
     },
     { upsert: true, new: true }
-  ).lean();
+  ).lean() as mongoose.FlattenMaps<ISubscriber> | null;
+
+  if (!subscriber) {
+    return {
+      id: "",
+      email,
+      status: "active",
+      source: input.source || "executive-intelligence-center",
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString()
+    };
+  }
 
   await safelyIngestLead({
     fullName: email.split("@")[0] || "Newsletter Subscriber",

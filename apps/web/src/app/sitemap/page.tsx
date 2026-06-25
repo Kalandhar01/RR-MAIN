@@ -3,8 +3,8 @@ import { SitemapDirectoryExperience } from "@/components/SitemapDirectoryExperie
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Sitemap | Ractysh Group",
-  description: "A premium enterprise navigation directory for Ractysh Group pages, services and governance records."
+  title: "Sitemap | RACTYSH",
+  description: "A premium enterprise navigation directory for RACTYSH pages, services and governance records."
 };
 
 export default async function SitemapPage() {

@@ -2,8 +2,10 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { Building2, Globe2, HardHat, Home, Landmark } from "lucide-react";
 import { CountUp } from "./CountUp";
+import { getCompanyBrand } from "@/lib/branding";
 
 const divisions = [
   {
@@ -35,12 +37,14 @@ const divisions = [
 
 const stats = [
   { label: "Business Divisions", value: 5, suffix: "" },
-  { label: "Years of Experience", value: 4, suffix: "+" },
-  { label: "Projects Delivered", value: 150, suffix: "+" },
-  { label: "Global Partners", value: 30, suffix: "+" }
+  { label: "Years of Experience", value: 5, suffix: "+" },
+  { label: "Projects Delivered", value: 100, suffix: "+" },
+  { label: "Global Partners", value: 10, suffix: "+" }
 ];
 
 function SectionHeader({ isInView }: { isInView: boolean }) {
+  const pathname = usePathname();
+  const brand = getCompanyBrand(pathname);
   return (
     <div className="mb-20 text-center">
       <motion.div
@@ -51,7 +55,7 @@ function SectionHeader({ isInView }: { isInView: boolean }) {
         <div className="mb-6 flex items-center justify-center gap-4">
           <span className="block h-px w-8 bg-[#D6B45F]/40" />
           <span className="text-[11px] font-bold tracking-[0.28em] text-[#D6B45F] uppercase">
-            The Ractysh Group
+            {brand.shortName}
           </span>
           <span className="block h-px w-8 bg-[#D6B45F]/40" />
         </div>

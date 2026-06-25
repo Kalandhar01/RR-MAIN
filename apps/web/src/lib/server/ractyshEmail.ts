@@ -210,7 +210,7 @@ export function EmailLayout({ eyebrow, title, previewText, sections, brand = get
                   ${escapeEmailHtml(eyebrow)}
                 </p>
                 <h1 style="margin:0;color:#181512;font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:1.15;font-weight:700">
-                  Ractysh Group
+                  RACTYSH
                 </h1>
                 <p style="margin:10px 0 0;color:#5f5648;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7">
                   ${divisionLine}
@@ -228,7 +228,7 @@ export function EmailLayout({ eyebrow, title, previewText, sections, brand = get
             <tr>
               <td style="padding:24px 30px 30px;background:#ffffff;border-top:1px solid #eadfc9">
                 <p style="margin:0 0 12px;color:#181512;font-family:Georgia,'Times New Roman',serif;font-size:19px;line-height:1.3;font-weight:700">
-                  Ractysh Group
+                  RACTYSH
                 </p>
                 <p style="margin:0;color:#5f5648;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.8">
                   ${divisions.map(escapeEmailHtml).join("<br>")}

@@ -4,7 +4,7 @@ import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Architecture Service Hub | Ractysh Group",
+  title: "Architecture Service Hub | RACTYSH",
   description:
     "Ractysh Architecture Services hub for architecture design, interior design, landscape planning and 3D visualization."
 };

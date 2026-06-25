@@ -55,7 +55,7 @@ export function HeroSection() {
               {...fadeUp(0)}
               className="font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[#C49A3A]"
             >
-              Ractysh Group Limited
+              RACTYSH Group Of Companies
             </motion.p>
 
             <SplitText

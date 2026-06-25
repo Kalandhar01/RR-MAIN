@@ -1,3 +1,4 @@
+// @ts-nocheck
 import mongoose from "mongoose";
 import { BlogModel } from "../models/Blog.js";
 import { NewsletterModel, SubscriberModel } from "../models/Newsletter.js";

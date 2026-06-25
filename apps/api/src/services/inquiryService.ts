@@ -101,7 +101,7 @@ export async function listContactInquiries() {
     .limit(250)
     .lean();
 
-  return records.map((record) => mapContactInquiry(record as IContactInquiry));
+  return records.map((record) => mapContactInquiry(record as unknown as unknown as IContactInquiry));
 }
 
 export async function updateContactInquiry(
@@ -115,5 +115,5 @@ export async function updateContactInquiry(
   ).lean();
 
   if (!record) throw new Error("Contact inquiry not found.");
-  return mapContactInquiry(record as IContactInquiry);
+  return mapContactInquiry(record as unknown as unknown as IContactInquiry);
 }

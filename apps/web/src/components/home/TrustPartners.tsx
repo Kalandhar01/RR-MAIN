@@ -8,7 +8,7 @@ import { CountUp } from "./CountUp";
 const supportingMetrics = [
   { label: "Enterprise Clients", value: 50, suffix: "+" },
   { label: "Business Divisions", value: 5, suffix: "" },
-  { label: "Years Experience", value: 4, suffix: "+" },
+  { label: "Years Experience", value: 5, suffix: "+" },
   { label: "Client Retention", value: 95, suffix: "%" }
 ];
 
@@ -172,7 +172,7 @@ export function TrustPartners() {
 
               <div className="flex items-start gap-2">
                 <span className="font-display text-[clamp(4.5rem,12vw,8rem)] font-bold leading-[0.9] tracking-tight text-[#111]">
-                  <CountUp from={0} to={150} started={isInView} />+
+                  <CountUp from={0} to={100} started={isInView} />+
                 </span>
               </div>
 
@@ -209,9 +209,9 @@ export function TrustPartners() {
               className="mt-10 flex flex-wrap gap-x-8 gap-y-2"
             >
               {[
-                "150+ Projects Delivered",
+                "100+ Projects Delivered",
                 "50+ Enterprise Clients",
-                "4+ Years Experience",
+                "5+ Years Experience",
                 "95% Retention Rate"
               ].map((item) => (
                 <span

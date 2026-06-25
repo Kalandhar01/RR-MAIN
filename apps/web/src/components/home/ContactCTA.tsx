@@ -2,17 +2,21 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Mail, Phone, MapPin, Check } from "lucide-react";
 import Link from "next/link";
+import { getCompanyBrand } from "@/lib/branding";
 
 const stats = [
-  { label: "Projects Delivered", value: "150+" },
+  { label: "Projects Delivered", value: "100+" },
   { label: "Enterprise Clients", value: "50+" },
   { label: "Business Divisions", value: "5" },
   { label: "Retention Rate", value: "95%" },
 ];
 
 export function ContactCTA() {
+  const pathname = usePathname();
+  const brand = getCompanyBrand(pathname);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -42,7 +46,7 @@ export function ContactCTA() {
 
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-[#1B1611]/50 sm:text-base">
             Ready to start your next project? Connect with our team and discover
-            how Ractysh Group can help bring your vision to life.
+            how {brand.shortName} can help bring your vision to life.
           </p>
         </motion.div>
 
@@ -89,7 +93,7 @@ export function ContactCTA() {
             <MapPin className="h-3.5 w-3.5" />
             <span>Coimbatore &bull; Palani &bull; Dindigul</span>
           </Link>
-          <Link href="mailto:noorulsmart1998@gmail.com" className="group flex items-center gap-2 text-sm text-[#1B1611]/40 transition-colors duration-200 hover:text-[#C49A3A]">
+          <Link href="mailto:ractyshgroup@gmail.com" className="group flex items-center gap-2 text-sm text-[#1B1611]/40 transition-colors duration-200 hover:text-[#C49A3A]">
             <Mail className="h-3.5 w-3.5" />
             <span>Email</span>
           </Link>

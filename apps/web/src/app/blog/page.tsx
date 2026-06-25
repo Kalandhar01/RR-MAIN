@@ -4,7 +4,7 @@ import { MarketingChrome } from "@/components/MarketingChrome";
 import { getBlogIndex, getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Enterprise Blog | Ractysh Group",
+  title: "Enterprise Blog | RACTYSH",
   description:
     "Ractysh articles on Architecture, Construction, Real Estate, Export & Import, OTC Exchange and enterprise coordination."
 };

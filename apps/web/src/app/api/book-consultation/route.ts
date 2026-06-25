@@ -54,8 +54,8 @@ const consultationSchema = z.object({
   companyName: z
     .string()
     .trim()
-    .min(1, "Please enter your company.")
-    .max(160, "Company is too long."),
+    .max(160, "Company is too long.")
+    .transform((v) => v || "Not provided"),
   serviceType: z
     .string()
     .trim()
@@ -65,8 +65,8 @@ const consultationSchema = z.object({
   projectDescription: z
     .string()
     .trim()
-    .min(1, "Please enter your message.")
-    .max(4000, "Message is too long."),
+    .max(4000, "Message is too long.")
+    .transform((v) => v || "Not provided"),
   phoneNumber: z.string().trim().max(40, "Phone number is too long.").optional(),
   budgetRange: z.string().trim().max(80, "Budget range is too long.").optional(),
   projectTimeline: z.string().trim().max(80, "Project timeline is too long.").optional(),

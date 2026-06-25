@@ -7,7 +7,13 @@ export const INTERNAL_API_URL = process.env.INTERNAL_API_URL || API_URL;
 
 export function normalizeImageUrl(url: string | null | undefined): string {
   if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    if (url.startsWith("https://res.cloudinary.com/")) {
+      const parts = url.split("/upload/");
+      if (parts.length === 2) return `${parts[0]}/upload/f_auto,q_auto/${parts[1]}`;
+    }
+    return url;
+  }
   return url;
 }
 

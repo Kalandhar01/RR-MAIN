@@ -5,7 +5,7 @@ import { getSiteContent } from "@/lib/api";
 import { prisma } from "@/lib/server/db";
 
 export const metadata: Metadata = {
-  title: "Ractysh Group Business Ecosystem | Five Enterprise Pillars",
+  title: "RACTYSH Business Ecosystem | Five Enterprise Pillars",
   description:
     "A premium overview of the Ractysh five-pillar enterprise ecosystem across Architecture, Construction, Real Estate, Export & Import and OTC Exchange."
 };

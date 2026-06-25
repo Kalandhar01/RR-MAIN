@@ -4,8 +4,8 @@ import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Directors | Ractysh Group",
-  description: "Meet the Ractysh Group directors and executive leadership team."
+  title: "Directors | RACTYSH",
+  description: "Meet the RACTYSH directors and executive leadership team."
 };
 
 export default async function DirectorsPage() {

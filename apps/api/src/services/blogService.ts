@@ -159,7 +159,7 @@ async function ensureUniqueSlug(base: string, existingId?: string): Promise<stri
   let suffix = 2;
 
   while (true) {
-    const existing = await BlogModel.findOne({ slug: candidate }).select("_id").lean();
+    const existing = await BlogModel.findOne({ slug: candidate }).select("_id").lean() as { _id: unknown } | null;
 
     if (!existing || (existingId && String(existing._id) === existingId)) return candidate;
 
@@ -274,7 +274,7 @@ async function normalizeCreateInput(input: BlogCreateInput): Promise<Partial<IBl
 }
 
 async function normalizeUpdateInput(id: string, input: BlogUpdateInput): Promise<Record<string, unknown>> {
-  const existing = await BlogModel.findById(id).lean();
+  const existing = await BlogModel.findById(id).lean() as unknown as IBlog | null;
   if (!existing) throw new Error("Blog not found.");
 
   const next: Record<string, unknown> = {};
@@ -310,7 +310,7 @@ async function normalizeUpdateInput(id: string, input: BlogUpdateInput): Promise
   }
 
   if (input.readTime !== undefined) {
-    next.readTime = input.readTime || computeReadTime(input.content || existing.content);
+    next.readTime = input.readTime || computeReadTime(input.content || existing.content || "");
   } else if (input.content !== undefined) {
     next.readTime = computeReadTime(input.content);
   }
@@ -340,10 +340,10 @@ export async function listAdminBlogs(options: BlogListOptions = {}): Promise<Blo
   ]);
 
   return {
-    blogs: records.map((record) => mapBlog(record as IBlog, true)),
-    featured: featured ? mapBlog(featured as IBlog, true) : null,
-    latest: latest.map((record) => mapBlog(record as IBlog)),
-    recentInsights: insights.map((record) => mapBlog(record as IBlog)),
+    blogs: records.map((record) => mapBlog(record as unknown as IBlog, true)),
+    featured: featured ? mapBlog(featured as unknown as IBlog, true) : null,
+    latest: latest.map((record) => mapBlog(record as unknown as IBlog)),
+    recentInsights: insights.map((record) => mapBlog(record as unknown as IBlog)),
     categories: categories as string[],
     pagination: pagination(page, limit, total)
   };
@@ -372,13 +372,13 @@ export async function listPublicBlogs(options: BlogListOptions = {}): Promise<Bl
       BlogModel.distinct("category", publicFilter)
     ]);
 
-    const latestDtos = latest.map((record) => mapBlog(record as IBlog));
+    const latestDtos = latest.map((record) => mapBlog(record as unknown as IBlog));
 
     return {
-      blogs: records.map((record) => mapBlog(record as IBlog)),
-      featured: featured ? mapBlog(featured as IBlog) : latestDtos[0] || null,
+      blogs: records.map((record) => mapBlog(record as unknown as IBlog)),
+      featured: featured ? mapBlog(featured as unknown as IBlog) : latestDtos[0] || null,
       latest: latestDtos,
-      recentInsights: insights.length ? insights.map((record) => mapBlog(record as IBlog)) : latestDtos.slice(0, 3),
+      recentInsights: insights.length ? insights.map((record) => mapBlog(record as unknown as IBlog)) : latestDtos.slice(0, 3),
       categories: categories as string[],
       pagination: pagination(page, limit, total)
     };
@@ -397,13 +397,13 @@ export async function getFeaturedBlog(): Promise<BlogDto | null> {
       ...publicWhere()
     }).sort({ publishedAt: -1, updatedAt: -1 }).lean();
 
-    if (record) return mapBlog(record as IBlog);
+    if (record) return mapBlog(record as unknown as IBlog);
 
     const latest = await BlogModel.findOne(publicWhere())
       .sort({ publishedAt: -1, updatedAt: -1 })
       .lean();
 
-    return latest ? mapBlog(latest as IBlog) : null;
+    return latest ? mapBlog(latest as unknown as IBlog) : null;
   } catch (error) {
     if (!blogMongoEnabled) return null;
     throw error;
@@ -419,7 +419,7 @@ export async function getLatestBlogs(limit = 6): Promise<BlogDto[]> {
       .limit(parseLimit(limit))
       .lean();
 
-    return records.map((record) => mapBlog(record as IBlog));
+    return records.map((record) => mapBlog(record as unknown as IBlog));
   } catch (error) {
     if (!blogMongoEnabled) return [];
     throw error;
@@ -433,17 +433,17 @@ export async function getPublicBlogBySlug(slug: string, options: { incrementView
     const record = await BlogModel.findOne({
       slug,
       ...publicWhere()
-    }).lean();
+    }).lean() as unknown as IBlog | null;
 
     if (!record) return null;
 
     if (options.incrementViews !== false) {
       await BlogModel.findByIdAndUpdate(record._id, { $inc: { views: 1 } });
-      const updated = await BlogModel.findById(record._id).lean();
-      if (updated) return mapBlog(updated as IBlog, true);
+      const updated = await BlogModel.findById(record._id).lean() as unknown as IBlog | null;
+      if (updated) return mapBlog(updated as unknown as IBlog, true);
     }
 
-    return mapBlog(record as IBlog, true);
+    return mapBlog(record as unknown as IBlog, true);
   } catch (error) {
     if (!blogMongoEnabled) return null;
     throw error;
@@ -461,14 +461,14 @@ export async function createBlog(input: BlogCreateInput): Promise<BlogDto> {
     ? await BlogModel.findById(blog._id).lean()
     : blog.toObject();
 
-  return mapBlog((fresh || blog.toObject()) as IBlog, true);
+  return mapBlog((fresh || blog.toObject()) as unknown as IBlog, true);
 }
 
 export async function updateBlog(id: string, input: BlogUpdateInput): Promise<BlogDto> {
   assertDatabase();
 
   const data = await normalizeUpdateInput(id, input);
-  const blog = await BlogModel.findByIdAndUpdate(id, { $set: data }, { new: true }).lean();
+  const blog = await BlogModel.findByIdAndUpdate(id, { $set: data }, { new: true }).lean() as unknown as IBlog | null;
   if (!blog) throw new Error("Blog not found.");
 
   await normalizeFeatured(id, (data.featured as boolean) || blog.featured);
@@ -477,7 +477,7 @@ export async function updateBlog(id: string, input: BlogUpdateInput): Promise<Bl
     ? await BlogModel.findById(id).lean()
     : blog;
 
-  return mapBlog((fresh || blog) as IBlog, true);
+  return mapBlog((fresh || blog) as unknown as IBlog, true);
 }
 
 export async function deleteBlog(id: string): Promise<void> {

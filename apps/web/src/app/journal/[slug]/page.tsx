@@ -27,7 +27,7 @@ function paragraphs(content: string): string[] {
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Ractysh Journal | Executive Intelligence",
-    description: "Executive intelligence published by Ractysh Group."
+    description: "Executive intelligence published by RACTYSH."
   };
 }
 

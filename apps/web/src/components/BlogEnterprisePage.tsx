@@ -518,7 +518,7 @@ function ContributionBox() {
         We welcome thought leadership from industry experts and innovators.
       </p>
       <a
-        href="mailto:noorulsmart1998@gmail.com?subject=Ractysh%20Insights%20Contribution"
+        href="mailto:ractyshgroup@gmail.com?subject=Ractysh%20Insights%20Contribution"
         className="mt-5 inline-flex items-center gap-2 text-[0.8rem] font-bold uppercase tracking-[0.13em] text-[#8b1118] transition duration-300 hover:text-[#5f0c11]"
       >
         Submit Your Article

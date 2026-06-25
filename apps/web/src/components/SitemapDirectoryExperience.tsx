@@ -4,10 +4,12 @@ import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Building2, Compass, FileText, Layers3 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MarketingChrome } from "@/components/MarketingChrome";
 import { commercialServicePages } from "@/data/commercialServices";
 import { servicePages } from "@/data/servicePages";
 import type { SiteContent } from "@/lib/types";
+import { getCompanyBrand } from "@/lib/branding";
 
 interface SitemapDirectoryExperienceProps {
   content: SiteContent;
@@ -27,16 +29,6 @@ interface DirectoryGroup {
 }
 
 const ease = [0.22, 1, 0.36, 1] as const;
-
-const companyLinks: DirectoryLink[] = [
-  { label: "Home", href: "/", description: "The primary Ractysh Group enterprise ecosystem entry." },
-  { label: "About Us", href: "/about", description: "Company context, operating philosophy and enterprise positioning." },
-  { label: "Founder", href: "/founder", description: "Founder profile, vision and leadership direction." },
-  { label: "Directors", href: "/directors", description: "Executive leadership and governance presence." },
-  { label: "Careers", href: "/careers", description: "Premium career paths, internships and team opportunities." },
-  { label: "Blog", href: "/blog", description: "Enterprise briefings, editorial updates and operating insights." },
-  { label: "Book Consultation", href: "/book-consultation", description: "A structured intake for project, design and trade requirements." }
-];
 
 const ecosystemLinks: DirectoryLink[] = [
   { label: "Architecture Service", href: "/architecture-service", description: "Premium architecture design, planning and visualization services." },
@@ -105,6 +97,19 @@ function DirectoryCard({ item, index }: { item: DirectoryLink; index: number }) 
 }
 
 export function SitemapDirectoryExperience({ content }: SitemapDirectoryExperienceProps) {
+  const pathname = usePathname();
+  const brand = getCompanyBrand(pathname);
+
+  const companyLinks: DirectoryLink[] = [
+    { label: "Home", href: "/", description: `The primary ${brand.shortName} enterprise ecosystem entry.` },
+    { label: "About Us", href: "/about", description: "Company context, operating philosophy and enterprise positioning." },
+    { label: "Founder", href: "/founder", description: "Founder profile, vision and leadership direction." },
+    { label: "Directors", href: "/directors", description: "Executive leadership and governance presence." },
+    { label: "Careers", href: "/careers", description: "Premium career paths, internships and team opportunities." },
+    { label: "Blog", href: "/blog", description: "Enterprise briefings, editorial updates and operating insights." },
+    { label: "Book Consultation", href: "/book-consultation", description: "A structured intake for project, design and trade requirements." }
+  ];
+
   const legalLinks =
     content.legal.documents.length > 0
       ? [
@@ -181,7 +186,7 @@ export function SitemapDirectoryExperience({ content }: SitemapDirectoryExperien
                 Sitemap
               </h1>
               <p className="mx-auto mt-7 max-w-[47rem] text-[1rem] leading-8 text-[#62584e] md:text-[1.12rem] md:leading-9">
-                A refined directory for Ractysh Group pages, enterprise divisions, service workflows and governance records.
+                {`A refined directory for ${brand.shortName} pages, enterprise divisions, service workflows and governance records.`}
               </p>
             </Reveal>
 

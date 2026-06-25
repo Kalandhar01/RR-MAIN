@@ -7,7 +7,7 @@ import { getSiteContent } from "@/lib/api";
 const service = getCommercialServicePage("real-estate-service")!;
 
 export const metadata: Metadata = {
-  title: `${service.title} | Ractysh Group`,
+  title: `${service.title} | RACTYSH`,
   description: service.summary
 };
 

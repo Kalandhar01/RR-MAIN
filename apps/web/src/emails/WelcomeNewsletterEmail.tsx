@@ -454,7 +454,7 @@ export function WelcomeNewsletterEmail({
               <Hr style={styles.shortRule} />
               <Text className="mobile-subheading" style={styles.subheading}>
                 You now have access to enterprise intelligence, ecosystem updates and strategic insights across the
-                Ractysh Group.
+                RACTYSH.
               </Text>
             </Section>
 
@@ -515,14 +515,14 @@ export function WelcomeNewsletterEmail({
 
             <Section className="mobile-pad" style={styles.footer}>
               <Hr style={styles.footerRule} />
-              <Text style={styles.footerName}>Ractysh Group</Text>
+              <Text style={styles.footerName}>RACTYSH</Text>
               <Text style={styles.footerDivisions}>
                 Architecture <span style={styles.goldDot}>•</span> Construction <span style={styles.goldDot}>•</span>{" "}
                 Real Estate <span style={styles.goldDot}>•</span> Import &amp; Export{" "}
                 <span style={styles.goldDot}>•</span> OTC Exchange
               </Text>
               <Text style={styles.footerLocation}>Coimbatore <span style={styles.goldDot}>•</span> Palani <span style={styles.goldDot}>•</span> Dindigul</Text>
-              <Text style={styles.copyright}>© 2026 Ractysh Group. All rights reserved.</Text>
+              <Text style={styles.copyright}>© 2026 RACTYSH. All rights reserved.</Text>
               {unsubscribeUrl ? (
                 <Text style={styles.unsubscribe}>
                   Sent to {email || "your inbox"} ·{" "}
@@ -552,7 +552,7 @@ function renderWelcomeNewsletterText({
     "",
     "Welcome to the Ractysh Network.",
     "",
-    "You now have access to enterprise intelligence, ecosystem updates and strategic insights across the Ractysh Group.",
+    "You now have access to enterprise intelligence, ecosystem updates and strategic insights across the RACTYSH.",
     "",
     "Our ecosystem:",
     "Architecture",
@@ -568,10 +568,10 @@ function renderWelcomeNewsletterText({
     "",
     `Explore Ractysh: ${cleanUrl(websiteUrl)}`,
     "",
-    "Ractysh Group",
+    "RACTYSH",
     "Architecture • Construction • Real Estate • Import & Export • OTC Exchange",
     "Coimbatore • Palani • Dindigul",
-    "© 2026 Ractysh Group. All rights reserved.",
+    "© 2026 RACTYSH. All rights reserved.",
     unsubscribeUrl ? `Unsubscribe (${email || "subscriber"}): ${unsubscribeUrl}` : ""
   ]
     .filter(Boolean)

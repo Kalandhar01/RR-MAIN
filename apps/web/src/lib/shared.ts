@@ -11,7 +11,7 @@ export function apiBaseUrl(): string {
 export const RACTYSH_GROUP_DIVISION = "ractysh-group";
 
 export const RACTYSH_DIVISIONS = [
-  { key: RACTYSH_GROUP_DIVISION, label: "Ractysh Group", keywords: ["ractysh", "group", "enterprise"] },
+  { key: RACTYSH_GROUP_DIVISION, label: "RACTYSH", keywords: ["ractysh", "group", "enterprise"] },
   { key: "infrastructure", label: "Infrastructure", keywords: ["infrastructure", "infra", "road", "bridge", "industrial"] },
   { key: "architecture", label: "Architecture", keywords: ["architecture", "architect", "design", "interior", "planning", "industrial", "factory", "warehouse", "manufacturing", "logistics"] },
   { key: "construction", label: "Construction", keywords: ["construction", "build", "site", "turnkey", "structural", "civil"] },

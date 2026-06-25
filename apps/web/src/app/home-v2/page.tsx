@@ -4,7 +4,7 @@ import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Home V2 Testing | Ractysh Group",
+  title: "Home V2 Testing | RACTYSH",
   description:
     "A cinematic testing version of the Ractysh homepage for enterprise ecosystem storytelling, premium execution and architectural operations."
 };

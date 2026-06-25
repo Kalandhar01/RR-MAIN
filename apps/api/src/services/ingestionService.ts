@@ -1,10 +1,12 @@
+import mongoose from "mongoose";
 import {
   IngestionEventModel,
   LeadModel,
   IngestedProjectModel,
   IngestedDocumentModel,
   IngestedMediaModel,
-  type IIngestionEvent
+  type IIngestionEvent,
+  type IIngestedProject
 } from "../models/Ingestion.js";
 import type {
   DocumentIngestionInput,
@@ -253,7 +255,7 @@ export async function updateIngestedProject(
       }
     },
     { new: true }
-  ).lean();
+  ).lean() as mongoose.FlattenMaps<IIngestedProject> | null;
 
   if (!project) throw new Error("Ingested project not found.");
 

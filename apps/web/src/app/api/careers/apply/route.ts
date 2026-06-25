@@ -271,7 +271,7 @@ function buildApplicantConfirmationHtml(application: ApplicationDoc): string {
     sections: [
       {
         title: "Application Received",
-        body: `Dear ${application.fullName},<br><br>Thank you for applying to the <strong>${application.position}</strong> position at Ractysh Group.<br><br>We have received your application and our team will review it shortly. If your profile matches our requirements, we will reach out to you within 5–7 business days.<br><br>Here is your application reference number for future correspondence:`,
+        body: `Dear ${application.fullName},<br><br>Thank you for applying to the <strong>${application.position}</strong> position at RACTYSH.<br><br>We have received your application and our team will review it shortly. If your profile matches our requirements, we will reach out to you within 5–7 business days.<br><br>Here is your application reference number for future correspondence:`,
       },
       {
         title: "Application Reference",
@@ -325,7 +325,7 @@ async function sendApplicantConfirmation(application: CareerApplication): Promis
     const info = await careerMailer(config).sendMail({
       from: config.from,
       to: [application.email],
-      subject: "Application Received – Ractysh Group",
+      subject: "Application Received – RACTYSH",
       html: buildApplicantConfirmationHtml(application),
     });
     return { ok: true, messageId: info.messageId, accepted: info.accepted as string[] | undefined, sentAt: new Date().toISOString() };

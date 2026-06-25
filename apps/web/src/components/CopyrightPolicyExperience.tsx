@@ -17,7 +17,7 @@ const copyrightSections: LegalEditorialSection[] = [
     id: "ownership",
     title: "Ownership of Content",
     body:
-      "Unless otherwise stated, all website copy, brand marks, graphics, dashboards, interface compositions, photography selections, documents and presentation assets are owned by Ractysh Group or used under appropriate permissions."
+      "Unless otherwise stated, all website copy, brand marks, graphics, dashboards, interface compositions, photography selections, documents and presentation assets are owned by RACTYSH or used under appropriate permissions."
   },
   {
     id: "permitted-usage",

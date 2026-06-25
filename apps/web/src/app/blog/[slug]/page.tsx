@@ -54,7 +54,7 @@ function jsonLd(article: BlogSummary) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Ractysh Group"
+      name: "RACTYSH"
     },
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
 
   if (!article) {
     return {
-      title: "Blog | Ractysh Group",
+      title: "Blog | RACTYSH",
       description: "Ractysh enterprise insights and editorial publications."
     };
   }

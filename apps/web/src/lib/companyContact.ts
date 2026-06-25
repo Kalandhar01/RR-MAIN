@@ -1,10 +1,10 @@
 export const COMPANY_CONTACT = {
-  email: "noorulsmart1998@gmail.com",
+  email: "ractyshgroup@gmail.com",
   mobile: "+91 9080844114",
   office: "+91 9443855819",
   locations: ["Coimbatore", "Palani", "Dindigul"],
   locationDisplay: "Coimbatore • Palani • Dindigul",
-  emailHref: "mailto:noorulsmart1998@gmail.com",
+  emailHref: "mailto:ractyshgroup@gmail.com",
   mobileHref: "tel:+919080844114",
   officeHref: "tel:+919443855819"
 } as const;

@@ -2,11 +2,11 @@ import type { SiteContent } from "@/lib/types";
 
 export const fallbackContent: SiteContent = {
   seo: {
-    title: "Ractysh Group | Five-Pillar Private Enterprise Ecosystem",
+    title: "RACTYSH | Five-Pillar Private Enterprise Ecosystem",
     description:
-      "Ractysh Group unifies Architecture, Construction, Real Estate, Export & Import and OTC Exchange through one premium enterprise operating ecosystem.",
+      "RACTYSH unifies Architecture, Construction, Real Estate, Export & Import and OTC Exchange through one premium enterprise operating ecosystem.",
     keywords: [
-      "Ractysh Group",
+      "RACTYSH",
       "Private Enterprise Group",
       "Architecture Division",
       "Construction Division",
@@ -43,10 +43,10 @@ export const fallbackContent: SiteContent = {
     ]
   },
   hero: {
-    eyebrow: "Ractysh Group Ecosystem",
+    eyebrow: "RACTYSH Ecosystem",
     headline: "Architecture, Construction, Real Estate, Trade and OTC Exchange through one ecosystem",
     subheadline:
-      "Ractysh Group operates across Architecture, Construction, Real Estate, Export & Import and OTC Exchange through one premium operating layer.",
+      "RACTYSH operates across Architecture, Construction, Real Estate, Export & Import and OTC Exchange through one premium operating layer.",
     primaryCta: "Book Consultation",
     secondaryCta: "Know More",
     trustLine: "Built for premium clients who need clarity, discretion and accountable delivery."
@@ -245,7 +245,7 @@ export const fallbackContent: SiteContent = {
   ],
   blogs: [],
   founder: {
-    name: "Fawas",
+    name: "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A.",
     role: "Chairman & Founder",
     image:
       "/images/photo-1560250097-0b93528c311a.webp",
@@ -254,9 +254,9 @@ export const fallbackContent: SiteContent = {
     shortArticle:
       "Ractysh was created to bring serious enterprise discipline to Architecture, Construction, Real Estate, Global Trade and Private Exchange coordination. The group is built around trust, documentation and accountable delivery.",
     biography:
-      "The Founder and Chairman leads Ractysh Group with a cross-sector view of architectural design, construction systems, real estate positioning, international trade and private transaction coordination. The leadership approach combines premium client service with operational controls normally expected in institutional environments.",
+      "The Founder and Chairman leads RACTYSH with a cross-sector view of architectural design, construction systems, real estate positioning, international trade and private transaction coordination. The leadership approach combines premium client service with operational controls normally expected in institutional environments.",
     vision:
-      "To build a globally respected five-pillar enterprise ecosystem where Architecture, Construction, Real Estate, Trade and Private Exchange operations move with clarity, dignity and measurable trust.",
+      "A leader is one who knows the way, goes the way, and shows the way.",
     mission:
       "To give premium clients one accountable platform for Architecture, Construction, Real Estate, Export-Import operations and OTC Exchange coordination.",
     resumeSummary:
@@ -291,12 +291,12 @@ export const fallbackContent: SiteContent = {
     ],
     certifications: [
       { title: "Trademark Registration", issuer: "Government authority", year: "2026", fileUrl: "/trademark-certificate.pdf" },
-      { title: "Enterprise Operations Charter", issuer: "Ractysh Group", year: "2026" }
+      { title: "Enterprise Operations Charter", issuer: "RACTYSH", year: "2026" }
     ],
     awards: ["Enterprise ecosystem builder", "Premium client operations leadership", "Design and construction strategy"],
     socialLinks: [
       { label: "LinkedIn", href: "https://www.linkedin.com" },
-      { label: "Email", href: "mailto:noorulsmart1998@gmail.com" }
+      { label: "Email", href: "mailto:ractyshgroup@gmail.com" }
     ],
     gallery: [
       "/images/photo-1486406146926-c627a92ad1ab.webp",
@@ -339,7 +339,7 @@ export const fallbackContent: SiteContent = {
         "Connects business divisions, demo requests, client communications and internal execution dashboards.",
       leadershipStatement:
         "Trust grows when clients can see the process, the owner and the next step without asking twice.",
-      socialLinks: [{ label: "Email", href: "mailto:noorulsmart1998@gmail.com" }]
+      socialLinks: [{ label: "Email", href: "mailto:ractyshgroup@gmail.com" }]
     }
   ],
   businessDivisions: [
@@ -426,11 +426,11 @@ export const fallbackContent: SiteContent = {
   ],
   locations: [
     {
-      name: "Ractysh Group Locations",
+      name: "RACTYSH Locations",
       address: "Coimbatore • Palani • Dindigul",
       outlookLocation: "Coimbatore • Palani • Dindigul",
       phone: "+91 9080844114",
-      email: "noorulsmart1998@gmail.com",
+      email: "ractyshgroup@gmail.com",
       hours: "Monday to Saturday, 10:00 AM - 6:30 PM",
       mapEmbedUrl:
         "https://www.google.com/maps?q=Coimbatore%20Palani%20Dindigul&output=embed"
@@ -448,7 +448,7 @@ export const fallbackContent: SiteContent = {
         title: "Privacy Policy",
         summary: "How Ractysh collects, protects and uses website and demo information.",
         body:
-          "Ractysh Group respects client privacy. Information submitted through forms, demo requests, subscriptions or feedback channels is used only for business communication, service evaluation, compliance review and client support. We do not sell private client information.",
+          "RACTYSH respects client privacy. Information submitted through forms, demo requests, subscriptions or feedback channels is used only for business communication, service evaluation, compliance review and client support. We do not sell private client information.",
         updatedAt: "2026-05-14"
       },
       {
@@ -472,7 +472,7 @@ export const fallbackContent: SiteContent = {
       title: "Copyright Policy",
         summary: "Ownership and permitted use of Ractysh brand, copy, visuals and presentation systems.",
         body:
-          "All brand marks, website copy, design compositions, graphics, dashboards and presentation systems are owned by Ractysh Group unless otherwise stated. Unauthorized copying, resale or misleading use is prohibited.",
+          "All brand marks, website copy, design compositions, graphics, dashboards and presentation systems are owned by RACTYSH unless otherwise stated. Unauthorized copying, resale or misleading use is prohibited.",
         updatedAt: "2026-05-14"
       },
       {
@@ -522,7 +522,7 @@ export const fallbackContent: SiteContent = {
     title: "Client review inbox",
     description:
       "Share confidential feedback with the Ractysh leadership team. Approved comments may be featured as testimonials.",
-    email: "noorulsmart1998@gmail.com"
+    email: "ractyshgroup@gmail.com"
   },
   careers: {
     heroTitle: "Build premium enterprise systems with Ractysh.",
@@ -664,7 +664,7 @@ export const fallbackContent: SiteContent = {
     socialLinks: [
       { label: "LinkedIn", href: "https://www.linkedin.com" },
       { label: "Instagram", href: "https://www.instagram.com" },
-      { label: "Email", href: "mailto:noorulsmart1998@gmail.com" }
+      { label: "Email", href: "mailto:ractyshgroup@gmail.com" }
     ]
   },
   updatedAt: new Date().toISOString()

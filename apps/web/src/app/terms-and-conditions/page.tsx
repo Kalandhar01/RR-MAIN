@@ -3,7 +3,7 @@ import { TermsConditionsExperience } from "@/components/TermsConditionsExperienc
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Ractysh Group",
+  title: "Terms & Conditions | RACTYSH",
   description: "The operational terms governing the use of the Ractysh enterprise ecosystem."
 };
 

@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowUpRight, Linkedin, Mail, Instagram, Phone, MapPin } from "lucide-react";
+import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { getCompanyBrand } from "@/lib/branding";
 
 const ecosystemLinks = [
   { label: "Architecture", href: "/architecture" },
@@ -23,15 +25,12 @@ const companyLinks = [
   { label: "Book Consultation", href: "/book-consultation" }
 ];
 
-const socialLinks = [
-  { icon: Linkedin, href: "https://www.linkedin.com", label: "LinkedIn" },
-  { icon: Instagram, href: "https://www.instagram.com", label: "Instagram" },
-  { icon: Mail, href: "mailto:noorulsmart1998@gmail.com", label: "Email" }
-];
 
 export function Footer() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const pathname = usePathname();
+  const companyBrand = getCompanyBrand(pathname);
 
   return (
     <footer ref={ref} className="relative bg-[#0A0A0A]">
@@ -51,13 +50,13 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/brand/ractysh-logo.png"
-                alt="Ractysh Group"
+                alt={companyBrand.shortName}
                 width={28}
                 height={28}
                 className="h-7 w-7 object-contain"
               />
               <span className="font-display text-xl font-bold tracking-tight text-white">
-                RACTYSH GROUP LIMITED
+                {companyBrand.legalName}
               </span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-[#D6B45F]/70">
@@ -67,18 +66,6 @@ export function Footer() {
               Building integrated enterprise solutions across multiple industries with a commitment
               to excellence, innovation, and long-term value creation.
             </p>
-            <div className="mt-6 flex gap-3">
-              {socialLinks.map((social) => (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 hover:border-[#D6B45F]/50 hover:text-[#D6B45F]"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-4 w-4" />
-                </Link>
-              ))}
-            </div>
           </motion.div>
 
           <motion.div
@@ -138,7 +125,7 @@ export function Footer() {
             </h4>
             <div className="space-y-4">
               {[
-                { icon: Mail, label: "Email", value: "noorulsmart1998@gmail.com", href: "mailto:noorulsmart1998@gmail.com" },
+                { icon: Mail, label: "Email", value: "ractyshgroup@gmail.com", href: "mailto:ractyshgroup@gmail.com" },
                 { icon: Phone, label: "Phone", value: "+91 9080844114", href: "tel:+919080844114" },
                 { icon: MapPin, label: "Locations", value: "Coimbatore \u2022 Palani \u2022 Dindigul", href: "/book-consultation" }
               ].map((item) => (
@@ -174,10 +161,10 @@ export function Footer() {
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
               <p className="text-xs text-white/30">
-                &copy; {new Date().getFullYear()} Ractysh Group Limited. All Rights Reserved.
+                &copy; 2025 {companyBrand.shortName}
               </p>
               <p className="mt-1 text-[11px] text-white/15">
-                Ractysh Group Limited&trade; is a registered enterprise group.
+                {companyBrand.legalName}&trade; is a registered enterprise entity.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { DivisionPortalPlaceholderPage, divisionPortalConfig } from "@/components/DivisionPortalPlaceholderPage";
+import { DivisionPortalPlaceholderPage } from "@/components/DivisionPortalPlaceholderPage";
+import { divisionPortalConfig } from "@/data/divisionPortals";
 
 const division = divisionPortalConfig["import-export"];
 
 export const metadata: Metadata = {
-  title: `${division.title} Launching Soon | Ractysh Group`,
+  title: `${division.title} Launching Soon | RACTYSH`,
   description: division.metadataDescription
 };
 

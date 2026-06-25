@@ -38,13 +38,13 @@ interface FounderEnterprisePageProps {
 export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const founderName = "R. P. M.\nNoorul Fawas";
+  const founderName = "Ar.P.M.S.Noorul\nFawaaz, B.Arch., A.I.I.A.";
   const founderRole = "FOUNDER & CHAIRMAN";
-  const founderTitle = "Visionary Founder of Ractysh Group Limited";
+  const founderTitle = "Visionary Founder of RACTYSH Group Of Companies";
   const founderDescription =
     "Leading the Ractysh ecosystem across Architecture, Construction, Real Estate, Import-Export and OTC Exchange — built on long-term vision, institutional discipline and enterprise-grade execution.";
   const portraitAlt =
-    founder.name && founder.name.toLowerCase() !== "ractysh founder" ? founder.name : "R. P. M. Noorul Fawas";
+    founder.name && founder.name.toLowerCase() !== "ractysh founder" ? founder.name : "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A.";
 
   useEffect(() => {
     const root = rootRef.current;
@@ -276,10 +276,10 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
         <div className="mx-auto max-w-[82rem] px-5 md:px-8">
           <div className="grid grid-cols-2 gap-px bg-[#d9c28c]/20 md:grid-cols-4">
             {[
-              { value: "150+", label: "Projects" },
+              { value: "100+", label: "Projects" },
               { value: "50+", label: "Clients" },
               { value: "5", label: "Divisions" },
-              { value: "4+", label: "Years" }
+              { value: "5+", label: "Years" }
             ].map(({ value, label }) => (
               <div
                 key={label}
@@ -310,7 +310,7 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
           <div className="relative z-10 mx-auto max-w-[80rem] px-5 text-center md:px-8">
             <Quote className="mx-auto h-12 w-12 text-[#d9bd7a]/30" strokeWidth={1.1} />
             <div className="mx-auto mt-8 max-w-[60rem]">
-              <p className="font-display text-[1.6rem] font-semibold italic leading-[1.18] tracking-[-0.01em] text-[#f5ebd6] md:text-[2.2rem] lg:text-[2.8rem]">
+              <p className="font-display text-[1.35rem] font-medium leading-[1.35] tracking-[-0.01em] text-[#f5ebd6] md:text-[1.85rem] lg:text-[2.2rem]">
                 &ldquo;{founder.vision}&rdquo;
               </p>
             </div>

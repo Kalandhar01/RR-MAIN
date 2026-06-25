@@ -15,7 +15,7 @@ const knowledgeBase: KnowledgeEntry[] = [
   {
     keywords: ["mission", "vision", "purpose", "goal", "aim", "objective"],
     title: "Mission & Vision",
-    content: "Vision: To build a globally respected five-pillar enterprise ecosystem where Architecture, Construction, Real Estate, Trade and Private Exchange operations move with clarity, dignity and measurable trust.\n\nMission: To give premium clients one accountable platform for Architecture, Construction, Real Estate, Export-Import operations and OTC Exchange coordination.",
+    content: "Vision: A leader is one who knows the way, goes the way, and shows the way.\n\nMission: To give premium clients one accountable platform for Architecture, Construction, Real Estate, Export-Import operations and OTC Exchange coordination.",
     category: "General"
   },
   {
@@ -27,13 +27,13 @@ const knowledgeBase: KnowledgeEntry[] = [
   {
     keywords: ["founder", "chairman", "leadership", "p.m.s", "noorul", "fawas", "ar", "director"],
     title: "Founder & Chairman",
-    content: "AR. P.M.S. NOORUL FAWAS is the Founder & Chairman of Ractysh Group. He leads the Ractysh ecosystem across Architecture, Construction, Real Estate, Import-Export, OTC Exchange and enterprise operations through long-term vision and execution excellence. His leadership combines premium client service with operational controls normally expected in institutional environments.",
+    content: "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A. is the Founder & Chairman of RACTYSH. He leads the Ractysh ecosystem across Architecture, Construction, Real Estate, Import-Export, OTC Exchange and enterprise operations through long-term vision and execution excellence. His leadership combines premium client service with operational controls normally expected in institutional environments.",
     category: "General"
   },
   {
     keywords: ["ecosystem", "five pillar", "5 pillar", "divisions", "verticals", "structure", "how it works"],
     title: "Enterprise Ecosystem",
-    content: "Ractysh Group is a five-pillar private enterprise ecosystem:\n\n1. Architecture Division — Spatial intelligence, planning and visualization for premium environments.\n2. Construction Division — Civil & MEP engineering, buildings, interiors, turnkey and 25+ capabilities.\n3. Real Estate Division — Asset positioning, development advisory and investor-ready property solutions.\n4. Export & Import Division — Structured global trade operations and cross-border coordination.\n5. OTC Exchange Division — Private counterparty intake, deal-room documentation and transaction workflows.\n\nThe group connects these services so clients move from spatial planning to construction, real estate strategy, trade documentation and private exchange with fewer handoffs.",
+    content: "RACTYSH is a five-pillar private enterprise ecosystem:\n\n1. Architecture Division — Spatial intelligence, planning and visualization for premium environments.\n2. Construction Division — Civil & MEP engineering, buildings, interiors, turnkey and 25+ capabilities.\n3. Real Estate Division — Asset positioning, development advisory and investor-ready property solutions.\n4. Export & Import Division — Structured global trade operations and cross-border coordination.\n5. OTC Exchange Division — Private counterparty intake, deal-room documentation and transaction workflows.\n\nThe group connects these services so clients move from spatial planning to construction, real estate strategy, trade documentation and private exchange with fewer handoffs.",
     category: "General"
   },
   {
@@ -45,7 +45,7 @@ const knowledgeBase: KnowledgeEntry[] = [
   {
     keywords: ["stats", "statistics", "metrics", "numbers", "capabilities", "projects", "delivered"],
     title: "Ractysh by the Numbers",
-    content: "Key metrics:\n- 5 Business verticals\n- 52+ Service capabilities\n- 30+ Enterprise workflows\n- 50+ Projects delivered\n- 15+ Strategic partnerships\n- 4.9 Rating from 128+ reviews\n- 1 Unified delivery model\n- Offices in Coimbatore, Palani and Dindigul",
+    content: "Key metrics:\n- 5 Business verticals\n- 52+ Service capabilities\n- 30+ Enterprise workflows\n- 100+ Projects delivered\n- 10+ Global partners\n- 4.9 Rating from 128+ reviews\n- 1 Unified delivery model\n- Offices in Coimbatore, Palani and Dindigul",
     category: "General"
   },
   {
@@ -56,8 +56,8 @@ const knowledgeBase: KnowledgeEntry[] = [
   },
   {
     keywords: ["ractysh", "group", "company", "about", "enterprise", "five pillar"],
-    title: "About Ractysh Group",
-    content: "Ractysh Group is a five-pillar private enterprise group operating across Architecture, Construction, Real Estate, Export & Import and OTC Exchange. The group provides premium enterprise services through one accountable platform.",
+    title: "About RACTYSH",
+    content: "RACTYSH is a five-pillar private enterprise group operating across Architecture, Construction, Real Estate, Export & Import and OTC Exchange. The group provides premium enterprise services through one accountable platform.",
     category: "General"
   },
   {
@@ -237,19 +237,19 @@ const knowledgeBase: KnowledgeEntry[] = [
   {
     keywords: ["book consultation", "consultation", "book", "appointment"],
     title: "Book a Consultation",
-    content: "You can book a consultation with Ractysh Group by visiting the Book Consultation page or using email at noorulsmart1998@gmail.com or phone at +91 9080844114.",
+    content: "You can book a consultation with RACTYSH by visiting the Book Consultation page or using email at ractyshgroup@gmail.com or phone at +91 9080844114.",
     category: "General"
   },
   {
     keywords: ["email", "phone", "address", "location"],
     title: "Consultation Information",
-    content: "Email: noorulsmart1998@gmail.com, Mobile: +91 9080844114, Office: +91 9443855819. Locations: Coimbatore, Palani, Dindigul.",
+    content: "Email: ractyshgroup@gmail.com, Mobile: +91 9080844114, Office: +91 9443855819. Locations: Coimbatore, Palani, Dindigul.",
     category: "General"
   },
   {
     keywords: ["location", "coimbatore", "palani", "dindigul", "office"],
     title: "Office Locations",
-    content: "Ractysh Group has offices in Coimbatore, Palani and Dindigul, Tamil Nadu, India.",
+    content: "RACTYSH has offices in Coimbatore, Palani and Dindigul, Tamil Nadu, India.",
     category: "General"
   },
   {

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { randomUUID } from "node:crypto";
 import {
   ConsultationModel,
@@ -69,7 +70,7 @@ function defaultWorkflowStages(now: Date): ConsultationWorkflowStage[] {
 
 async function findConsultation(id: string): Promise<ConsultationRecord | null> {
   try {
-    const record = await ConsultationModel.findById(id).lean();
+    const record = await ConsultationModel.findById(id).lean() as mongoose.FlattenMaps<IConsultation> | null;
     if (!record) return null;
 
     const [workflowStages, workflowLogs, uploadedDocuments, statusHistory] = await Promise.all([

@@ -3,7 +3,7 @@ import { DisclosureExperience } from "@/components/DisclosureExperience";
 import { getSiteContent } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Disclosure | Ractysh Group",
+  title: "Disclosure | RACTYSH",
   description: "Important business, project and professional disclosure notes for the Ractysh enterprise ecosystem."
 };
 
