@@ -19,17 +19,17 @@ const projects: PortfolioProject[] = [
     "slug": "green-valley-interiors",
     "location": "Salem, Tamil Nadu",
     "description": "Luxury interior design project featuring curated living spaces, modern aesthetics, and seamless functionality.",
-    "category": "App-Development",
-    "coverImage": "/images/our-works/App-Development/1.webp",
+    "category": "Architecture",
+    "coverImage": "/images/our-works/Architecture/13.webp",
     "galleryImages": [
-      "/images/our-works/App-Development/1.webp",
-      "/images/our-works/App-Development/2.webp",
-      "/images/our-works/App-Development/3.webp",
-      "/images/our-works/App-Development/4.webp",
-      "/images/our-works/App-Development/5.webp",
-      "/images/our-works/App-Development/6.webp",
-      "/images/our-works/App-Development/7.webp",
-      "/images/our-works/App-Development/8.webp"
+      "/images/our-works/Architecture/13.webp",
+      "/images/our-works/Architecture/14.webp",
+      "/images/our-works/Architecture/15.webp",
+      "/images/our-works/Architecture/16.webp",
+      "/images/our-works/Architecture/17.webp",
+      "/images/our-works/Architecture/18.webp",
+      "/images/our-works/Architecture/19.webp",
+      "/images/our-works/Architecture/20.webp"
     ],
     "status": "Completed"
   },
@@ -91,17 +91,17 @@ const projects: PortfolioProject[] = [
     "title": "Vellore Premium Bedrooms",
     "slug": "vellore-premium-bedrooms",
     "location": "Vellore, Tamil Nadu",
-    "description": "A digital marketing campaign showcasing premium bedroom designs through strategic visual storytelling.",
-    "category": "Digital-Marketing",
-    "coverImage": "/images/our-works/Digital-Marketing/1.webp",
+    "description": "Premium bedroom construction project featuring modern design, quality finishes, and elegant living spaces.",
+    "category": "Construction",
+    "coverImage": "/images/our-works/Construction/15.webp",
     "galleryImages": [
-      "/images/our-works/Digital-Marketing/1.webp",
-      "/images/our-works/Digital-Marketing/2.webp",
-      "/images/our-works/Digital-Marketing/3.webp",
-      "/images/our-works/Digital-Marketing/4.webp",
-      "/images/our-works/Digital-Marketing/5.webp",
-      "/images/our-works/Digital-Marketing/6.webp",
-      "/images/our-works/Digital-Marketing/7.webp"
+      "/images/our-works/Construction/15.webp",
+      "/images/our-works/Construction/16.webp",
+      "/images/our-works/Construction/17.webp",
+      "/images/our-works/Construction/18.webp",
+      "/images/our-works/Construction/19.webp",
+      "/images/our-works/Construction/20.webp",
+      "/images/our-works/Construction/21.webp"
     ],
     "status": "Completed"
   },
@@ -132,15 +132,15 @@ const projects: PortfolioProject[] = [
     "title": "City Corner Bakery",
     "slug": "city-corner-bakery",
     "location": "Chennai, Tamil Nadu",
-    "description": "A complete digital presence transformation for a boutique bakery with modern web design and brand storytelling.",
-    "category": "Web-Development",
-    "coverImage": "/images/our-works/Web-Development/1.webp",
+    "description": "Commercial real estate project featuring a boutique bakery space with modern design and functional layout.",
+    "category": "Real-Estate",
+    "coverImage": "/images/our-works/Real-Estate/9.webp",
     "galleryImages": [
-      "/images/our-works/Web-Development/1.webp",
-      "/images/our-works/Web-Development/2.webp",
-      "/images/our-works/Web-Development/3.webp",
-      "/images/our-works/Web-Development/4.webp",
-      "/images/our-works/Web-Development/5.webp"
+      "/images/our-works/Real-Estate/9.webp",
+      "/images/our-works/Real-Estate/10.webp",
+      "/images/our-works/Real-Estate/11.webp",
+      "/images/our-works/Real-Estate/12.webp",
+      "/images/our-works/Real-Estate/13.webp"
     ],
     "status": "Completed"
   }
