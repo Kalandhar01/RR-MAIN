@@ -117,5 +117,6 @@ export function HeroSection() {
         </div>
       </div>
     </section>
+    <div id="hero-sentinel" className="pointer-events-none h-px" />
   );
 }

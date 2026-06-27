@@ -30,6 +30,7 @@ import { COMPANY_CONTACT } from "@/lib/companyContact";
 import type { NavItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getCompanyBrand } from "@/lib/branding";
+import { useHeroIntersection } from "@/lib/useHeroIntersection";
 
 interface NavbarProps {
   logoText: string;
@@ -795,6 +796,9 @@ export function Navbar({ logoText, items }: NavbarProps) {
   const brandName = logoText && !logoText.toLowerCase().includes("audit") ? logoText : "Ractysh";
   const companyBrand = getCompanyBrand(pathname);
   const isLandscapePlanningRoute = pathname === "/landscape-planning";
+  const { navbarVariant } = useHeroIntersection();
+  const navbarVariantRef = useRef(navbarVariant);
+  navbarVariantRef.current = navbarVariant;
   const displayedSearchItems = useMemo(() => {
     if (!searchQuery.trim()) return quickAccessSearchItems;
     return globalSearchItems.filter((item) => matchesSearchItem(item, searchQuery)).slice(0, 8);
@@ -846,14 +850,6 @@ export function Navbar({ logoText, items }: NavbarProps) {
     const isMobileViewport = () => window.innerWidth < 768;
     const showDuration = () => (isMobileViewport() ? 0.38 : 0.5);
     const hideDuration = () => (isMobileViewport() ? 0.34 : 0.45);
-    const getHeroEnd = () => {
-      if (pathname !== "/") return 0;
-
-      const hero = document.getElementById("hero");
-      if (!hero) return 0;
-
-      return hero.offsetTop + hero.offsetHeight - header.offsetHeight;
-    };
 
     const showHeader = (duration = showDuration()) => {
       const currentY = Number(gsap.getProperty(header, "yPercent"));
@@ -886,7 +882,7 @@ export function Navbar({ logoText, items }: NavbarProps) {
     const syncHeader = () => {
       const currentScroll = Math.max(window.scrollY, 0);
       const scrolled = currentScroll > 18;
-      const insideHomeHero = pathname === "/" && currentScroll < getHeroEnd();
+      const insideHomeHero = pathname === "/" && navbarVariantRef.current === "transparent";
       const navBackground = insideHomeHero ? "transparent" : "#FFFFFF";
       const navBorder = insideHomeHero ? "transparent" : "#ECECEC";
       const navShadow = scrolled ? "0 2px 20px rgba(0,0,0,0.05)" : "none";
@@ -963,6 +959,24 @@ export function Navbar({ logoText, items }: NavbarProps) {
       gsap.killTweensOf(header);
     };
   }, [activeLabel, isLandscapePlanningRoute, mobileOpen, pathname, searchOpen]);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header || pathname !== "/") return;
+
+    const isHero = navbarVariant === "transparent";
+    gsap.to(header, {
+      "--nav-bg": isHero ? "transparent" : "#FFFFFF",
+      "--nav-border": isHero ? "transparent" : "#ECECEC",
+      "--nav-text": isHero ? "#ffffff" : "#111111",
+      "--nav-mobile-btn-bg": isHero ? "rgba(255,255,255,0.12)" : "#ffffff",
+      "--nav-mobile-btn-border": isHero ? "rgba(255,255,255,0.25)" : "#ECECEC",
+      "--nav-shadow": isHero ? "none" : "0 2px 20px rgba(0,0,0,0.05)",
+      "--nav-blur": isHero ? "blur(0px)" : "blur(8px)",
+      duration: 0.3,
+      ease: "power3.out",
+    });
+  }, [navbarVariant, pathname]);
 
   useEffect(() => {
     const syncSearchMode = () => setCompactSearch(window.innerWidth < 640);
