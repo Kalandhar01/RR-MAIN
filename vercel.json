@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd ../.. && ./node_modules/.bin/turbo run build --filter=@ractysh/web",
-  "framework": "nextjs"
-}
