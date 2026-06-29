@@ -6,12 +6,9 @@ import { ConsultationForm } from "@/components/consultation/ConsultationForm";
 import { ConsultationHero } from "@/components/consultation/ConsultationHero";
 import { FAQSection } from "@/components/consultation/FAQSection";
 import { getSiteContent } from "@/lib/api";
+import { buildMetadata, pageSeo } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Book a Consultation | Ractysh",
-  description:
-    "Book a premium Ractysh enterprise consultation across Architecture, Construction, Real Estate, Export-Import and OTC Exchange."
-};
+export const metadata: Metadata = buildMetadata(pageSeo["/book-consultation"], "/book-consultation");
 
 export default async function BookConsultationPage() {
   const content = await getSiteContent();

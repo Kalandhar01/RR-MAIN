@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@react-map/india": "^1.0.21"
+    "@react-map/india": "^1.0.21",
+    "busboy": "^1.6.0"
   }
 }

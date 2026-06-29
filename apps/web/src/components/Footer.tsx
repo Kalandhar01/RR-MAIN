@@ -25,6 +25,13 @@ const companyLinks = [
   { label: "Book Consultation", href: "/book-consultation" }
 ];
 
+const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-and-conditions" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Disclaimer", href: "/disclaimer" },
+];
+
 
 export function Footer() {
   const ref = useRef<HTMLDivElement>(null);
@@ -168,11 +175,7 @@ export function Footer() {
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
-              {[
-                { label: "Privacy Policy", href: "/privacy-policy" },
-                { label: "Terms & Conditions", href: "/terms-and-conditions" },
-                { label: "Sitemap", href: "/sitemap" }
-              ].map((link, i) => (
+              {legalLinks.map((link, i) => (
                 <span key={link.label} className="inline-flex items-center gap-x-5">
                   <Link
                     href={link.href}
@@ -180,7 +183,7 @@ export function Footer() {
                   >
                     {link.label}
                   </Link>
-                  {i < 2 && (
+                  {i < legalLinks.length - 1 && (
                     <span className="h-3 w-px bg-white/10" />
                   )}
                 </span>

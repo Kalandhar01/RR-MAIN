@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope, Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import { Suspense } from "react";
 import Script from "next/script";
@@ -6,6 +6,7 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { TransitionProvider } from "@/components/providers/TransitionProvider";
 import { ChatBot } from "@/components/ChatBot";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE } from "@/lib/seo";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -44,14 +45,102 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap"
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0A0A0A",
+};
+
 export const metadata: Metadata = {
-  title: "RACTYSH",
-  description:
-    "A five-pillar private enterprise group across Architecture, Construction, Real Estate, Export & Import and OTC Exchange.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: "%s | Ractysh Group",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: "Ractysh Group",
+  authors: [{ name: "Ractysh Group" }],
+  publisher: "Ractysh Group",
+  generator: "Next.js",
+  keywords: [
+    "Ractysh Group",
+    "Ractysh",
+    "diversified enterprise",
+    "architecture",
+    "construction",
+    "real estate",
+    "import export",
+    "OTC business India",
+    "global business solutions",
+    "Coimbatore",
+    "Tamil Nadu",
+    "India",
+    "Enterprise Group India",
+    "Corporate Group Tamil Nadu",
+    "Luxury Architecture Company",
+    "Infrastructure Company Tamil Nadu",
+    "Architecture Company Tamil Nadu",
+    "Construction Company Tamil Nadu",
+    "Real Estate Company Tamil Nadu",
+    "Import Export Company India",
+  ],
   icons: {
-    icon: [{ url: "/brand/ractysh-icon-32.png", type: "image/png", sizes: "32x32" }],
-    apple: [{ url: "/brand/ractysh-icon-192.png", type: "image/png", sizes: "192x192" }]
-  }
+    icon: [
+      { url: "/brand/ractysh-icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/ractysh-icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [{ url: "/brand/ractysh-icon-192.png", type: "image/png", sizes: "192x192" }],
+  },
+  manifest: "/manifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_IN",
+    countryName: "India",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
+  category: "enterprise",
+  classification: "Enterprise Group of Companies",
 };
 
 export default function RootLayout({

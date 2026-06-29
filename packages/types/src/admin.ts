@@ -19,7 +19,8 @@ export type AdminView =
   | "audit"
   | "chatbot"
   | "contacts"
-  | "subscribers";
+  | "subscribers"
+  | "our-works";
 
 export type LeadFilter = "New" | "Read" | "Responded" | "Archived";
 export type ProjectKey = string;

@@ -1,14 +1,15 @@
 import type { MetadataRoute } from "next";
-import { fallbackContent } from "@/data/fallbackContent";
+import { SITE_URL } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = fallbackContent.seo.canonicalUrl || "https://ractysh.com";
-
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/"
-    },
-    sitemap: `${baseUrl}/sitemap.xml`
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/ractysh-group/dashboard/", "/ecosystem/"],
+      },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

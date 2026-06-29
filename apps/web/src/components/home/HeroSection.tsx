@@ -30,6 +30,7 @@ export function HeroSection() {
   });
 
   return (
+    <>
     <section id="hero" className="hero-section relative h-screen min-h-[600px] overflow-hidden bg-[#1B1611]">
       {/* ─── Full-screen background image ─── */}
       <div className="absolute inset-0">
@@ -117,5 +118,6 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  );
+    <div id="hero-sentinel" className="pointer-events-none h-px" />
+    </>);
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import { buildMetadata, pageSeo } from "@/lib/seo";
 import {
   ArrowUpRight,
   Building2,
@@ -16,11 +17,7 @@ import { AboutWhoWeAreEditorial } from "@/components/AboutWhoWeAreEditorial";
 import { MarketingChrome } from "@/components/MarketingChrome";
 import { getSiteContent } from "@/lib/api";
 
-export const metadata: Metadata = {
-  title: "About Ractysh | Premium Enterprise Ecosystem",
-  description:
-    "Ractysh connects Architecture, Construction, Real Estate, Export & Import and OTC Exchange into one premium business ecosystem."
-};
+export const metadata: Metadata = buildMetadata(pageSeo["/about"], "/about");
 
 const divisions = [
   {

@@ -28,7 +28,7 @@ const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 const apiKey = process.env.CLOUDINARY_API_KEY;
 const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
-const isCloudinaryConfigured = Boolean(cloudName && apiKey && apiSecret);
+export const isCloudinaryConfigured = Boolean(cloudName && apiKey && apiSecret);
 
 function toBlob(file: Buffer | Blob): Blob {
   if (file instanceof Blob) return file;
@@ -80,26 +80,32 @@ async function uploadViaApi(
   formData.append("api_key", apiKey!);
   formData.append("signature", sig);
 
-  const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
-    { method: "POST", body: formData }
-  );
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
 
-  const data: CloudinaryUploadResponse = await res.json();
+  try {
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+      { method: "POST", body: formData, signal: controller.signal }
+    );
+    const data: CloudinaryUploadResponse = await res.json();
 
-  if (!res.ok || data.error) {
-    throw new Error(data.error?.message || `Cloudinary upload failed: ${res.status}`);
+    if (!res.ok || data.error) {
+      throw new Error(data.error?.message || `Cloudinary upload failed: ${res.status}`);
+    }
+
+    if (!data.secure_url) {
+      throw new Error("Cloudinary did not return a secure URL");
+    }
+
+    return {
+      url: data.secure_url,
+      publicId: data.public_id || publicId,
+      provider: "cloudinary",
+    };
+  } finally {
+    clearTimeout(timeout);
   }
-
-  if (!data.secure_url) {
-    throw new Error("Cloudinary did not return a secure URL");
-  }
-
-  return {
-    url: data.secure_url,
-    publicId: data.public_id || publicId,
-    provider: "cloudinary",
-  };
 }
 
 async function uploadLocally(
@@ -137,7 +143,12 @@ export async function uploadToCloudinary(
     return uploadLocally(file, options.folder, options.fileName);
   }
 
-  return uploadViaApi(file, options.folder, options.fileName);
+  try {
+    return await uploadViaApi(file, options.folder, options.fileName);
+  } catch (err) {
+    console.warn("[cloudinary] API upload failed, falling back to local:", (err as Error).message);
+    return uploadLocally(file, options.folder, options.fileName);
+  }
 }
 
 export async function deleteFromCloudinary(publicId: string): Promise<boolean> {

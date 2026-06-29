@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Calendar, CheckCircle2, Clock, MapPin } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -15,18 +14,13 @@ interface PortfolioProject {
   title: string;
   slug: string;
   category: string;
+  shortDescription?: string;
   description: string;
   location: string;
   status: "Completed" | "Ongoing" | "Upcoming";
   coverImage: string;
   galleryImages: string[];
   createdAt?: string;
-}
-
-function shimmer(width: number, height: number) {
-  return `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="#ede5d6"/><rect width="60%" height="20" x="20%" y="40%" fill="#dfcfaa" rx="4" opacity="0.5"/></svg>`
-  )}`;
 }
 
 export function OurWorkProjectDetail({ project }: { project: PortfolioProject }) {
@@ -123,16 +117,10 @@ export function OurWorkProjectDetail({ project }: { project: PortfolioProject })
             className="mt-10"
           >
             <div className="relative aspect-[21/9] overflow-hidden rounded-[20px] bg-[#ede5d6] shadow-[0_24px_80px_rgba(58,41,18,0.12)]">
-              <Image
+              <img
                 src={allImages[selectedImage]}
                 alt={`${project.title} - Image ${selectedImage + 1}`}
-                fill
-                sizes="100vw"
-                quality={92}
-                priority
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={shimmer(1200, 514)}
+                className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
             </div>
@@ -149,13 +137,10 @@ export function OurWorkProjectDetail({ project }: { project: PortfolioProject })
                     }`}
                   >
                     <div className="relative h-16 w-24 sm:h-20 sm:w-28">
-                      <Image
+                      <img
                         src={img}
                         alt={`${project.title} thumbnail ${i + 1}`}
-                        fill
-                        sizes="112px"
-                        quality={60}
-                        className="object-cover"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                     </div>
                   </button>
@@ -182,13 +167,10 @@ export function OurWorkProjectDetail({ project }: { project: PortfolioProject })
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {allImages.slice(1, 5).map((img, i) => (
                   <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-[14px] bg-[#ede5d6] shadow-[0_8px_24px_rgba(58,41,18,0.06)]">
-                    <Image
+                    <img
                       src={img}
                       alt={`${project.title} gallery ${i + 2}`}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      quality={80}
-                      className="object-cover transition-all duration-500 hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
                 ))}

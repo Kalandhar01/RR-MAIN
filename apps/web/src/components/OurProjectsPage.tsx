@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Building2, Globe, HardHat, Home, Landmark } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getCompanyBrand } from "@/lib/branding";
+import { ProjectCard } from "@/components/ProjectCard";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -23,6 +23,7 @@ interface PortfolioProject {
   title: string;
   slug: string;
   category: string;
+  shortDescription?: string;
   description: string;
   location: string;
   status: "Completed" | "Ongoing" | "Upcoming";
@@ -49,37 +50,28 @@ const stats = [
 export function OurProjectsPage({ initialProjects }: { initialProjects?: PortfolioProject[] }) {
   const pathname = usePathname();
   const brand = getCompanyBrand(pathname);
-  const isStatic = !!initialProjects;
-  const [projects, setProjects] = useState<PortfolioProject[]>(initialProjects || []);
-  const [loading, setLoading] = useState(!isStatic);
+  const [allProjects, setAllProjects] = useState<PortfolioProject[]>(initialProjects || []);
+  const [loading, setLoading] = useState(!initialProjects);
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (isStatic) {
-      setProjects(
-        activeFilter === "All"
-          ? initialProjects!
-          : initialProjects!.filter((p) => p.category === activeFilter)
-      );
-      return;
-    }
+    if (initialProjects) return;
     async function fetchProjects() {
       try {
-        const params = new URLSearchParams({ limit: "50" });
-        if (activeFilter !== "All") params.set("category", activeFilter);
-        const res = await fetch(`/api/our-works?${params}`);
+        const res = await fetch("/api/our-works?limit=50");
         const data = await res.json();
-        setProjects((data.works || []).map((w: Record<string, unknown>) => ({
+        setAllProjects((data.works || []).map((w: Record<string, unknown>) => ({
           _id: w.id || w._id,
           title: w.title,
           slug: w.slug,
           category: w.category,
-          description: w.description,
-          location: w.location,
+          shortDescription: w.shortDescription as string || "",
+          description: w.description as string || "",
+          location: w.location as string || "",
           status: w.status,
           coverImage: w.coverImage ? optimizeCloudinaryUrl(w.coverImage as string) : "",
-          galleryImages: (w.galleryImages as string[] || []).map(optimizeCloudinaryUrl),
+          galleryImages: ((w.galleryImages as string[]) || []).map(optimizeCloudinaryUrl),
         })));
       } catch (err) {
         console.error("Failed to fetch projects:", err);
@@ -88,7 +80,15 @@ export function OurProjectsPage({ initialProjects }: { initialProjects?: Portfol
       }
     }
     fetchProjects();
-  }, [activeFilter, isStatic, initialProjects]);
+  }, [initialProjects]);
+
+  const projects = useMemo(
+    () =>
+      activeFilter === "All"
+        ? allProjects
+        : allProjects.filter((p) => p.category === activeFilter),
+    [allProjects, activeFilter]
+  );
 
   const reveal = reduceMotion
     ? {}
@@ -228,82 +228,13 @@ export function OurProjectsPage({ initialProjects }: { initialProjects?: Portfol
             transition={reduceMotion ? undefined : { duration: 0.72, delay: 0.2, ease }}
             className="mt-14"
           >
-            <div className="grid gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-4">
-              {projects.map((project, index) => (
-                <motion.article
-                  layout
-                  key={project._id}
-                  initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-                  animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: reduceMotion ? 0 : index * 0.04, ease }}
-                  className="group flex flex-col overflow-hidden rounded-[20px] border border-[#dfcfaa]/50 bg-white shadow-[0_20px_60px_rgba(58,41,18,0.07)] transition-all duration-500 hover:-translate-y-1 hover:border-[#C9A45C]/70 hover:shadow-[0_28px_80px_rgba(58,41,18,0.12)]"
-                >
-                  <Link href={`/our-work/${project.slug}`} className="block">
-                    <div className="relative aspect-[16/11] overflow-hidden bg-[#ede5d6]">
-                      {project.coverImage ? (
-                        <Image
-                          src={project.coverImage}
-                          alt={project.title}
-                          fill
-                          sizes="(min-width: 1024px) 31vw, (min-width: 640px) 48vw, 100vw"
-                          quality={85}
-                          priority={index < 3}
-                          className="object-cover transition-all duration-700 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full items-center justify-center bg-[#ede5d6]">
-                          <Building2 className="h-12 w-12 text-[#dfcfaa]" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/20 px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.1em] text-white/90 backdrop-blur-md">
-                        {project.category}
-                      </span>
-                      <span
-                        className={cn(
-                          "absolute right-4 top-4 rounded-full px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.1em] backdrop-blur-md",
-                          project.status === "Completed"
-                            ? "bg-emerald-500/20 text-emerald-200 border border-emerald-400/30"
-                            : "bg-amber-500/20 text-amber-200 border border-amber-400/30"
-                        )}
-                      >
-                        {project.status}
-                      </span>
-                    </div>
-                  </Link>
-
-                  <div className="flex flex-1 flex-col gap-4 p-6 md:p-7">
-                    <div>
-                      <h2 className="font-display text-[clamp(1.8rem,2.4vw,2.6rem)] font-semibold leading-[1.15] tracking-[0.02em] text-[#15110d]">
-                        <Link href={`/our-work/${project.slug}`} className="transition-all duration-500 ease-out hover:text-[#C49A3A]">
-                          {project.title}
-                        </Link>
-                      </h2>
-                      {project.location && (
-                        <p className="mt-1.5 text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#9d742a]">
-                          {project.location}
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-[0.82rem] font-medium leading-[1.7] text-[#62594f]/75 line-clamp-2">
-                      {project.description}
-                    </p>
-                    <div className="mt-auto pt-2">
-                      <Link
-                        href={`/our-work/${project.slug}`}
-                        className="group inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#8B1118] transition-all duration-500 ease-out hover:text-[#741016]"
-                      >
-                        <span className="relative">
-                          View Project
-                          <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#C49A3A] transition-all duration-500 ease-out group-hover:w-full" />
-                        </span>
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-all duration-500 ease-out group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.5} />
-                      </Link>
-                    </div>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
+            <AnimatePresence mode="popLayout">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {projects.map((project, index) => (
+                  <ProjectCard key={project._id} project={project} index={index} />
+                ))}
+              </div>
+            </AnimatePresence>
           </motion.div>
         )}
 
