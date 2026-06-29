@@ -9,11 +9,11 @@ import { usePathname } from "next/navigation";
 import { getCompanyBrand } from "@/lib/branding";
 
 const ecosystemLinks = [
-  { label: "Architecture", href: "/architecture" },
-  { label: "Construction", href: "/construction" },
-  { label: "Real Estate", href: "/real-estate" },
-  { label: "Import & Export", href: "/import-export" },
-  { label: "OTC Exchange", href: "/otc-exchange" }
+  { label: "Architecture", href: "https://design.ractysh.com/" },
+  { label: "Construction", href: "https://infra.ractysh.com/" },
+  { label: "Real Estate", href: "https://estates.ractysh.com/" },
+  { label: "Import & Export", href: "https://exim.ractysh.com/" },
+  { label: "OTC Exchange", href: "https://associates.ractysh.com/" }
 ];
 
 const companyLinks = [
@@ -179,7 +179,9 @@ export function Footer() {
                 <span key={link.label} className="inline-flex items-center gap-x-5">
                   <Link
                     href={link.href}
-                    className="text-xs text-white/30 transition-colors duration-300 hover:text-white/60"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/45 transition-colors duration-300 hover:text-white"
                   >
                     {link.label}
                   </Link>

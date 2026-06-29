@@ -26,7 +26,7 @@ const serviceDivisions: ServiceDivision[] = [
   {
     title: "Architecture",
     statement: "Designing spaces that define identity.",
-    href: "/architecture",
+    href: "https://design.ractysh.com/",
     image: "/images/photo-1600585154340-be6161a56a0c.webp",
     imageClassName: "object-[48%_52%]",
     code: "ARC",
@@ -35,7 +35,7 @@ const serviceDivisions: ServiceDivision[] = [
   {
     title: "Construction",
     statement: "Civil, MEP, buildings, interiors, landscape and turnkey — all under one accountable system.",
-    href: "/construction",
+    href: "https://infra.ractysh.com/",
     image: "/images/photo-1541888946425-d81bb19240f5.webp",
     imageClassName: "object-[50%_44%]",
     code: "CON",
@@ -44,7 +44,7 @@ const serviceDivisions: ServiceDivision[] = [
   {
     title: "Real Estate",
     statement: "Land, buildings and communities with lasting value.",
-    href: "/real-estate",
+    href: "https://estates.ractysh.com/",
     image: "/images/photo-1486406146926-c627a92ad1ab.webp",
     imageClassName: "object-[50%_50%]",
     code: "REA",
@@ -53,7 +53,7 @@ const serviceDivisions: ServiceDivision[] = [
   {
     title: "Import & Export",
     statement: "Connecting markets through global trade.",
-    href: "/import-export",
+    href: "https://exim.ractysh.com/",
     image: "/images/photo-1605745341112-85968b19335b.webp",
     imageClassName: "object-[50%_50%]",
     code: "TRD",
@@ -62,7 +62,7 @@ const serviceDivisions: ServiceDivision[] = [
   {
     title: "OTC Exchange",
     statement: "Crypto currency, USDT exchange and KYC-verified OTC services.",
-    href: "/otc-exchange",
+    href: "https://associates.ractysh.com/",
     image: "/images/photo-1611974789855-9c2a0a7236a3.webp",
     imageClassName: "object-[50%_48%]",
     code: "OTC",
@@ -752,6 +752,8 @@ export function HomeServicesSection() {
               key={division.title}
               data-services-final-card
               href={division.href}
+              target="_blank"
+              rel="noopener noreferrer"
               prefetch={false}
               className="group relative min-w-0 flex-1 overflow-hidden border-r border-[#fffaf0]/12 last:border-r-0"
             >
