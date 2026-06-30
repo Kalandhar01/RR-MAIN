@@ -238,7 +238,8 @@ const menuModels: Record<string, MegaDefinition> = {
         title: "Director Offices",
         links: [
           { label: "Ashok Kumar M", description: "Director — RACTYSH Associates Pvt Ltd.", href: "/directors", Icon: Building2 },
-          { label: "C. Naveen", description: "Director — RACTYSH Design Pvt Ltd.", href: "/directors", Icon: Building2 }
+          { label: "C. Naveen", description: "Director — RACTYSH Design Pvt Ltd.", href: "/directors", Icon: Building2 },
+          { label: "A. Subash", description: "Director — RACTYSH Infra Pvt Ltd.", href: "/directors", Icon: Building2 }
         ]
       }
     ]
@@ -296,7 +297,7 @@ const quickAccessSearchItems: SearchItem[] = [
     description: "Executive leadership and director profiles",
     href: "/directors",
     Icon: Building2,
-    keywords: ["directors", "leadership", "executive", "ashok", "naveen", "board"]
+    keywords: ["directors", "leadership", "executive", "ashok", "naveen", "subash", "infra", "board"]
   },
   {
     title: "Blog",

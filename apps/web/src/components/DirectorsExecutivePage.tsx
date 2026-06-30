@@ -44,6 +44,23 @@ const directors = [
       "C. Naveen leads architectural planning and design innovation at RACTYSH Design. With expertise in Building Information Modeling (BIM) and modern architectural practices, he oversees the delivery of sustainable, functional, and aesthetically refined projects across residential, commercial, and institutional sectors.",
     badges: ["Architecture", "BIM", "Sustainable Design", "Project Management"],
     initial: "C"
+  },
+  {
+    name: "A. Subash",
+    qualification: "B.E. Civil",
+    position: "Director",
+    company: "RACTYSH INFRA PRIVATE LIMITED",
+    description:
+      "A. Subash leads the engineering and construction operations of RACTYSH Infra Private Limited. With a strong background in Civil Engineering, he oversees project planning, structural execution, quality assurance, site management, and timely project delivery. His focus on precision, safety, and sustainable construction practices ensures that every infrastructure project is completed to the highest industry standards while delivering long-term value to clients.",
+    badges: [
+      "Civil Engineering",
+      "Infrastructure Development",
+      "Construction Management",
+      "Structural Execution",
+      "Project Planning",
+      "Quality Assurance"
+    ],
+    initial: "A"
   }
 ];
 
@@ -84,6 +101,7 @@ const leadershipStructure = [
   { title: "RACTYSH Group", subtitle: "Leadership", description: "Integrated enterprise governance across all divisions." },
   { title: "RACTYSH Design Pvt Ltd", subtitle: "Architecture & Interiors", description: "Premium architectural and interior design services." },
   { title: "RACTYSH Associates Pvt Ltd", subtitle: "Intermediary Services", description: "Financial and business intermediary solutions." },
+  { title: "RACTYSH Infra Pvt Ltd", subtitle: "Infrastructure & Engineering", description: "Civil engineering, project planning and structural execution." },
   { title: "Construction Division", subtitle: "Infrastructure & Execution", description: "Turnkey construction and project management." },
   { title: "Real Estate Division", subtitle: "Property & Assets", description: "Asset positioning and property development." },
   { title: "Import & Export Division", subtitle: "Global Trade", description: "Cross-border trade and supplier coordination." }
@@ -302,7 +320,7 @@ export default function DirectorsExecutivePage() {
           <div className="grid grid-cols-2 gap-px bg-[#d9c28c]/20 md:grid-cols-4">
             {[
               { value: "6", label: "Divisions" },
-              { value: "2", label: "Director Offices" },
+              { value: "3", label: "Director Offices" },
               { value: "100+", label: "Enterprise Projects" },
               { value: "5+", label: "Years of Leadership" }
             ].map(({ value, label }) => (
