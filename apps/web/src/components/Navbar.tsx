@@ -225,6 +225,23 @@ const menuModels: Record<string, MegaDefinition> = {
         ]
       }
     ]
+  },
+  Directors: {
+    eyebrow: "Directors",
+    title: "Directors driving the RACTYSH vision.",
+    description: "Meet Ashok Kumar M and C. Naveen — the Directors leading RACTYSH Associates and RACTYSH Design.",
+    image: "/images/photo-1518005020951-eccb494ad742.webp",
+    ctaLabel: "View directors",
+    ctaHref: "/directors",
+    columns: [
+      {
+        title: "Director Offices",
+        links: [
+          { label: "Ashok Kumar M", description: "Director — RACTYSH Associates Pvt Ltd.", href: "/directors", Icon: Building2 },
+          { label: "C. Naveen", description: "Director — RACTYSH Design Pvt Ltd.", href: "/directors", Icon: Building2 }
+        ]
+      }
+    ]
   }
 };
 
@@ -236,7 +253,8 @@ const navOrder = [
   "Careers",
   "Blog",
   "Book Consultation",
-  "Founder"
+  "Founder",
+  "Directors"
 ];
 
 const fallbackHref: Record<string, string> = {
@@ -247,7 +265,8 @@ const fallbackHref: Record<string, string> = {
   Careers: "/careers",
   Blog: "/blog",
   "Book Consultation": "/book-consultation",
-  Founder: "/founder"
+  Founder: "/founder",
+  Directors: "/directors"
 };
 
 const quickAccessSearchItems: SearchItem[] = [
@@ -271,6 +290,13 @@ const quickAccessSearchItems: SearchItem[] = [
     href: "/founder",
     Icon: ShieldCheck,
     keywords: ["founder", "chairman", "leadership", "vision", "trust"]
+  },
+  {
+    title: "Directors",
+    description: "Executive leadership and director profiles",
+    href: "/directors",
+    Icon: Building2,
+    keywords: ["directors", "leadership", "executive", "ashok", "naveen", "board"]
   },
   {
     title: "Blog",
@@ -472,6 +498,7 @@ const mobileNavItems: MobileNavItem[] = [
   { label: "Services", href: "/architecture-service", children: commercialServiceChildren },
   { label: "Our Work", href: "/our-projects" },
   { label: "Founder", href: "/founder" },
+  { label: "Directors", href: "/directors" },
   { label: "About Us", href: "/about" },
   { label: "Careers", href: "/careers" },
   { label: "Blog", href: "/blog" },

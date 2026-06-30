@@ -1,303 +1,565 @@
 "use client";
 
-import type { PointerEvent as ReactPointerEvent } from "react";
-import { useEffect, useMemo, useRef } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Building2,
+  Eye,
+  Globe2,
+  Handshake,
+  HardHat,
+  Landmark,
+  Leaf,
+  ShieldCheck,
+  Target,
+  TrendingUp
+} from "lucide-react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import type { DirectorProfile, FounderProfile } from "@/lib/types";
-import SplitText from "./home/SplitText";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const timeline = ["Foundation", "Expansion", "Ecosystem Growth", "Enterprise Scaling"];
+const directors = [
+  {
+    name: "Ashok Kumar. M",
+    qualification: "B.Sc. Physics",
+    position: "Director",
+    company: "RACTYSH ASSOCIATES PRIVATE LIMITED",
+    description:
+      "Ashok Kumar provides strategic direction for RACTYSH Associates, contributing to business development, financial planning, operational management, and long-term enterprise growth. His practical leadership supports the company\u2019s commitment to delivering trusted financial and intermediary services with professionalism and integrity.",
+    badges: ["Business Strategy", "Financial Operations", "Enterprise Management", "Client Relations"],
+    initial: "A"
+  },
+  {
+    name: "C. Naveen",
+    qualification: "B.Arch., BIM",
+    position: "Director",
+    company: "RACTYSH DESIGN PRIVATE LIMITED",
+    description:
+      "C. Naveen leads architectural planning and design innovation at RACTYSH Design. With expertise in Building Information Modeling (BIM) and modern architectural practices, he oversees the delivery of sustainable, functional, and aesthetically refined projects across residential, commercial, and institutional sectors.",
+    badges: ["Architecture", "BIM", "Sustainable Design", "Project Management"],
+    initial: "C"
+  }
+];
 
-interface DirectorsExecutivePageProps {
-  founder: FounderProfile;
-  directors: DirectorProfile[];
+const principles = [
+  {
+    title: "Vision Driven",
+    description: "Every decision aligns with a clear long-term enterprise vision across all divisions.",
+    Icon: Eye
+  },
+  {
+    title: "Innovation First",
+    description: "We embrace modern methodologies, technology and design thinking across every discipline.",
+    Icon: TrendingUp
+  },
+  {
+    title: "Ethical Governance",
+    description: "Transparency, compliance and ethical business practices form the foundation of our leadership.",
+    Icon: ShieldCheck
+  },
+  {
+    title: "Client Commitment",
+    description: "Our directors maintain direct accountability to every client engagement and partnership.",
+    Icon: Handshake
+  },
+  {
+    title: "Sustainable Development",
+    description: "Long-term environmental and social responsibility guide our business and project decisions.",
+    Icon: Leaf
+  },
+  {
+    title: "Long-Term Growth",
+    description: "Strategic investments in people, systems and capabilities that compound over decades.",
+    Icon: TrendingUp
+  }
+];
+
+const leadershipStructure = [
+  { title: "RACTYSH Group", subtitle: "Leadership", description: "Integrated enterprise governance across all divisions." },
+  { title: "RACTYSH Design Pvt Ltd", subtitle: "Architecture & Interiors", description: "Premium architectural and interior design services." },
+  { title: "RACTYSH Associates Pvt Ltd", subtitle: "Intermediary Services", description: "Financial and business intermediary solutions." },
+  { title: "Construction Division", subtitle: "Infrastructure & Execution", description: "Turnkey construction and project management." },
+  { title: "Real Estate Division", subtitle: "Property & Assets", description: "Asset positioning and property development." },
+  { title: "Import & Export Division", subtitle: "Global Trade", description: "Cross-border trade and supplier coordination." }
+];
+
+const whyLeadership = [
+  {
+    title: "Industry Experience",
+    description: "Decades of combined experience across architecture, finance, engineering and business.",
+    Icon: Building2
+  },
+  {
+    title: "Strategic Decision Making",
+    description: "Data-driven, long-term oriented decisions that prioritize sustainable value creation.",
+    Icon: Target
+  },
+  {
+    title: "Innovation Focus",
+    description: "Continuous investment in modern tools, BIM, digital infrastructure and design technology.",
+    Icon: TrendingUp
+  },
+  {
+    title: "Transparent Governance",
+    description: "Clear reporting structures, compliance frameworks and stakeholder communication.",
+    Icon: ShieldCheck
+  },
+  {
+    title: "Sustainable Growth",
+    description: "Growth strategies designed to deliver value across multiple generations of enterprise activity.",
+    Icon: Leaf
+  },
+  {
+    title: "Client-Centric Leadership",
+    description: "Every division operates with the client\u2019s long-term interests at the core of decision making.",
+    Icon: Handshake
+  }
+];
+
+function FounderBackground() {
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#FFFCF8_0%,#F8F3EA_50%,#F3EDE0_100%)]" />
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 28% 18%, rgba(214,180,95,0.3) 0%, transparent 52%), radial-gradient(circle at 72% 82%, rgba(139,17,24,0.08) 0%, transparent 48%)"
+        }}
+      />
+      <div
+        className="absolute left-1/2 top-0 h-[42rem] w-[42rem] -translate-x-1/2 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(214,180,95,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(214,180,95,0.15) 1px, transparent 1px)",
+          backgroundSize: "64px 64px"
+        }}
+      />
+    </div>
+  );
 }
 
-interface LeadershipProfile {
-  name: string;
-  role: string;
-  line: string;
-  image: string;
-}
-
-function executiveLine(statement: string, fallback: string) {
-  const clean = statement.trim();
-  if (!clean) return fallback;
-  const firstSentence = clean.split(".")[0]?.trim();
-  return `${firstSentence || fallback}.`;
-}
-
-export function DirectorsExecutivePage({ founder, directors }: DirectorsExecutivePageProps) {
+export default function DirectorsExecutivePage() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { damping: 34, stiffness: 120, mass: 0.85 });
-  const smoothY = useSpring(pointerY, { damping: 34, stiffness: 120, mass: 0.85 });
-  const portraitX = useTransform(smoothX, [-0.5, 0.5], [-10, 10]);
-  const portraitRotateX = useTransform(smoothY, [-0.5, 0.5], [1.6, -1.6]);
-  const portraitRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.4, 2.4]);
-  const heroImage = founder.heroImage || founder.image || directors[0]?.image || "/HeaderBG.webp";
-
-  const profiles = useMemo<LeadershipProfile[]>(() => {
-    const founderProfile: LeadershipProfile = {
-      name: founder.name || "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A.",
-      role: founder.role || "Founder & Executive Director",
-      line: "Operational ecosystems with premium execution intelligence.",
-      image: founder.image || heroImage
-    };
-
-    return [
-      founderProfile,
-      ...directors.map((director) => ({
-        name: director.name,
-        role: director.position,
-        line: executiveLine(
-          director.leadershipStatement,
-          "Enterprise leadership shaped around clarity, trust and disciplined execution."
-        ),
-        image: director.image
-      }))
-    ];
-  }, [directors, founder.image, founder.name, founder.role, heroImage]);
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || reduceMotion) return;
+    if (!root) return;
 
-    const context = gsap.context(() => {
-      gsap.to("[data-directors-grid]", {
-        y: -24,
-        duration: 24,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      gsap.to("[data-directors-glow]", {
-        xPercent: 10,
-        yPercent: -8,
-        duration: 16,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      if (portraitRef.current) {
-        gsap.to(portraitRef.current, {
-          yPercent: -8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: "[data-directors-hero]",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.1
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-countup]").forEach((el) => {
+        const target = parseInt(el.getAttribute("data-target") || "0", 10);
+        const suffix = el.getAttribute("data-suffix") || "";
+        gsap.fromTo(
+          el,
+          { textContent: "0" },
+          {
+            textContent: target,
+            duration: 2.2,
+            ease: "power3.out",
+            snap: { textContent: 1 },
+            scrollTrigger: { trigger: el.closest("[data-countup-section]") || el, start: "top 78%" },
+            onUpdate() {
+              el.textContent = Math.round(parseFloat(el.textContent || "0")).toString() + suffix;
+            }
           }
-        });
-      }
+        );
+      });
     }, root);
 
-    return () => context.revert();
-  }, [reduceMotion]);
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
-    if (reduceMotion) return;
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const resetPointer = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div ref={rootRef} className="relative isolate overflow-hidden bg-[#F8F6F1] text-[#17120f]">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#FFFDFC_0%,#F8F6F1_44%,#F5F2EB_100%)]" />
-      <div
-        data-directors-grid
-        className="pointer-events-none absolute -inset-x-10 top-0 -z-10 h-[68rem] opacity-[0.18] will-change-transform [background-image:linear-gradient(rgba(89,72,45,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(89,72,45,0.1)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_50%_18%,black,transparent_74%)]"
-      />
-      <div
-        data-directors-glow
-        className="pointer-events-none absolute right-[8%] top-20 -z-10 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(214,180,95,0.16),rgba(255,255,255,0.12)_38%,transparent_68%)] opacity-80 will-change-transform"
-      />
+    <div ref={rootRef} className="relative isolate overflow-hidden bg-[#f8f3ea] text-[#1c120e]">
+      <FounderBackground />
 
-      <section
-        data-directors-hero
-        onPointerMove={handlePointerMove}
-        onPointerLeave={resetPointer}
-        className="relative grid min-h-[100svh] px-5 pb-16 pt-28 md:px-8 md:pt-32 lg:pb-20"
-      >
-        <div className="mx-auto grid w-full max-w-[78rem] gap-14 lg:grid-cols-[minmax(0,0.88fr)_minmax(24rem,0.82fr)] lg:items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 42, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, ease }}
-            className="max-w-[43rem]"
-          >
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#8b1118]">
-              Executive Leadership
-            </p>
-            <h1 className="mt-7 font-display text-[clamp(3.15rem,7vw,6.6rem)] font-semibold leading-[0.93] tracking-[-0.055em] text-[#17120f]">
-              <SplitText
-                text="Built by vision, guided by execution."
-                tag="span"
-                className="block"
-                splitType="lines"
-                delay={60}
-                duration={0.9}
-                from={{ opacity: 0, y: 40 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.3}
-                rootMargin="-80px"
-                textAlign="left"
-              />
-            </h1>
-            <p className="mt-8 max-w-[34rem] text-[1rem] leading-7 text-[#62584e] md:text-[1.08rem]">
-              Ractysh leadership combines infrastructure strategy, spatial intelligence and enterprise execution into
-              one operational ecosystem.
-            </p>
-            <Link
-              href="/book-consultation"
-              className="group mt-10 inline-flex h-12 items-center justify-center gap-2 rounded-[7px] bg-[#14110f] px-5 text-[0.86rem] font-semibold text-[#fffaf0] shadow-[0_18px_46px_rgba(23,18,15,0.16)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_62px_rgba(23,18,15,0.2),0_0_28px_rgba(214,180,95,0.12)]"
-            >
-              Book a Private Briefing
-              <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
-            </Link>
-          </motion.div>
-
-          <div ref={portraitRef} className="relative mx-auto w-full max-w-[31rem] will-change-transform lg:mr-0">
+      {/* ═══════════════ 1. HERO ═══════════════ */}
+      <section className="relative z-10 overflow-hidden bg-[#f8f3ea]">
+        <div className="mx-auto max-w-[92rem] px-5 md:px-10 lg:px-14 xl:px-16">
+          {/* Mobile */}
+          <div className="flex flex-col items-center pt-20 md:hidden">
             <motion.div
-              initial={{ opacity: 0, y: 34, scale: 0.97 }}
-              animate={
-                reduceMotion
-                  ? { opacity: 1, y: 0, scale: 1 }
-                  : { opacity: 1, y: [0, -10, 0], scale: 1 }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 1, ease }
-                  : {
-                      opacity: { duration: 1, ease, delay: 0.16 },
-                      scale: { duration: 1, ease, delay: 0.16 },
-                      y: { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
-                    }
-              }
-              className="relative will-change-transform"
-              style={
-                reduceMotion
-                  ? undefined
-                  : { x: portraitX, rotateX: portraitRotateX, rotateY: portraitRotateY, perspective: 1400 }
-              }
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease }}
+              className="w-full text-center"
             >
-              <div className="absolute -inset-5 rounded-[2rem] border border-[#d7c59a]/40 bg-white/22 shadow-[0_34px_100px_rgba(55,42,24,0.11)]" />
-              <div className="relative overflow-hidden rounded-[1.55rem] border border-[#d6c69e]/70 bg-[#f7f2e8] p-3 shadow-[0_36px_90px_rgba(52,39,23,0.16),inset_0_1px_0_rgba(255,255,255,0.78)]">
-                <div className="pointer-events-none absolute inset-3 z-10 rounded-[1.2rem] bg-[radial-gradient(circle_at_54%_16%,rgba(255,255,255,0.46),transparent_32%),linear-gradient(90deg,rgba(20,17,15,0.24),transparent_42%,rgba(214,180,95,0.1))]" />
-                <img
-                  src={heroImage}
-                  alt={founder.name || "Ractysh executive leadership"}
-                  className="aspect-[0.78] w-full rounded-[1.2rem] object-cover object-center grayscale contrast-[1.08] saturate-0"
-                />
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#8b1118]">Leadership</p>
+              <h1 className="mt-4 font-display text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
+                Meet the Directors Driving the RACTYSH Vision.
+              </h1>
+              <p className="mx-auto mt-4 max-w-[24rem] text-[14px] leading-[1.7] text-[#7d7062]">
+                Behind every successful enterprise is a team of visionary leaders committed to innovation, governance,
+                strategic growth, and operational excellence. The Directors of RACTYSH Group bring together expertise
+                across architecture, finance, engineering, and business development to build a future-focused enterprise
+                ecosystem.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Link
+                  href="#directors"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+                >
+                  Explore Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+                <Link
+                  href="#board-message"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#d9bd7a]/40 bg-white/70 px-5 text-[0.85rem] font-semibold leading-none text-[#20130f] shadow-[0_4px_16px_rgba(82,52,25,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_8px_28px_rgba(82,52,25,0.1)]"
+                >
+                  Contact Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
               </div>
-              <div className="absolute -bottom-6 left-5 right-5 rounded-[1rem] border border-white/55 bg-[#fffaf0]/78 px-5 py-4 shadow-[0_20px_54px_rgba(48,36,21,0.13)]">
-                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#9a7428]">Executive Office</p>
-                <p className="mt-1.5 font-display text-[1.25rem] font-semibold tracking-[-0.03em]">{founder.name}</p>
+            </motion.div>
+          </div>
+
+          {/* Tablet */}
+          <div className="hidden md:flex md:flex-col md:items-center md:pt-28 lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15, ease }}
+              className="w-full max-w-[38rem] text-center"
+            >
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#8b1118]">Leadership</p>
+              <h1 className="mt-4 font-display text-[3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
+                Meet the Directors Driving the RACTYSH Vision.
+              </h1>
+              <p className="mx-auto mt-5 max-w-[32rem] text-[15px] leading-[1.7] text-[#7d7062]">
+                Behind every successful enterprise is a team of visionary leaders committed to innovation, governance,
+                strategic growth, and operational excellence. The Directors of RACTYSH Group bring together expertise
+                across architecture, finance, engineering, and business development to build a future-focused enterprise
+                ecosystem.
+              </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                <Link
+                  href="#directors"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+                >
+                  Explore Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+                <Link
+                  href="#board-message"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#d9bd7a]/40 bg-white/70 px-5 text-[0.85rem] font-semibold leading-none text-[#20130f] shadow-[0_4px_16px_rgba(82,52,25,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_8px_28px_rgba(82,52,25,0.1)]"
+                >
+                  Contact Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Desktop */}
+          <div className="hidden min-h-[88svh] lg:grid lg:items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease }}
+              className="max-w-[56rem]"
+            >
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-[#8b1118]">Leadership</p>
+              <h1 className="mt-6 font-display text-[4.2rem] font-semibold leading-[0.95] tracking-[-0.03em] text-[#20130f] xl:text-[5rem]">
+                Meet the Directors Driving the RACTYSH Vision.
+              </h1>
+              <p className="mt-5 max-w-[46rem] text-[1.05rem] leading-[1.8] text-[#7d7062]">
+                Behind every successful enterprise is a team of visionary leaders committed to innovation, governance,
+                strategic growth, and operational excellence. The Directors of RACTYSH Group bring together expertise
+                across architecture, finance, engineering, and business development to build a future-focused enterprise
+                ecosystem.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="#directors"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+                >
+                  Explore Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+                <Link
+                  href="#board-message"
+                  className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#d9bd7a]/40 bg-white/70 px-5 text-[0.85rem] font-semibold leading-none text-[#20130f] shadow-[0_4px_16px_rgba(82,52,25,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_8px_28px_rgba(82,52,25,0.1)]"
+                >
+                  Contact Leadership
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <section className="relative px-5 py-20 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[78rem]">
-          <ScrollReveal className="max-w-[32rem]">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b1118]">Leadership</p>
-            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.02] tracking-[-0.045em] md:text-[2.7rem]">
-              Enterprise presence, without excess.
-            </h2>
-          </ScrollReveal>
+      {/* ═══════════════ TRUST METRICS ═══════════════ */}
+      <section className="relative z-10 border-t border-[#d9c28c]/20 bg-[#f5ede0]">
+        <div className="mx-auto max-w-[82rem] px-5 md:px-8">
+          <div className="grid grid-cols-2 gap-px bg-[#d9c28c]/20 md:grid-cols-4">
+            {[
+              { value: "6", label: "Divisions" },
+              { value: "2", label: "Director Offices" },
+              { value: "100+", label: "Enterprise Projects" },
+              { value: "5+", label: "Years of Leadership" }
+            ].map(({ value, label }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center justify-center bg-[#f5ede0] py-8 text-center md:py-10"
+              >
+                <span className="font-display text-[1.8rem] font-bold leading-none tracking-[-0.02em] text-[#20130f] md:text-[2.2rem]">
+                  {value}
+                </span>
+                <span className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[#8b1118]">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {profiles.map((profile, index) => (
-              <ScrollReveal key={`${profile.name}-${profile.role}`} delay={index * 0.04} className="group relative min-h-[15.5rem] overflow-hidden rounded-[8px] border border-[#dfd2b7]/78 bg-[#fffdf8]/62 p-5 shadow-[0_18px_54px_rgba(55,42,24,0.06)]">
-                <motion.article
-                  whileHover={reduceMotion ? undefined : { y: -4 }}
-                  transition={{ duration: 0.35, ease }}
+      {/* ═══════════════ 2. LEADERSHIP INTRODUCTION ═══════════════ */}
+      <section className="relative z-10 px-5 py-20 md:px-10 md:py-24 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <ScrollReveal className="max-w-[40rem]">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">Board Leadership</p>
+            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#20130f] md:text-[2.7rem]">
+              Leadership Built on Vision, Integrity &amp; Innovation
+            </h2>
+            <p className="mt-5 text-[15px] leading-[1.8] text-[#7d7062] md:text-[16px]">
+              At RACTYSH Group, our Directors provide strategic leadership across multiple business divisions, ensuring
+              every company operates with professionalism, transparency, and long-term value creation. Their combined
+              expertise strengthens our commitment to delivering excellence across architecture, construction, finance,
+              real estate, import &amp; export, and enterprise services.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════════════ 3. DIRECTORS CARDS ═══════════════ */}
+      <section id="directors" className="relative z-10 px-5 pb-20 md:px-10 md:pb-28 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <div className="grid gap-10 md:grid-cols-2 md:gap-8 lg:gap-12">
+            {directors.map((director, index) => (
+              <ScrollReveal key={director.name} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.4, ease }}
+                  className="group relative overflow-hidden rounded-[12px] border border-[#d9c28c]/30 bg-white/60 p-6 shadow-[0_24px_80px_rgba(82,52,25,0.06)] backdrop-blur-xl transition-all duration-500 hover:border-[#d9bd7a]/60 hover:shadow-[0_32px_100px_rgba(82,52,25,0.12)] md:p-8 lg:p-10"
                 >
-                  <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-[#d6b45f]/40 via-transparent to-transparent" />
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={profile.image || "/HeaderBG.webp"}
-                      alt=""
-                      className="h-11 w-11 rounded-full border border-[#d8c7a0] object-cover grayscale contrast-[1.05]"
-                    />
-                    <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#9a7428]">
-                      0{index + 1}
-                    </span>
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-[radial-gradient(circle_at_center,rgba(214,180,95,0.12),transparent_68%)]" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9bd7a]/40 to-transparent" />
+
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[10px] bg-[#20130f] text-[1.5rem] font-bold text-[#d9bd7a] shadow-[0_8px_24px_rgba(32,19,15,0.12)] md:h-20 md:w-20 md:text-[1.8rem]">
+                      {director.initial}
+                    </div>
+                    <div>
+                      <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-[#8b1118]">
+                        {director.position}
+                      </p>
+                      <h3 className="mt-1 font-display text-[1.4rem] font-semibold leading-tight tracking-[-0.03em] text-[#20130f] md:text-[1.7rem]">
+                        {director.name}
+                      </h3>
+                      <p className="mt-0.5 text-[13px] font-medium text-[#8b7a62]">{director.qualification}</p>
+                    </div>
                   </div>
-                  <h3 className="mt-8 font-display text-[1.35rem] font-semibold leading-tight tracking-[-0.035em]">
-                    {profile.name}
-                  </h3>
-                  <p className="mt-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#8b1118]">
-                    {profile.role}
+
+                  <p className="mt-5 text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-[#9a7428]">
+                    {director.company}
                   </p>
-                  <p className="mt-5 text-[0.92rem] leading-6 text-[#62584e]">{profile.line}</p>
-                </motion.article>
+
+                  <p className="mt-3 text-[14px] leading-[1.8] text-[#62584e] md:text-[15px]">
+                    {director.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {director.badges.map((badge) => (
+                      <span
+                        key={badge}
+                        className="rounded-[4px] border border-[#d9c28c]/30 bg-[#d9bd7a]/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-[#7a642e]"
+                      >
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-5 py-16 md:px-8 md:py-20">
-        <div className="mx-auto grid max-w-[78rem] gap-12 border-y border-[#ded1b8] py-14 md:grid-cols-[0.95fr_1fr] md:items-center">
-          <ScrollReveal className="font-display text-[clamp(2.25rem,5vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#17120f]">
-            <blockquote>
-              &ldquo;Execution is the foundation of trust.&rdquo;
-            </blockquote>
+      {/* ═══════════════ 4. LEADERSHIP PRINCIPLES ═══════════════ */}
+      <section className="relative z-10 border-t border-[#d9c28c]/20 bg-[#f3ede0] px-5 py-20 md:px-10 md:py-24 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <ScrollReveal className="text-center">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">Guiding Principles</p>
+            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#20130f] md:text-[2.7rem]">
+              Leadership Principles
+            </h2>
           </ScrollReveal>
-          <ScrollReveal className="grid gap-6 sm:grid-cols-2">
-            {timeline.map((item, index) => (
-              <div key={item} className="border-t border-[#d8c9aa] pt-5">
-                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#9a7428]">
-                  0{index + 1}
-                </p>
-                <p className="mt-3 font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-[#211914]">
-                  {item}
-                </p>
-              </div>
-            ))}
-          </ScrollReveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {principles.map((principle, index) => {
+              const Icon = principle.Icon;
+              return (
+                <ScrollReveal key={principle.title} delay={index * 0.04}>
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.35, ease }}
+                    className="group rounded-[10px] border border-[#d9c28c]/25 bg-white/55 p-6 shadow-[0_12px_40px_rgba(82,52,25,0.04)] backdrop-blur-sm transition-all duration-400 hover:border-[#d9bd7a]/50 hover:bg-white/80 hover:shadow-[0_20px_60px_rgba(82,52,25,0.08)]"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[8px] bg-[#20130f] text-[#d9bd7a] shadow-[0_4px_14px_rgba(32,19,15,0.08)]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-5 font-display text-[1.1rem] font-semibold tracking-[-0.02em] text-[#20130f]">
+                      {principle.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-[1.7] text-[#62584e]">{principle.description}</p>
+                  </motion.div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="px-5 pb-28 pt-10 text-center md:px-8 md:pb-32">
-        <ScrollReveal className="mx-auto max-w-[38rem]">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8b1118]">Private Briefing</p>
-          <h2 className="mt-5 font-display text-[2.25rem] font-semibold leading-[1.02] tracking-[-0.045em] md:text-[3.25rem]">
-            Leadership designed for premium execution.
-          </h2>
-          <Link
-            href="/book-consultation"
-            className="group mt-9 inline-flex h-12 items-center justify-center gap-2 rounded-[7px] bg-[#14110f] px-5 text-[0.86rem] font-semibold text-[#fffaf0] shadow-[0_18px_46px_rgba(23,18,15,0.14)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_62px_rgba(23,18,15,0.2),0_0_28px_rgba(214,180,95,0.12)]"
-          >
-            Book Consultation
-            <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" />
-          </Link>
-        </ScrollReveal>
+      {/* ═══════════════ 5. BUSINESS LEADERSHIP ═══════════════ */}
+      <section className="relative z-10 px-5 py-20 md:px-10 md:py-24 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <ScrollReveal className="text-center">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">Enterprise Structure</p>
+            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#20130f] md:text-[2.7rem]">
+              Business Leadership
+            </h2>
+            <p className="mx-auto mt-4 max-w-[36rem] text-[15px] leading-[1.8] text-[#7d7062]">
+              Every division operates under one integrated leadership ecosystem, ensuring consistent governance,
+              strategic alignment and operational excellence across the entire RACTYSH Group.
+            </p>
+          </ScrollReveal>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {leadershipStructure.map((item, index) => (
+              <ScrollReveal key={item.title} delay={index * 0.05}>
+                <motion.div
+                  whileHover={{ y: -3 }}
+                  transition={{ duration: 0.35, ease }}
+                  className="relative overflow-hidden rounded-[10px] border border-[#d9c28c]/25 bg-white/55 p-6 shadow-[0_12px_40px_rgba(82,52,25,0.04)] backdrop-blur-sm transition-all duration-400 hover:border-[#d9bd7a]/50 hover:bg-white/80 hover:shadow-[0_20px_60px_rgba(82,52,25,0.08)]"
+                >
+                  <div className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-bl-full bg-[radial-gradient(circle_at_100%_0,rgba(214,180,95,0.08),transparent_68%)]" />
+                  <p className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#8b1118]">{item.subtitle}</p>
+                  <h3 className="mt-2 font-display text-[1.15rem] font-semibold tracking-[-0.02em] text-[#20130f]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-[1.7] text-[#62584e]">{item.description}</p>
+                </motion.div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ 6. WHY OUR LEADERSHIP ═══════════════ */}
+      <section className="relative z-10 border-t border-[#d9c28c]/20 bg-[#f3ede0] px-5 py-20 md:px-10 md:py-24 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <ScrollReveal className="text-center">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">Why Our Leadership</p>
+            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#20130f] md:text-[2.7rem]">
+              Built on Experience &amp; Trust
+            </h2>
+          </ScrollReveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {whyLeadership.map((item, index) => {
+              const Icon = item.Icon;
+              return (
+                <ScrollReveal key={item.title} delay={index * 0.04}>
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.35, ease }}
+                    className="group rounded-[10px] border border-[#d9c28c]/25 bg-white/55 p-6 shadow-[0_12px_40px_rgba(82,52,25,0.04)] backdrop-blur-sm transition-all duration-400 hover:border-[#d9bd7a]/50 hover:bg-white/80 hover:shadow-[0_20px_60px_rgba(82,52,25,0.08)]"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[8px] bg-[#20130f] text-[#d9bd7a] shadow-[0_4px_14px_rgba(32,19,15,0.08)]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-5 font-display text-[1.1rem] font-semibold tracking-[-0.02em] text-[#20130f]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-[1.7] text-[#62584e]">{item.description}</p>
+                  </motion.div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ 7. MESSAGE FROM THE BOARD ═══════════════ */}
+      <section id="board-message" className="relative z-10 px-5 py-20 md:px-10 md:py-28 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[82rem]">
+          <div className="relative overflow-hidden rounded-[16px] border border-[#d9c28c]/30 bg-[linear-gradient(135deg,#20130f_0%,#2d1f18_50%,#1a110d_100%)] p-8 shadow-[0_32px_100px_rgba(32,19,15,0.2)] md:p-12 lg:p-16">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[radial-gradient(circle_at_center,rgba(214,180,95,0.1),transparent_68%)]" />
+            <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-[radial-gradient(circle_at_center,rgba(214,180,95,0.06),transparent_68%)]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9bd7a]/30 to-transparent" />
+
+            <ScrollReveal>
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[#d9bd7a]/70">
+                Message from the Board
+              </p>
+              <h2 className="mt-4 font-display text-[1.8rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#f5ebd6] md:text-[2.4rem] lg:text-[2.8rem]">
+                Building Tomorrow Through Responsible Leadership
+              </h2>
+              <p className="mt-5 max-w-[42rem] text-[15px] leading-[1.9] text-[#cbbaa0] md:text-[16px]">
+                Our mission is to build businesses that create lasting value through innovation, trust, and disciplined
+                execution. Every decision is guided by integrity, professionalism, and a commitment to excellence for our
+                clients, partners, and communities.
+              </p>
+              <div className="mt-8 flex items-center gap-4">
+                <span className="h-px w-10 bg-[#d9bd7a]/40" />
+                <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[#d9bd7a]/60">
+                  Board of Directors — RACTYSH Group
+                </span>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ 8. CTA ═══════════════ */}
+      <section className="relative z-10 border-t border-[#d9c28c]/20 bg-[#f5ede0] px-5 py-20 text-center md:px-10 md:py-28 lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[42rem]">
+          <ScrollReveal>
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.24em] text-[#8b1118]">Get In Touch</p>
+            <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.03em] text-[#20130f] md:text-[2.7rem]">
+              Connect With Our Leadership Team
+            </h2>
+            <p className="mx-auto mt-4 max-w-[32rem] text-[15px] leading-[1.8] text-[#7d7062]">
+              Learn more about the people shaping the future of RACTYSH Group and explore opportunities for
+              collaboration across our business ecosystem.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/book-consultation"
+                className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-6 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+              >
+                Contact Directors
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+              <Link
+                href="/about"
+                className="group inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#d9bd7a]/40 bg-white/70 px-6 text-[0.85rem] font-semibold leading-none text-[#20130f] shadow-[0_4px_16px_rgba(82,52,25,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_8px_28px_rgba(82,52,25,0.1)]"
+              >
+                Explore Companies
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
       </section>
     </div>
   );
