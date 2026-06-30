@@ -11,31 +11,31 @@ const cards = [
     title: "Architecture",
     tagline: "Designing Landmark Spaces",
     image: "/images/photo-1497366754035-f200968a6e72.webp",
-    href: "/architecture"
+    href: "https://architects.ractysh.com/"
   },
   {
     title: "Construction",
     tagline: "Building with Precision",
     image: "/images/photo-1503387762-592deb58ef4e.webp",
-    href: "/construction"
+    href: "https://construction.ractysh.com/"
   },
   {
     title: "Real Estate",
     tagline: "Creating Long-Term Value",
     image: "/images/photo-1560518883-ce09059eeffa.webp",
-    href: "/real-estate"
+    href: "https://realestate.ractysh.com/"
   },
   {
     title: "Import & Export",
     tagline: "Global Trade Excellence",
     image: "/images/photo-1494412574643-ff11b0a5c1c3.webp",
-    href: "/import-export"
+    href: "https://exports.ractysh.com/"
   },
   {
     title: "OTC Exchange",
     tagline: "Private Market Transactions",
     image: "/images/photo-1450101499163-c8848c66ca85.webp",
-    href: "/otc-exchange"
+    href: "https://exchange.ractysh.com/"
   }
 ];
 
