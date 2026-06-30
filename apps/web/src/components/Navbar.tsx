@@ -99,11 +99,11 @@ const menuModels: Record<string, MegaDefinition> = {
       {
         title: "Business Divisions",
         links: [
-          { label: "Architecture Division", description: "Spatial intelligence, planning and visualization.", href: "/architecture", Icon: DraftingCompass },
-          { label: "Construction Division", description: "Site execution, MEP and turnkey delivery.", href: "/construction", Icon: HardHat },
-          { label: "Real Estate Division", description: "Asset positioning and development advisory.", href: "/real-estate", Icon: Building2 },
-          { label: "Import & Export Division", description: "Global trade and supplier network operations.", href: "/import-export", Icon: Globe2 },
-          { label: "OTC Exchange Division", description: "Private counterparty and deal-room coordination.", href: "/otc-exchange", Icon: ShieldCheck }
+          { label: "Architecture Division", description: "Spatial intelligence, planning and visualization.", href: "https://architects.ractysh.com/", Icon: DraftingCompass },
+          { label: "Construction Division", description: "Site execution, MEP and turnkey delivery.", href: "https://construction.ractysh.com/", Icon: HardHat },
+          { label: "Real Estate Division", description: "Asset positioning and development advisory.", href: "https://realestate.ractysh.com/", Icon: Building2 },
+          { label: "Import & Export Division", description: "Global trade and supplier network operations.", href: "https://exports.ractysh.com/", Icon: Globe2 },
+          { label: "OTC Exchange Division", description: "Private counterparty and deal-room coordination.", href: "https://exchange.ractysh.com/", Icon: ShieldCheck }
         ]
       }
     ]
@@ -460,11 +460,11 @@ const commercialServiceChildren = commercialServicePages.map((s) => {
 });
 
 const mobileEcosystemChildren: MobileChildItem[] = [
-  { label: "Architecture Division", href: "/architecture", Icon: DraftingCompass },
-  { label: "Construction Division", href: "/construction", Icon: HardHat },
-  { label: "Real Estate Division", href: "/real-estate", Icon: Building2 },
-  { label: "Import & Export Division", href: "/import-export", Icon: Globe2 },
-  { label: "OTC Exchange Division", href: "/otc-exchange", Icon: ShieldCheck },
+  { label: "Architecture Division", href: "https://architects.ractysh.com/", Icon: DraftingCompass },
+  { label: "Construction Division", href: "https://construction.ractysh.com/", Icon: HardHat },
+  { label: "Real Estate Division", href: "https://realestate.ractysh.com/", Icon: Building2 },
+  { label: "Import & Export Division", href: "https://exports.ractysh.com/", Icon: Globe2 },
+  { label: "OTC Exchange Division", href: "https://exchange.ractysh.com/", Icon: ShieldCheck },
 ];
 
 const mobileNavItems: MobileNavItem[] = [
