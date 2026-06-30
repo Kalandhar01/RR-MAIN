@@ -168,10 +168,7 @@ export function Footer() {
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             <div className="text-center sm:text-left">
               <p className="text-xs text-white/30">
-                &copy; 2025 {companyBrand.shortName}
-              </p>
-              <p className="mt-1 text-[11px] text-white/15">
-                {companyBrand.legalName}&trade; is a registered enterprise entity.
+                &copy; 2025 RACTYSH GROUP. All Rights Reserved.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">

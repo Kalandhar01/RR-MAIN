@@ -1122,13 +1122,13 @@ export function Navbar({ logoText, items }: NavbarProps) {
         <div className="mx-auto flex h-[64px] max-w-[90rem] items-center px-5 md:px-8 xl:grid xl:h-[72px] xl:grid-cols-[minmax(13.25rem,1fr)_auto_minmax(13.25rem,1fr)] xl:gap-4 2xl:gap-5">
           <Link
             href="/#hero"
-            className="flex min-w-[11rem] items-center gap-1.5 xl:min-w-[13.25rem] xl:gap-2"
+            className="flex min-w-[11rem] items-center gap-2 xl:min-w-[13.25rem] xl:gap-2"
             onMouseEnter={() => setActiveLabel(null)}
             aria-label="Ractysh home"
           >
-            <BrandLogo size="navCompact" priority decorative className="xl:hidden translate-y-[2px] !h-[37px] !w-[37px]" />
+            <BrandLogo size="navCompact" priority decorative className="xl:hidden translate-y-[1px] !h-[42px] !w-[42px]" />
             <div>
-              <span style={{ color: "var(--nav-text, #111111)" }} className="block font-sans text-[1.1rem] font-bold leading-tight tracking-tight md:text-[1.15rem]">
+              <span style={{ color: "var(--nav-text, #111111)" }} className="block font-sans text-[1.2rem] font-bold leading-tight tracking-tight md:text-[1.25rem]">
                 {brandName}
               </span>
               <span className="block text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#C9A15A] xl:hidden">
@@ -1225,14 +1225,14 @@ export function Navbar({ logoText, items }: NavbarProps) {
                   href="/#hero"
                   onClick={() => setMobileOpen(false)}
                   aria-label="Ractysh home"
-                  className="flex items-center gap-2.5"
+                  className="flex items-center gap-3"
                 >
-                  <BrandLogo size="navCompact" priority decorative />
+                  <BrandLogo size="navCompact" priority decorative className="!h-[42px] !w-[42px]" />
                   <div>
-                    <span className="block font-display text-[1.05rem] font-semibold leading-tight text-[#111111]">
+                    <span className="block font-display text-[1.15rem] font-semibold leading-tight text-[#111111]">
                       {brandName}
                     </span>
-                    <span className="mt-0.5 block text-[0.55rem] font-medium uppercase tracking-[0.18em] text-[#9e8a70]">
+                    <span className="mt-0.5 block text-[0.6rem] font-medium uppercase tracking-[0.18em] text-[#9e8a70]">
                       {companyBrand.subtitle}
                     </span>
                   </div>
