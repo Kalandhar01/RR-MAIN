@@ -1,7 +1,9 @@
+import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   compress: true,
+  outputFileTracingRoot: process.env.VERCEL ? path.join(__dirname, "../..") : undefined,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
