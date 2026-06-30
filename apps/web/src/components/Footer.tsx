@@ -176,8 +176,6 @@ export function Footer() {
                 <span key={link.label} className="inline-flex items-center gap-x-5">
                   <Link
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="text-sm text-white/45 transition-colors duration-300 hover:text-white"
                   >
                     {link.label}
