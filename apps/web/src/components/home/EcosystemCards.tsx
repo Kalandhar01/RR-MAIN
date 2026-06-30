@@ -23,7 +23,7 @@ const cards = [
     title: "Real Estate",
     tagline: "Creating Long-Term Value",
     image: "/images/photo-1560518883-ce09059eeffa.webp",
-    href: "https://realestate.ractysh.com/"
+    href: "https://estates.ractysh.com/"
   },
   {
     title: "Import & Export",

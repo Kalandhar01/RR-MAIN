@@ -101,7 +101,7 @@ const menuModels: Record<string, MegaDefinition> = {
         links: [
           { label: "Architecture Division", description: "Spatial intelligence, planning and visualization.", href: "https://architects.ractysh.com/", Icon: DraftingCompass },
           { label: "Construction Division", description: "Site execution, MEP and turnkey delivery.", href: "https://construction.ractysh.com/", Icon: HardHat },
-          { label: "Real Estate Division", description: "Asset positioning and development advisory.", href: "https://realestate.ractysh.com/", Icon: Building2 },
+          { label: "Real Estate Division", description: "Asset positioning and development advisory.", href: "https://estates.ractysh.com/", Icon: Building2 },
           { label: "Import & Export Division", description: "Global trade and supplier network operations.", href: "https://exports.ractysh.com/", Icon: Globe2 },
           { label: "OTC Exchange Division", description: "Private counterparty and deal-room coordination.", href: "https://exchange.ractysh.com/", Icon: ShieldCheck }
         ]
@@ -462,7 +462,7 @@ const commercialServiceChildren = commercialServicePages.map((s) => {
 const mobileEcosystemChildren: MobileChildItem[] = [
   { label: "Architecture Division", href: "https://architects.ractysh.com/", Icon: DraftingCompass },
   { label: "Construction Division", href: "https://construction.ractysh.com/", Icon: HardHat },
-  { label: "Real Estate Division", href: "https://realestate.ractysh.com/", Icon: Building2 },
+  { label: "Real Estate Division", href: "https://estates.ractysh.com/", Icon: Building2 },
   { label: "Import & Export Division", href: "https://exports.ractysh.com/", Icon: Globe2 },
   { label: "OTC Exchange Division", href: "https://exchange.ractysh.com/", Icon: ShieldCheck },
 ];

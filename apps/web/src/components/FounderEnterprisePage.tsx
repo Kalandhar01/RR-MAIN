@@ -38,10 +38,14 @@ interface FounderEnterprisePageProps {
 export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const founderName = "Ar.P.M.S.Noorul\nFawaaz";
+  const founderName = "Ar.P.M.S.Noorul\nFawaaz, B.Arch., A.I.I.A.";
   const founderRole = "FOUNDER & CHAIRMAN";
+  const founderTitle = "Visionary Founder of RACTYSH Group Of Companies";
+  const founderDescription =
+    "Leading the Ractysh ecosystem across Architecture, Construction, Real Estate, Import-Export and OTC Exchange — built on long-term vision, institutional discipline and enterprise-grade execution.";
   const founderQualification = "B.Arch., A.I.I.A.";
-  const portraitAlt = founder.name && founder.name.toLowerCase() !== "ractysh founder" ? founder.name : "Ar.P.M.S.Noorul Fawaaz";
+  const portraitAlt =
+    founder.name && founder.name.toLowerCase() !== "ractysh founder" ? founder.name : "Ar.P.M.S.Noorul Fawaaz, B.Arch., A.I.I.A.";
 
   useEffect(() => {
     const root = rootRef.current;
@@ -136,14 +140,27 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
               transition={{ duration: 0.7, delay: 0.15, ease: motionEase }}
               className="w-full text-center"
             >
-              <h1 className="font-display text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#8b1118]">
+                {founderRole}
+              </p>
+              <h1 className="mt-4 font-display text-[2.2rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
                 {founderName.split("\n").map((line, i) => (
                   <span key={i}>{line}{i === 0 ? <br /> : null}</span>
                 ))}
               </h1>
-              <p className="mt-3 text-[0.85rem] font-medium leading-none text-[#675a4f]">
-                {founderQualification}
+              <p className="mx-auto mt-4 max-w-[22rem] text-[15px] font-medium leading-[1.5] text-[#675a4f]">
+                {founderTitle}
               </p>
+              <p className="mx-auto mt-4 max-w-[24rem] text-[14px] leading-[1.7] text-[#7d7062]">
+                {founderDescription}
+              </p>
+              <Link
+                href="#timeline"
+                className="group mt-6 inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+              >
+                Chairman&apos;s Message
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
             </motion.div>
           </div>
 
@@ -173,14 +190,27 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
               transition={{ duration: 0.7, delay: 0.2, ease: motionEase }}
               className="w-full max-w-[34rem] text-center"
             >
-              <h1 className="font-display text-[3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#8b1118]">
+                {founderRole}
+              </p>
+              <h1 className="mt-4 font-display text-[3rem] font-semibold leading-[1.02] tracking-[-0.02em] text-[#20130f]">
                 {founderName.split("\n").map((line, i) => (
                   <span key={i}>{line}{i === 0 ? <br /> : null}</span>
                 ))}
               </h1>
-              <p className="mt-3 text-[0.9rem] font-medium leading-none text-[#675a4f]">
-                {founderQualification}
+              <p className="mx-auto mt-4 max-w-[28rem] text-[16px] font-medium leading-[1.5] text-[#675a4f]">
+                {founderTitle}
               </p>
+              <p className="mx-auto mt-5 max-w-[30rem] text-[15px] leading-[1.7] text-[#7d7062]">
+                {founderDescription}
+              </p>
+              <Link
+                href="#timeline"
+                className="group mt-7 inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+              >
+                Chairman&apos;s Message
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
             </motion.div>
           </div>
 
@@ -191,14 +221,27 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: motionEase }}
             >
-              <h1 className="font-display text-[4.2rem] font-semibold leading-[0.95] tracking-[-0.03em] text-[#20130f] xl:text-[5rem]">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-[#8b1118]">
+                {founderRole}
+              </p>
+              <h1 className="mt-6 font-display text-[4.2rem] font-semibold leading-[0.95] tracking-[-0.03em] text-[#20130f] xl:text-[5rem]">
                 {founderName.split("\n").map((line, i) => (
                   <span key={i}>{line}{i === 0 ? <br /> : null}</span>
                 ))}
               </h1>
-              <p className="mt-4 text-[1rem] font-medium leading-none text-[#675a4f]">
-                {founderQualification}
+              <p className="mt-5 max-w-[28rem] text-[1.1rem] font-medium leading-[1.4] text-[#675a4f]">
+                {founderTitle}
               </p>
+              <p className="mt-5 max-w-[30rem] text-[15px] leading-[1.8] text-[#7d7062]">
+                {founderDescription}
+              </p>
+              <Link
+                href="#timeline"
+                className="group mt-8 inline-flex min-h-[2.8rem] items-center justify-center gap-2 rounded-[6px] border border-[#8b1118]/30 bg-[#8b1118] px-5 text-[0.85rem] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(139,17,24,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#7a0e14]"
+              >
+                Chairman&apos;s Message
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
               <div className="mt-12 flex items-center gap-3">
                 <span className="h-px w-10 bg-[#d9bd7a]/60" />
                 <BrandLogo size="sm" decorative />
@@ -397,7 +440,7 @@ export function FounderEnterprisePage({ founder }: FounderEnterprisePageProps) {
                 The Enterprise Horizon
               </h3>
               <p className="mt-4 text-[15px] leading-[1.8] text-[#cbbaa0] md:text-[16px]">
-                {founder.vision}
+                Building an integrated enterprise ecosystem across five premium service pillars — Architecture, Construction, Real Estate, Global Trade and Private Exchange — with institutional discipline and long-term value creation.
               </p>
               <div className="mt-6 flex items-center gap-3">
                 <BrandLogo size="sm" decorative />
