@@ -1,5 +1,4 @@
 {
-  "rootDirectory": "apps/web",
-  "buildCommand": "npm run build",
+  "buildCommand": "npx turbo run build --filter=@ractysh/web && cp -r apps/web/.next .next",
   "framework": "nextjs"
 }
