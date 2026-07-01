@@ -16,9 +16,12 @@ import Link from "next/link";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import dynamic from "next/dynamic";
 import {
-  DirectorCompactCard,
   type DirectorProfileCardProps,
 } from "@/components/DirectorProfileCard";
+import {
+  DirectorFounderCard,
+  DirectorDesktopCard,
+} from "@/components/DirectorDesktopCard";
 
 const DirectorProfileCard = dynamic(
   () => import("@/components/DirectorProfileCard").then((mod) => mod.default),
@@ -213,12 +216,18 @@ export default function DirectorsExecutivePage() {
           <DirectorProfileCard key={director.slug} {...director} showConnect={false} />
         ))}
       </div>
-      {/* Desktop: 4-column compact card grid */}
-      <section className="hidden px-6 py-16 lg:block lg:px-14 xl:px-16">
-        <div className="mx-auto max-w-[92rem]">
-          <div className="grid gap-5 lg:grid-cols-4">
-            {directorsData.map((director) => (
-              <DirectorCompactCard key={director.slug} {...director} />
+      {/* Desktop: premium executive showcase */}
+      <section className="hidden px-6 py-20 lg:block lg:px-14 xl:px-16">
+        <div className="mx-auto max-w-[1500px]">
+          {/* Founder */}
+          <div className="flex justify-center">
+            <DirectorFounderCard data={directorsData[0]} index={0} />
+          </div>
+
+          {/* Directors 2-column grid */}
+          <div className="mt-24 grid gap-12 lg:grid-cols-2 xl:gap-14">
+            {directorsData.slice(1).map((director, i) => (
+              <DirectorDesktopCard key={director.slug} data={director} index={i} />
             ))}
           </div>
         </div>

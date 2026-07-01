@@ -28,7 +28,6 @@
     "typecheck:admin": "npm run typecheck --workspace apps/admin",
     "seed:construction-works": "node scripts/seed-construction-works.mjs"
   },
-  },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "concurrently": "^9.1.2",
