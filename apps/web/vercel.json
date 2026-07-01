@@ -1,4 +1,5 @@
 {
-  "buildCommand": "npx turbo run build --filter=@ractysh/web && rm -rf .next && cp -r apps/web/.next .next",
-  "framework": "nextjs"
+  "buildCommand": "npx next build apps/web && rm -rf .next && cp -r apps/web/.next .next",
+  "framework": "nextjs",
+  "installCommand": "npm install"
 }
