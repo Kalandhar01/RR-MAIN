@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npx next build apps/web && rm -rf .next && cp -r apps/web/.next .next",
-  "framework": "nextjs",
-  "installCommand": "npm install"
-}
