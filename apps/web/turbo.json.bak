@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "dist/**", "!.next/cache/**"],
+      "env": [
+        "MONGODB_URI",
+        "RESEND_API_KEY",
+        "MAIL_TO",
+        "CONSULTATION_NOTIFY_TO",
+        "RESEND_FROM",
+        "CONSULTATION_NOTIFY_FROM"
+      ]
+    }
+  }
+}
