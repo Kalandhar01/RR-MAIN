@@ -6,7 +6,7 @@ import {
   Mail, Compass, Globe, Ship, Package, CreditCard,
   HardHat, Building2, Ruler, ShieldCheck,
   Palette, DraftingCompass, HeartHandshake, Target,
-  TrendingUp, Landmark, Briefcase, Users, ArrowRight,
+  TrendingUp, Landmark, Briefcase, Users,
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -54,7 +54,7 @@ export const DirectorCompactCard = React.memo(function DirectorCompactCard(props
   const initial = firstName.charAt(0);
 
   return (
-    <Link href={`/directors/${slug}`} className="group block">
+    <div className="group block">
       <div className="overflow-hidden rounded-[20px] border border-[rgba(255,215,120,0.1)] bg-[#0a0a0a] shadow-[0_16px_48px_rgba(0,0,0,0.4)] transition-all duration-500 hover:border-[#C9A14A]/30 hover:shadow-[0_0_50px_rgba(201,161,74,0.06)]">
         {/* Image */}
         <div className="relative h-[260px] w-full overflow-hidden md:h-[300px]">
@@ -124,14 +124,9 @@ export const DirectorCompactCard = React.memo(function DirectorCompactCard(props
               );
             })}
           </div>
-
-          <div className="mt-4 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#C9A14A] transition-all duration-300 group-hover:gap-2.5">
-            View Profile
-            <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={2} />
-          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 });
 
@@ -244,9 +239,9 @@ export default function DirectorProfileCard(props: DirectorProfileCardProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease }}
-          className="font-fraunces text-[20px] font-semibold leading-[1.5] md:text-[24px] lg:text-[26px]"
+          className="text-[16px] leading-[1.65] text-white/75 md:text-[17px]"
         >
-          <GoldText>{description}</GoldText>
+          {description}
         </motion.p>
 
         {/* Divider */}

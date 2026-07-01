@@ -10,7 +10,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import type { DirectorProfileCardProps } from "@/components/DirectorProfileCard";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -32,9 +31,7 @@ export function DirectorFounderCard({ data, index }: { data: DirectorProfileCard
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8, delay: index * 0.12, ease: cardEase }}
     >
-      <Link
-        href={`/directors/${data.slug}`}
-        className="group relative mx-auto block w-full max-w-[620px] overflow-hidden rounded-[32px] border border-[rgba(201,161,74,0.18)] bg-[#faf7f0] shadow-[0_24px_80px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 hover:border-[#C9A14A]/40 hover:shadow-[0_0_60px_rgba(201,161,74,0.10),0_32px_80px_rgba(0,0,0,0.12)]"
+      <div className="group relative mx-auto block w-full max-w-[620px] overflow-hidden rounded-[32px] border border-[rgba(201,161,74,0.18)] bg-[#faf7f0] shadow-[0_24px_80px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 hover:border-[#C9A14A]/40 hover:shadow-[0_0_60px_rgba(201,161,74,0.10),0_32px_80px_rgba(0,0,0,0.12)]"
       >
         {/* Image */}
         <div className="relative h-[440px] w-full overflow-hidden md:h-[500px]">
@@ -110,7 +107,7 @@ export function DirectorFounderCard({ data, index }: { data: DirectorProfileCard
             })}
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }
@@ -125,9 +122,7 @@ export function DirectorDesktopCard({ data, index }: { data: DirectorProfileCard
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: cardEase }}
     >
-      <Link
-        href={`/directors/${data.slug}`}
-        className="group relative mx-auto block w-full max-w-[600px] overflow-hidden rounded-[28px] border border-[rgba(201,161,74,0.14)] bg-[#faf7f0] shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-2 hover:border-[#C9A14A]/35 hover:shadow-[0_0_50px_rgba(201,161,74,0.08),0_28px_70px_rgba(0,0,0,0.10)]"
+      <div className="group relative mx-auto block w-full max-w-[600px] overflow-hidden rounded-[28px] border border-[rgba(201,161,74,0.14)] bg-[#faf7f0] shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-2 hover:border-[#C9A14A]/35 hover:shadow-[0_0_50px_rgba(201,161,74,0.08),0_28px_70px_rgba(0,0,0,0.10)]"
       >
         {/* Image */}
         <div className="relative h-[380px] w-full overflow-hidden md:h-[430px]">
@@ -203,7 +198,7 @@ export function DirectorDesktopCard({ data, index }: { data: DirectorProfileCard
             })}
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }
