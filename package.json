@@ -33,8 +33,7 @@
     "@playwright/test": "^1.60.0",
     "concurrently": "^9.1.2",
     "mongodb-memory-server": "^11.2.0",
-    "tsx": "^4.22.4",
-    "turbo": "^2.6.1"
+    "tsx": "^4.22.4"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
