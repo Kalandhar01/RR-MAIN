@@ -1,13 +1,74 @@
-node_modules
+# --- Dependencies ---
+node_modules/
+.pnp
+.pnp.js
+
+# --- Build outputs ---
 .next
-.turbo
-*.tsbuildinfo
+dist
+build
+.out
+
+# --- Environment files ---
 .env
 .env.local
-.env.*.local
-*.log
+.env.development
+.env.production
+.env.*
+!.env.example
+
+# --- Turbo repo ---
+.turbo
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Cache ---
 .cache
-out
-build
-dist
-public/uploads
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.next/cache/
+
+# --- Logs ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# --- Testing ---
+coverage/
+test-results/
+playwright-report/
+
+# --- OS generated ---
+.DS_Store
+Thumbs.db
+*.pid
+
+# --- Temp files ---
+tmp/
+temp/
+
+# --- Uploads ---
+apps/web/public/uploads/
+
+# --- Project-specific ---
+.audit/
+Architecture-Site/Home-BG-video.mp4
+*.webm
+arch-reference-*.png
+construction-device-*.png
+footer-spacing-after.png
+mobile-*.png
+otc-world-map-*.png
+Architecture-Site/dither-*.png
+Real-Estate-Site/

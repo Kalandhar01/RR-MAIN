@@ -2,6 +2,7 @@ import type { Attachment } from "resend";
 import type { ConsultationRecord } from "../types/consultation.js";
 import { parseEmailList, sendResendEmail } from "./emailDeliveryService.js";
 import { renderExecutiveInquiryHtml, renderExecutiveInquiryText } from "./executiveInquiryEmailTemplate.js";
+import { renderAutoReplyHtml, renderAutoReplyText } from "./autoReplyEmailTemplate.js";
 import { senderFromEnv } from "./ractyshEmailTemplate.js";
 
 function recipients(): string[] {
@@ -28,7 +29,7 @@ export async function sendConsultationNotification(
 ): Promise<ConsultationRecord["notification"]> {
   const subjectName = consultation.companyName || consultation.fullName;
   const emailInput = {
-    adminUrl: `${process.env.ADMIN_ORIGIN || process.env.ADMIN_PUBLIC_BASE_URL || "http://localhost:3001"}/operations`,
+    adminUrl: `${process.env.ADMIN_ORIGIN || process.env.ADMIN_PUBLIC_BASE_URL || "https://admin.ractysh.com"}/operations`,
     clientName: consultation.fullName,
     company: consultation.companyName,
     email: consultation.emailAddress,
@@ -65,10 +66,36 @@ export async function sendConsultationNotification(
     idempotencyKey: consultation.id
   });
 
+  if (result.sent && consultation.emailAddress) {
+    await sendAutoReply(consultation);
+  }
+
   return {
     sent: result.sent,
     skipped: result.skipped,
     error: result.error,
     sentAt: result.sentAt
   };
+}
+
+async function sendAutoReply(consultation: ConsultationRecord): Promise<void> {
+  const input = {
+    clientName: consultation.fullName,
+    email: consultation.emailAddress,
+    serviceType: consultation.serviceType,
+    inquiryId: consultation.id,
+  };
+
+  try {
+    await sendResendEmail({
+      from: senderFromEnv("RESEND_FROM", "MAIL_FROM") || "RACTYSH Group <noreply@ractysh.com>",
+      to: [consultation.emailAddress],
+      subject: `Thank You, ${consultation.fullName} — RACTYSH Group`,
+      text: renderAutoReplyText(input),
+      html: renderAutoReplyHtml(input),
+      tags: [{ name: "source", value: "auto-reply" }]
+    });
+  } catch {
+    console.warn(`[auto-reply] Failed to send acknowledgement to ${consultation.emailAddress}`);
+  }
 }

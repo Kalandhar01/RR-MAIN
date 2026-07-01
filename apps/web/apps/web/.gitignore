@@ -1,0 +1,13 @@
+node_modules
+.next
+.turbo
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+*.log
+.cache
+out
+build
+dist
+public/uploads
